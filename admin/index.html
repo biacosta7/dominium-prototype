@@ -1,842 +1,2904 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dominium — Painel Administrativo</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg:#f4f5f7; --sb:#0d1117; --sb-hover:#161b22; --sb-active:#1a2332;
-  --accent:#2563eb; --accent-l:#dbeafe; --accent-glow:rgba(37,99,235,0.14);
-  --teal:#0891b2; --surf:#fff; --surf2:#f8fafc; --surf3:#f1f5f9;
-  --bdr:#e2e8f0; --bdr2:#cbd5e1;
-  --tx:#0f172a; --tx2:#334155; --tx3:#64748b; --tx4:#94a3b8;
-  --sb-tx:#94a3b8; --sb-active-tx:#f1f5f9;
-  --green:#10b981; --green-bg:#d1fae5;
-  --yellow:#f59e0b; --yellow-bg:#fef3c7;
-  --red:#ef4444; --red-bg:#fee2e2;
-  --blue-bg:#dbeafe; --purple:#7c3aed;
-  --r:12px; --r-sm:8px;
-  --sh:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.04);
-  --sh-md:0 4px 12px rgba(0,0,0,.08),0 12px 40px rgba(0,0,0,.06);
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);display:flex;min-height:100vh;overflow-x:hidden;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dominium — Painel Administrativo</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4f5f7;
+      --sb: #0d1117;
+      --sb-hover: #161b22;
+      --sb-active: #1a2332;
+      --accent: #2563eb;
+      --accent-l: #dbeafe;
+      --accent-glow: rgba(37, 99, 235, 0.14);
+      --teal: #0891b2;
+      --surf: #fff;
+      --surf2: #f8fafc;
+      --surf3: #f1f5f9;
+      --bdr: #e2e8f0;
+      --bdr2: #cbd5e1;
+      --tx: #0f172a;
+      --tx2: #334155;
+      --tx3: #64748b;
+      --tx4: #94a3b8;
+      --sb-tx: #94a3b8;
+      --sb-active-tx: #f1f5f9;
+      --green: #10b981;
+      --green-bg: #d1fae5;
+      --yellow: #f59e0b;
+      --yellow-bg: #fef3c7;
+      --red: #ef4444;
+      --red-bg: #fee2e2;
+      --blue-bg: #dbeafe;
+      --purple: #7c3aed;
+      --r: 12px;
+      --r-sm: 8px;
+      --sh: 0 1px 3px rgba(0, 0, 0, .06), 0 4px 16px rgba(0, 0, 0, .04);
+      --sh-md: 0 4px 12px rgba(0, 0, 0, .08), 0 12px 40px rgba(0, 0, 0, .06);
+    }
 
-/* LOGIN */
-#loginScreen{width:100vw;min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0d1117 0%,#1a2332 50%,#0d1117 100%);inset:0;z-index:500;}
-.lcard{background:var(--surf);border-radius:20px;padding:40px;width:400px;max-width:90vw;box-shadow:0 30px 80px rgba(0,0,0,.4);}
-.llogo{display:flex;align-items:center;gap:12px;margin-bottom:32px;}
-.llogo-icon{width:44px;height:44px;background:linear-gradient(135deg,#2563eb,#0891b2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;}
-.llogo-text{font-family:'Syne',sans-serif;font-size:24px;font-weight:700;color:var(--tx);}
-.lsub{font-size:13.5px;color:var(--tx4);margin-bottom:28px;line-height:1.5;}
-.fg{margin-bottom:16px;}
-.fl{display:block;font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--tx3);margin-bottom:6px;}
-.fi{width:100%;padding:10px 13px;border:1.5px solid var(--bdr);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--tx);outline:none;transition:border-color .15s;}
-.fi:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);}
-.forgot{font-size:12.5px;color:var(--accent);cursor:pointer;text-align:right;margin-top:6px;display:block;}
-.lbtn{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px;transition:all .18s;box-shadow:0 4px 14px rgba(37,99,235,.35);}
-.lbtn:hover{background:#1d4ed8;transform:translateY(-1px);}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* SIDEBAR */
-.sidebar{width:240px;min-height:100vh;background:var(--sb);display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:100;border-right:1px solid rgba(255,255,255,.04);}
-.sb-logo{padding:26px 22px 18px;border-bottom:1px solid rgba(255,255,255,.06);}
-.sb-logo-mark{display:flex;align-items:center;gap:10px;}
-.sb-logo-icon{width:34px;height:34px;background:linear-gradient(135deg,#2563eb,#0891b2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:#fff;letter-spacing:-1px;}
-.sb-logo-text{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:#f1f5f9;letter-spacing:-.3px;}
-.sb-logo-sub{font-size:10px;color:var(--tx4);letter-spacing:.8px;text-transform:uppercase;margin-top:1px;}
-.sb-condo{margin:12px 14px;background:var(--sb-hover);border-radius:var(--r-sm);padding:10px 12px;border:1px solid rgba(255,255,255,.06);}
-.sb-condo-name{font-size:12px;font-weight:500;color:var(--sb-active-tx);}
-.sb-condo-meta{font-size:11px;color:var(--tx4);margin-top:2px;}
-.sb-nav{flex:1;padding:6px 10px;overflow-y:auto;}
-.sb-section{margin-bottom:18px;}
-.sb-section-label{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(148,163,184,.4);padding:0 8px;margin-bottom:5px;}
-.ni{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:var(--r-sm);cursor:pointer;transition:all .15s;color:var(--sb-tx);font-size:13.5px;position:relative;user-select:none;}
-.ni:hover{background:var(--sb-hover);color:#cbd5e1;}
-.ni.active{background:var(--sb-active);color:var(--sb-active-tx);font-weight:500;}
-.ni.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:60%;background:var(--accent);border-radius:0 3px 3px 0;}
-.ni svg{width:17px;height:17px;opacity:.7;flex-shrink:0;}
-.ni.active svg{opacity:1;}
-.nb{margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:600;border-radius:20px;padding:1px 6px;min-width:18px;text-align:center;}
-.nb.y{background:var(--yellow);}
-.sb-bottom{padding:12px;border-top:1px solid rgba(255,255,255,.06);}
-.ucard{display:flex;align-items:center;gap:10px;padding:10px;border-radius:var(--r-sm);cursor:pointer;transition:background .15s;}
-.ucard:hover{background:var(--sb-hover);}
-.av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;}
-.u-name{font-size:12.5px;font-weight:500;color:var(--sb-active-tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.u-role{font-size:11px;color:var(--tx4);}
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--tx);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-/* MAIN */
-.main{margin-left:240px;flex:1;display:flex;flex-direction:column;min-height:100vh;}
-.topbar{height:60px;background:var(--surf);border-bottom:1px solid var(--bdr);display:flex;align-items:center;padding:0 26px;gap:14px;position:sticky;top:0;z-index:50;}
-.bread{flex:1;display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx4);}
-.bread .cur{color:var(--tx);font-weight:500;}
-.tb-actions{display:flex;align-items:center;gap:8px;}
-.iBtn{width:36px;height:36px;border-radius:var(--r-sm);border:1px solid var(--bdr);background:var(--surf);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--tx3);transition:all .15s;position:relative;}
-.iBtn:hover{background:var(--surf2);border-color:var(--bdr2);}
-.ndot{position:absolute;top:7px;right:7px;width:7px;height:7px;background:var(--red);border-radius:50%;border:1.5px solid #fff;}
-.sbar{display:flex;align-items:center;gap:8px;background:var(--surf2);border:1px solid var(--bdr);border-radius:var(--r-sm);padding:0 12px;height:36px;width:210px;cursor:text;transition:all .15s;}
-.sbar:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);}
-.sbar input{border:none;background:none;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--tx);outline:none;width:100%;}
-.sbar input::placeholder{color:var(--tx4);}
+    /* LOGIN */
+    #loginScreen {
+      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0d1117 0%, #1a2332 50%, #0d1117 100%);
+      inset: 0;
+      z-index: 500;
+    }
 
-/* CONTENT */
-.content{flex:1;padding:26px;display:none;}
-.content.active{display:block;}
-.ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;}
-.pt{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:var(--tx);letter-spacing:-.3px;}
-.ps{font-size:13.5px;color:var(--tx3);margin-top:3px;}
+    .lcard {
+      background: var(--surf);
+      border-radius: 20px;
+      padding: 40px;
+      width: 400px;
+      max-width: 90vw;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, .4);
+    }
 
-/* BUTTONS */
-.btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:500;cursor:pointer;border:none;transition:all .15s;}
-.btn-p{background:var(--accent);color:#fff;box-shadow:0 1px 3px rgba(37,99,235,.3);}
-.btn-p:hover{background:#1d4ed8;box-shadow:0 4px 12px rgba(37,99,235,.35);transform:translateY(-1px);}
-.btn-s{background:var(--surf);color:var(--tx3);border:1px solid var(--bdr);}
-.btn-s:hover{background:var(--surf2);border-color:var(--bdr2);}
-.btn-sm{padding:6px 12px;font-size:12.5px;}
+    .llogo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
 
-/* CARDS */
-.card{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r);padding:20px;box-shadow:var(--sh);}
-.card-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
-.card-t{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--tx);}
-.card-lk{font-size:12.5px;color:var(--accent);cursor:pointer;font-weight:500;}
+    .llogo-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #2563eb, #0891b2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+    }
 
-/* STATS */
-.sg{display:grid;grid-template-columns:repeat(5,1fr);gap:13px;margin-bottom:22px;}
-.sc{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sh);transition:all .2s;cursor:default;}
-.sc:hover{box-shadow:var(--sh-md);transform:translateY(-2px);}
-.si{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:13px;font-size:17px;}
-.sv{font-family:'Syne',sans-serif;font-size:26px;font-weight:700;color:var(--tx);line-height:1;letter-spacing:-.5px;}
-.sl{font-size:12.5px;color:var(--tx3);margin-top:5px;}
-.sch{font-size:11.5px;margin-top:8px;display:flex;align-items:center;gap:3px;}
-.sch.up{color:var(--green);} .sch.dn{color:var(--red);} .sch.nt{color:var(--tx4);}
+    .llogo-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--tx);
+    }
 
-/* DASH GRID */
-.dg{display:grid;grid-template-columns:1fr 340px;gap:18px;}
-.dg-l{display:flex;flex-direction:column;gap:18px;}
+    .lsub {
+      font-size: 13.5px;
+      color: var(--tx4);
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
 
-/* CHART */
-.chart{position:relative;height:180px;display:flex;align-items:flex-end;gap:8px;padding-top:20px;}
-.cb-w{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:flex-end;}
-.cb{width:100%;border-radius:6px 6px 0 0;transition:opacity .2s;cursor:pointer;}
-.cb:hover{opacity:.8;}
-.cb.inc{background:linear-gradient(180deg,#2563eb,#3b82f6);}
-.cb.exp{background:linear-gradient(180deg,#e2e8f0,#cbd5e1);}
-.clb{font-size:10.5px;color:var(--tx4);margin-top:5px;}
+    .fg {
+      margin-bottom: 16px;
+    }
 
-/* ACTIVITY */
-.al{display:flex;flex-direction:column;gap:1px;}
-.ai{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--bdr);}
-.ai:last-child{border-bottom:none;}
-.adot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0;}
-.at{font-size:13px;color:var(--tx);line-height:1.4;flex:1;}
-.at strong{font-weight:500;}
-.atime{font-size:11.5px;color:var(--tx4);white-space:nowrap;margin-top:1px;}
+    .fl {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      color: var(--tx3);
+      margin-bottom: 6px;
+    }
 
-/* UPCOMING */
-.ul{display:flex;flex-direction:column;gap:10px;}
-.ui{display:flex;gap:12px;align-items:flex-start;padding:12px;background:var(--surf2);border-radius:var(--r-sm);border:1px solid var(--bdr);cursor:pointer;transition:all .15s;}
-.ui:hover{border-color:var(--bdr2);background:var(--surf3);}
-.ud{width:38px;height:42px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;flex-shrink:0;}
-.ud .dy{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;line-height:1;}
-.ud .mo{font-size:9px;text-transform:uppercase;letter-spacing:.5px;opacity:.85;}
-.ui-inf{flex:1;}
-.ui-title{font-size:13px;font-weight:500;color:var(--tx);}
-.ui-meta{font-size:11.5px;color:var(--tx4);margin-top:2px;}
+    .fi {
+      width: 100%;
+      padding: 10px 13px;
+      border: 1.5px solid var(--bdr);
+      border-radius: var(--r-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--tx);
+      outline: none;
+      transition: border-color .15s;
+    }
 
-/* BADGES */
-.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:500;}
-.bg{background:var(--green-bg);color:#065f46;}
-.by{background:var(--yellow-bg);color:#92400e;}
-.br{background:var(--red-bg);color:#991b1b;}
-.bb{background:var(--blue-bg);color:#1e40af;}
-.bgr{background:var(--surf3);color:var(--tx3);}
+    .fi:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
 
-/* TABLE */
-.tw{overflow-x:auto;border-radius:var(--r-sm);border:1px solid var(--bdr);}
-table{width:100%;border-collapse:collapse;font-size:13.5px;}
-thead th{background:var(--surf2);padding:11px 16px;text-align:left;font-weight:500;color:var(--tx3);font-size:12px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--bdr);white-space:nowrap;}
-tbody td{padding:13px 16px;border-bottom:1px solid var(--bdr);color:var(--tx);vertical-align:middle;}
-tbody tr:last-child td{border-bottom:none;}
-tbody tr:hover td{background:var(--surf2);}
-.tdb{font-weight:500;}
-.abtns{display:flex;gap:6px;}
-.abtn{width:28px;height:28px;border-radius:6px;border:1px solid var(--bdr);background:var(--surf);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--tx4);font-size:13px;transition:all .15s;}
-.abtn:hover{background:var(--surf2);color:var(--tx);border-color:var(--bdr2);}
+    .forgot {
+      font-size: 12.5px;
+      color: var(--accent);
+      cursor: pointer;
+      text-align: right;
+      margin-top: 6px;
+      display: block;
+    }
 
-/* FILTERS */
-.fb{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
-.fsel{padding:7px 12px;border:1px solid var(--bdr);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--tx);background:var(--surf);cursor:pointer;outline:none;transition:border-color .15s;}
-.fsel:focus{border-color:var(--accent);}
-.finp{padding:7px 12px;border:1px solid var(--bdr);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--tx);background:var(--surf);outline:none;transition:border-color .15s;min-width:180px;}
-.finp:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);}
+    .lbtn {
+      width: 100%;
+      padding: 13px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--r-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: all .18s;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, .35);
+    }
 
-/* CALENDAR */
-.cal-g{display:grid;grid-template-columns:1fr 300px;gap:18px;}
-.cal-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
-.cal-month{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
-.cdl{text-align:center;font-size:11px;font-weight:600;color:var(--tx4);text-transform:uppercase;padding-bottom:8px;letter-spacing:.5px;}
-.cd{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:13px;cursor:pointer;transition:all .15s;position:relative;color:var(--tx);}
-.cd:hover:not(.emp){background:var(--surf2);}
-.cd.om{color:var(--tx4);}
-.cd.today{background:var(--accent);color:#fff;font-weight:600;}
-.cd.booked{background:#dbeafe;color:#1e40af;font-weight:500;}
-.cd.has-ev::after{content:'';position:absolute;bottom:3px;width:4px;height:4px;background:var(--accent);border-radius:50%;}
-.cd.today.has-ev::after{background:#fff;}
+    .lbtn:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
 
-/* NOTIF */
-.nl{display:flex;flex-direction:column;gap:8px;}
-.ni2{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r-sm);transition:all .15s;cursor:pointer;position:relative;}
-.ni2:hover{border-color:var(--bdr2);box-shadow:var(--sh);}
-.ni2.unread{border-left:3px solid var(--accent);}
-.niw{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
-.nb2{flex:1;}
-.nt{font-size:13.5px;font-weight:500;color:var(--tx);}
-.nd{font-size:12.5px;color:var(--tx3);margin-top:3px;line-height:1.4;}
-.ntime{font-size:11.5px;color:var(--tx4);white-space:nowrap;margin-top:2px;}
+    /* SIDEBAR */
+    .sidebar {
+      width: 240px;
+      min-height: 100vh;
+      background: var(--sb);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 100;
+      border-right: 1px solid rgba(255, 255, 255, .04);
+    }
 
-/* FINANCEIRO */
-.fs{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:22px;}
-.fc{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r);padding:20px;box-shadow:var(--sh);}
-.fa{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;letter-spacing:-1px;line-height:1;margin-top:6px;}
-.flab{font-size:12px;color:var(--tx4);text-transform:uppercase;letter-spacing:.7px;font-weight:500;}
+    .sb-logo {
+      padding: 26px 22px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, .06);
+    }
 
-/* VOTE BARS */
-.vbw{margin:8px 0;}
-.vbt{height:8px;background:var(--bdr);border-radius:20px;overflow:hidden;margin:6px 0;}
-.vbf{height:100%;border-radius:20px;background:linear-gradient(90deg,#2563eb,#0891b2);transition:width .6s ease;}
-.vbm{display:flex;justify-content:space-between;font-size:12px;color:var(--tx4);}
+    .sb-logo-mark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-/* MODAL */
-.mo{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:none;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;}
-.mo.open{opacity:1;pointer-events:all;}
-.mbox{background:var(--surf);border-radius:16px;width:480px;max-width:90vw;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,.2);transform:translateY(20px);transition:transform .25s;}
-.mo.open .mbox{transform:translateY(0);}
-.mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
-.mt{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;}
-.mc{width:28px;height:28px;border-radius:6px;border:1px solid var(--bdr);background:var(--surf);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--tx4);font-size:16px;transition:all .15s;}
-.mc:hover{background:var(--surf2);color:var(--tx);}
-.mf{display:flex;justify-content:flex-end;gap:8px;margin-top:24px;padding-top:16px;border-top:1px solid var(--bdr);}
-.fgg{margin-bottom:16px;}
-.fgl{display:block;font-size:12.5px;font-weight:500;color:var(--tx3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.3px;}
-.fgi{width:100%;padding:9px 12px;border:1px solid var(--bdr);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--tx);outline:none;transition:border-color .15s;background:var(--surf);resize:vertical;}
-.fgi:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);}
-.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .sb-logo-icon {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, #2563eb, #0891b2);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -1px;
+    }
 
-/* TOAST */
-.tc{position:fixed;bottom:24px;right:24px;z-index:300;display:flex;flex-direction:column;gap:8px;}
-.toast{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--sb);color:#fff;border-radius:var(--r-sm);font-size:13.5px;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:sli .3s ease;min-width:250px;}
-@keyframes sli{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
-::-webkit-scrollbar{width:5px;height:5px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:10px}
-</style>
+    .sb-logo-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #f1f5f9;
+      letter-spacing: -.3px;
+    }
+
+    .sb-logo-sub {
+      font-size: 10px;
+      color: var(--tx4);
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      margin-top: 1px;
+    }
+
+    .sb-condo {
+      margin: 12px 14px;
+      background: var(--sb-hover);
+      border-radius: var(--r-sm);
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 255, 255, .06);
+    }
+
+    .sb-condo-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--sb-active-tx);
+    }
+
+    .sb-condo-meta {
+      font-size: 11px;
+      color: var(--tx4);
+      margin-top: 2px;
+    }
+
+    .sb-nav {
+      flex: 1;
+      padding: 6px 10px;
+      overflow-y: auto;
+    }
+
+    .sb-section {
+      margin-bottom: 18px;
+    }
+
+    .sb-section-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(148, 163, 184, .4);
+      padding: 0 8px;
+      margin-bottom: 5px;
+    }
+
+    .ni {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 10px;
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      transition: all .15s;
+      color: var(--sb-tx);
+      font-size: 13.5px;
+      position: relative;
+      user-select: none;
+    }
+
+    .ni:hover {
+      background: var(--sb-hover);
+      color: #cbd5e1;
+    }
+
+    .ni.active {
+      background: var(--sb-active);
+      color: var(--sb-active-tx);
+      font-weight: 500;
+    }
+
+    .ni.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 60%;
+      background: var(--accent);
+      border-radius: 0 3px 3px 0;
+    }
+
+    .ni svg {
+      width: 17px;
+      height: 17px;
+      opacity: .7;
+      flex-shrink: 0;
+    }
+
+    .ni.active svg {
+      opacity: 1;
+    }
+
+    .nb {
+      margin-left: auto;
+      background: var(--red);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 600;
+      border-radius: 20px;
+      padding: 1px 6px;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    .nb.y {
+      background: var(--yellow);
+    }
+
+    .sb-bottom {
+      padding: 12px;
+      border-top: 1px solid rgba(255, 255, 255, .06);
+    }
+
+    .ucard {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      transition: background .15s;
+    }
+
+    .ucard:hover {
+      background: var(--sb-hover);
+    }
+
+    .av {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .u-name {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--sb-active-tx);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .u-role {
+      font-size: 11px;
+      color: var(--tx4);
+    }
+
+    /* MAIN */
+    .main {
+      margin-left: 240px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      height: 60px;
+      background: var(--surf);
+      border-bottom: 1px solid var(--bdr);
+      display: flex;
+      align-items: center;
+      padding: 0 26px;
+      gap: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .bread {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--tx4);
+    }
+
+    .bread .cur {
+      color: var(--tx);
+      font-weight: 500;
+    }
+
+    .tb-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .iBtn {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--r-sm);
+      border: 1px solid var(--bdr);
+      background: var(--surf);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--tx3);
+      transition: all .15s;
+      position: relative;
+    }
+
+    .iBtn:hover {
+      background: var(--surf2);
+      border-color: var(--bdr2);
+    }
+
+    .ndot {
+      position: absolute;
+      top: 7px;
+      right: 7px;
+      width: 7px;
+      height: 7px;
+      background: var(--red);
+      border-radius: 50%;
+      border: 1.5px solid #fff;
+    }
+
+    .sbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surf2);
+      border: 1px solid var(--bdr);
+      border-radius: var(--r-sm);
+      padding: 0 12px;
+      height: 36px;
+      width: 210px;
+      cursor: text;
+      transition: all .15s;
+    }
+
+    .sbar:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .sbar input {
+      border: none;
+      background: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--tx);
+      outline: none;
+      width: 100%;
+    }
+
+    .sbar input::placeholder {
+      color: var(--tx4);
+    }
+
+    /* CONTENT */
+    .content {
+      flex: 1;
+      padding: 26px;
+      display: none;
+    }
+
+    .content.active {
+      display: block;
+    }
+
+    .ph {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+
+    .pt {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--tx);
+      letter-spacing: -.3px;
+    }
+
+    .ps {
+      font-size: 13.5px;
+      color: var(--tx3);
+      margin-top: 3px;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      border-radius: var(--r-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: all .15s;
+    }
+
+    .btn-p {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 1px 3px rgba(37, 99, 235, .3);
+    }
+
+    .btn-p:hover {
+      background: #1d4ed8;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, .35);
+      transform: translateY(-1px);
+    }
+
+    .btn-s {
+      background: var(--surf);
+      color: var(--tx3);
+      border: 1px solid var(--bdr);
+    }
+
+    .btn-s:hover {
+      background: var(--surf2);
+      border-color: var(--bdr2);
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 12.5px;
+    }
+
+    /* CARDS */
+    .card {
+      background: var(--surf);
+      border: 1px solid var(--bdr);
+      border-radius: var(--r);
+      padding: 20px;
+      box-shadow: var(--sh);
+    }
+
+    .card-h {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .card-t {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--tx);
+    }
+
+    .card-lk {
+      font-size: 12.5px;
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    /* STATS */
+    .sg {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 13px;
+      margin-bottom: 22px;
+    }
+
+    .sc {
+      background: var(--surf);
+      border: 1px solid var(--bdr);
+      border-radius: var(--r);
+      padding: 18px 20px;
+      box-shadow: var(--sh);
+      transition: all .2s;
+      cursor: default;
+    }
+
+    .sc:hover {
+      box-shadow: var(--sh-md);
+      transform: translateY(-2px);
+    }
+
+    .si {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 13px;
+      font-size: 17px;
+    }
+
+    .sv {
+      font-family: 'Syne', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--tx);
+      line-height: 1;
+      letter-spacing: -.5px;
+    }
+
+    .sl {
+      font-size: 12.5px;
+      color: var(--tx3);
+      margin-top: 5px;
+    }
+
+    .sch {
+      font-size: 11.5px;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .sch.up {
+      color: var(--green);
+    }
+
+    .sch.dn {
+      color: var(--red);
+    }
+
+    .sch.nt {
+      color: var(--tx4);
+    }
+
+    /* DASH GRID */
+    .dg {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 18px;
+    }
+
+    .dg-l {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* CHART */
+    .chart {
+      position: relative;
+      height: 180px;
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      padding-top: 20px;
+    }
+
+    .cb-w {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      height: 100%;
+      justify-content: flex-end;
+    }
+
+    .cb {
+      width: 100%;
+      border-radius: 6px 6px 0 0;
+      transition: opacity .2s;
+      cursor: pointer;
+    }
+
+    .cb:hover {
+      opacity: .8;
+    }
+
+    .cb.inc {
+      background: linear-gradient(180deg, #2563eb, #3b82f6);
+    }
+
+    .cb.exp {
+      background: linear-gradient(180deg, #e2e8f0, #cbd5e1);
+    }
+
+    .clb {
+      font-size: 10.5px;
+      color: var(--tx4);
+      margin-top: 5px;
+    }
+
+    /* ACTIVITY */
+    .al {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .ai {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--bdr);
+    }
+
+    .ai:last-child {
+      border-bottom: none;
+    }
+
+    .adot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .at {
+      font-size: 13px;
+      color: var(--tx);
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    .at strong {
+      font-weight: 500;
+    }
+
+    .atime {
+      font-size: 11.5px;
+      color: var(--tx4);
+      white-space: nowrap;
+      margin-top: 1px;
+    }
+
+    /* UPCOMING */
+    .ul {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ui {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px;
+      background: var(--surf2);
+      border-radius: var(--r-sm);
+      border: 1px solid var(--bdr);
+      cursor: pointer;
+      transition: all .15s;
+    }
+
+    .ui:hover {
+      border-color: var(--bdr2);
+      background: var(--surf3);
+    }
+
+    .ud {
+      width: 38px;
+      height: 42px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .ud .dy {
+      font-family: 'Syne', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .ud .mo {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      opacity: .85;
+    }
+
+    .ui-inf {
+      flex: 1;
+    }
+
+    .ui-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--tx);
+    }
+
+    .ui-meta {
+      font-size: 11.5px;
+      color: var(--tx4);
+      margin-top: 2px;
+    }
+
+    /* BADGES */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 500;
+    }
+
+    .bg {
+      background: var(--green-bg);
+      color: #065f46;
+    }
+
+    .by {
+      background: var(--yellow-bg);
+      color: #92400e;
+    }
+
+    .br {
+      background: var(--red-bg);
+      color: #991b1b;
+    }
+
+    .bb {
+      background: var(--blue-bg);
+      color: #1e40af;
+    }
+
+    .bgr {
+      background: var(--surf3);
+      color: var(--tx3);
+    }
+
+    /* TABLE */
+    .tw {
+      overflow-x: auto;
+      border-radius: var(--r-sm);
+      border: 1px solid var(--bdr);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+
+    thead th {
+      background: var(--surf2);
+      padding: 11px 16px;
+      text-align: left;
+      font-weight: 500;
+      color: var(--tx3);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      border-bottom: 1px solid var(--bdr);
+      white-space: nowrap;
+    }
+
+    tbody td {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--bdr);
+      color: var(--tx);
+      vertical-align: middle;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:hover td {
+      background: var(--surf2);
+    }
+
+    .tdb {
+      font-weight: 500;
+    }
+
+    .abtns {
+      display: flex;
+      gap: 6px;
+    }
+
+    .abtn {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      border: 1px solid var(--bdr);
+      background: var(--surf);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--tx4);
+      font-size: 13px;
+      transition: all .15s;
+    }
+
+    .abtn:hover {
+      background: var(--surf2);
+      color: var(--tx);
+      border-color: var(--bdr2);
+    }
+
+    /* FILTERS */
+    .fb {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .fsel {
+      padding: 7px 12px;
+      border: 1px solid var(--bdr);
+      border-radius: var(--r-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--tx);
+      background: var(--surf);
+      cursor: pointer;
+      outline: none;
+      transition: border-color .15s;
+    }
+
+    .fsel:focus {
+      border-color: var(--accent);
+    }
+
+    .finp {
+      padding: 7px 12px;
+      border: 1px solid var(--bdr);
+      border-radius: var(--r-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--tx);
+      background: var(--surf);
+      outline: none;
+      transition: border-color .15s;
+      min-width: 180px;
+    }
+
+    .finp:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    /* CALENDAR */
+    .cal-g {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 18px;
+    }
+
+    .cal-hd {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .cal-month {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .cdl {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--tx4);
+      text-transform: uppercase;
+      padding-bottom: 8px;
+      letter-spacing: .5px;
+    }
+
+    .cd {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all .15s;
+      position: relative;
+      color: var(--tx);
+    }
+
+    .cd:hover:not(.emp) {
+      background: var(--surf2);
+    }
+
+    .cd.om {
+      color: var(--tx4);
+    }
+
+    .cd.today {
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .cd.booked {
+      background: #dbeafe;
+      color: #1e40af;
+      font-weight: 500;
+    }
+
+    .cd.has-ev::after {
+      content: '';
+      position: absolute;
+      bottom: 3px;
+      width: 4px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .cd.today.has-ev::after {
+      background: #fff;
+    }
+
+    /* NOTIF */
+    .nl {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ni2 {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px 16px;
+      background: var(--surf);
+      border: 1px solid var(--bdr);
+      border-radius: var(--r-sm);
+      transition: all .15s;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .ni2:hover {
+      border-color: var(--bdr2);
+      box-shadow: var(--sh);
+    }
+
+    .ni2.unread {
+      border-left: 3px solid var(--accent);
+    }
+
+    .niw {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .nb2 {
+      flex: 1;
+    }
+
+    .nt {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--tx);
+    }
+
+    .nd {
+      font-size: 12.5px;
+      color: var(--tx3);
+      margin-top: 3px;
+      line-height: 1.4;
+    }
+
+    .ntime {
+      font-size: 11.5px;
+      color: var(--tx4);
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+
+    /* FINANCEIRO */
+    .fs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 13px;
+      margin-bottom: 22px;
+    }
+
+    .fc {
+      background: var(--surf);
+      border: 1px solid var(--bdr);
+      border-radius: var(--r);
+      padding: 20px;
+      box-shadow: var(--sh);
+    }
+
+    .fa {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-top: 6px;
+    }
+
+    .flab {
+      font-size: 12px;
+      color: var(--tx4);
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      font-weight: 500;
+    }
+
+    /* VOTE BARS */
+    .vbw {
+      margin: 8px 0;
+    }
+
+    .vbt {
+      height: 8px;
+      background: var(--bdr);
+      border-radius: 20px;
+      overflow: hidden;
+      margin: 6px 0;
+    }
+
+    .vbf {
+      height: 100%;
+      border-radius: 20px;
+      background: linear-gradient(90deg, #2563eb, #0891b2);
+      transition: width .6s ease;
+    }
+
+    .vbm {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--tx4);
+    }
+
+    /* MODAL */
+    .mo {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .45);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s;
+    }
+
+    .mo.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .mbox {
+      background: var(--surf);
+      border-radius: 16px;
+      width: 480px;
+      max-width: 90vw;
+      padding: 28px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .2);
+      transform: translateY(20px);
+      transition: transform .25s;
+    }
+
+    .mo.open .mbox {
+      transform: translateY(0);
+    }
+
+    .mh {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .mt {
+      font-family: 'Syne', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .mc {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      border: 1px solid var(--bdr);
+      background: var(--surf);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--tx4);
+      font-size: 16px;
+      transition: all .15s;
+    }
+
+    .mc:hover {
+      background: var(--surf2);
+      color: var(--tx);
+    }
+
+    .mf {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--bdr);
+    }
+
+    .fgg {
+      margin-bottom: 16px;
+    }
+
+    .fgl {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--tx3);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: .3px;
+    }
+
+    .fgi {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid var(--bdr);
+      border-radius: var(--r-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13.5px;
+      color: var(--tx);
+      outline: none;
+      transition: border-color .15s;
+      background: var(--surf);
+      resize: vertical;
+    }
+
+    .fgi:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .fgrid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* TOAST */
+    .tc {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 300;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toast {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: var(--sb);
+      color: #fff;
+      border-radius: var(--r-sm);
+      font-size: 13.5px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
+      animation: sli .3s ease;
+      min-width: 250px;
+    }
+
+    @keyframes sli {
+      from {
+        transform: translateX(100%);
+        opacity: 0
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--bdr2);
+      border-radius: 10px
+    }
+  </style>
 </head>
+
 <body>
 
-<div id="loginScreen">
-  <div class="lcard">
-    <div class="llogo">
-      <div class="llogo-icon">D</div>
-      <div>
-        <div class="llogo-text">Dominium</div>
-        <div style="font-size:11px;color:var(--tx4);text-transform:uppercase;letter-spacing:1px;">Painel Administrativo</div>
+  <div id="loginScreen">
+    <div class="lcard">
+      <div class="llogo">
+        <div class="llogo-icon">D</div>
+        <div>
+          <div class="llogo-text">Dominium</div>
+          <div style="font-size:11px;color:var(--tx4);text-transform:uppercase;letter-spacing:1px;">Painel
+            Administrativo</div>
+        </div>
       </div>
-    </div>
-    <p class="lsub">Entre com suas credenciais de síndico ou administrador para acessar o sistema.</p>
-    <div class="fg"><label class="fl">E-mail</label><input type="email" class="fi" value="sindico@residencial.com"></div>
-    <div class="fg">
-      <label class="fl">Senha</label>
-      <input type="password" class="fi" value="admin123">
-      <span class="forgot">Esqueci minha senha</span>
-    </div>
-    <button class="lbtn" onclick="doLogin()">Entrar no Painel →</button>
-    <p style="font-size:12px;color:var(--tx4);text-align:center;margin-top:18px;">Residencial Parque Verde · 120 unidades</p>
-  </div>
-</div>
-
-<div id="app" style="display:none;width:100%;min-height:100vh;flex-direction:row;">
-
-<aside class="sidebar">
-  <div class="sb-logo">
-    <div class="sb-logo-mark">
-      <div class="sb-logo-icon">D</div>
-      <div>
-        <div class="sb-logo-text">Dominium</div>
-        <div class="sb-logo-sub">Gestão Condominial</div>
+      <p class="lsub">Entre com suas credenciais de síndico ou administrador para acessar o sistema.</p>
+      <div class="fg"><label class="fl">E-mail</label><input type="email" class="fi" value="sindico@residencial.com">
       </div>
+      <div class="fg">
+        <label class="fl">Senha</label>
+        <input type="password" class="fi" value="admin123">
+        <span class="forgot">Esqueci minha senha</span>
+      </div>
+      <button class="lbtn" onclick="doLogin()">Entrar no Painel →</button>
+      <p style="font-size:12px;color:var(--tx4);text-align:center;margin-top:18px;">Residencial Parque Verde · 120
+        unidades</p>
     </div>
   </div>
-  <div class="sb-condo">
-    <div class="sb-condo-name">Residencial Parque Verde</div>
-    <div class="sb-condo-meta">120 unidades · Blocos A–D</div>
-  </div>
-  <nav class="sb-nav">
-    <div class="sb-section">
-      <div class="sb-section-label">Principal</div>
-      <div class="ni active" onclick="nav('dashboard')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1" stroke-width="1.8"/></svg>
-        Dashboard
-      </div>
-      <div class="ni" onclick="nav('financeiro')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23" stroke-width="1.8"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke-width="1.8" stroke-linecap="round"/></svg>
-        Financeiro <span class="nb y">3</span>
-      </div>
-      <div class="ni" onclick="nav('notificacoes')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" stroke-width="1.8"/><path d="M13.73 21a2 2 0 01-3.46 0" stroke-width="1.8"/></svg>
-        Notificações <span class="nb">5</span>
-      </div>
-    </div>
-    <div class="sb-section">
-      <div class="sb-section-label">Cadastros</div>
-      <div class="ni" onclick="nav('unidades')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke-width="1.8"/><polyline points="9,22 9,12 15,12 15,22" stroke-width="1.8"/></svg>
-        Unidades
-      </div>
-      <div class="ni" onclick="nav('moradores')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke-width="1.8"/><circle cx="9" cy="7" r="4" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke-width="1.8"/></svg>
-        Moradores
-      </div>
-    </div>
-    <div class="sb-section">
-      <div class="sb-section-label">Operações</div>
-      <div class="ni" onclick="nav('reservas')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke-width="1.8"/><line x1="16" y1="2" x2="16" y2="6" stroke-width="1.8"/><line x1="8" y1="2" x2="8" y2="6" stroke-width="1.8"/><line x1="3" y1="10" x2="21" y2="10" stroke-width="1.8"/></svg>
-        Reservas
-      </div>
-      <div class="ni" onclick="nav('ocorrencias')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke-width="1.8"/><line x1="12" y1="9" x2="12" y2="13" stroke-width="1.8"/><line x1="12" y1="17" x2="12.01" y2="17" stroke-width="2.5"/></svg>
-        Ocorrências <span class="nb">2</span>
-      </div>
-      <div class="ni" onclick="nav('assembleias')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke-width="1.8"/><circle cx="9" cy="7" r="4" stroke-width="1.8"/><path d="M23 11l-4 4-2-2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Assembleias
-      </div>
-    </div>
-  </nav>
-  <div class="sb-bottom">
-    <div class="ucard">
-      <div class="av">MR</div>
-      <div style="flex:1;min-width:0;">
-        <div class="u-name">Marco Ribeiro</div>
-        <div class="u-role">Síndico</div>
-      </div>
-      <svg width="14" height="14" fill="none" stroke="#64748b" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" stroke-width="2"/><path stroke-width="2" d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-    </div>
-  </div>
-</aside>
 
-<div class="main">
-  <header class="topbar">
-    <div class="bread">
-      <span>Dominium</span><span>›</span>
-      <span class="cur" id="breadcrumb">Dashboard</span>
-    </div>
-    <div class="tb-actions">
-      <div class="sbar">
-        <svg width="14" height="14" fill="none" stroke="#94a3b8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke-width="2"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke-width="2" stroke-linecap="round"/></svg>
-        <input type="text" placeholder="Buscar...">
-      </div>
-      <div class="iBtn" onclick="nav('notificacoes')">
-        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" stroke-width="1.8"/><path d="M13.73 21a2 2 0 01-3.46 0" stroke-width="1.8"/></svg>
-        <div class="ndot"></div>
-      </div>
-      <div class="av" style="cursor:pointer;width:34px;height:34px;font-size:11.5px;">MR</div>
-    </div>
-  </header>
+  <div id="app" style="display:none;width:100%;min-height:100vh;flex-direction:row;">
 
-  <div class="content active" id="page-dashboard">
-    <div class="ph">
-      <div>
-        <div class="pt">Bom dia, Marco 👋</div>
-        <div class="ps">Quinta-feira, 05 de março de 2026 · Residencial Parque Verde</div>
+    <aside class="sidebar">
+      <div class="sb-logo">
+        <div class="sb-logo-mark">
+          <div class="sb-logo-icon">D</div>
+          <div>
+            <div class="sb-logo-text">Dominium</div>
+            <div class="sb-logo-sub">Gestão Condominial</div>
+          </div>
+        </div>
       </div>
-      <button class="btn btn-p" onclick="openModal('modal-unidade')">
-        <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round"/></svg>
-        Novo Registro
-      </button>
-    </div>
-    <div class="sg">
-      <div class="sc"><div class="si" style="background:#dbeafe;">📅</div><div class="sv">3</div><div class="sl">Reservas hoje</div><div class="sch nt">Churrasqueira · Salão · Piscina</div></div>
-      <div class="sc"><div class="si" style="background:#d1fae5;">💰</div><div class="sv">R$48,2k</div><div class="sl">Receita mensal</div><div class="sch up">↑ 4.2% vs mês anterior</div></div>
-      <div class="sc"><div class="si" style="background:#fee2e2;">⚠️</div><div class="sv">7</div><div class="sl">Inadimplentes</div><div class="sch dn">↑ 2 desde mês passado</div></div>
-      <div class="sc"><div class="si" style="background:#fef3c7;">🔔</div><div class="sv">2</div><div class="sl">Ocorrências abertas</div><div class="sch nt">Aguardando análise</div></div>
-      <div class="sc"><div class="si" style="background:#ede9fe;">🗳️</div><div class="sv">1</div><div class="sl">Assembleia próxima</div><div class="sch nt">Em 8 dias</div></div>
-    </div>
-    <div class="dg">
-      <div class="dg-l">
-        <div class="card">
-          <div class="card-h">
-            <div class="card-t">Fluxo Financeiro — 2026</div>
-            <div style="display:flex;gap:8px;">
-              <span class="badge bb">Receitas</span>
-              <span class="badge bgr">Despesas</span>
+      <div class="sb-condo">
+        <div class="sb-condo-name">Residencial Parque Verde</div>
+        <div class="sb-condo-meta">120 unidades · Blocos A–D</div>
+      </div>
+      <nav class="sb-nav">
+        <div class="sb-section">
+          <div class="sb-section-label">Principal</div>
+          <div class="ni active" onclick="nav('dashboard')">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <rect x="3" y="3" width="7" height="7" rx="1" stroke-width="1.8" />
+              <rect x="14" y="3" width="7" height="7" rx="1" stroke-width="1.8" />
+              <rect x="3" y="14" width="7" height="7" rx="1" stroke-width="1.8" />
+              <rect x="14" y="14" width="7" height="7" rx="1" stroke-width="1.8" />
+            </svg>
+            Dashboard
+          </div>
+          <div class="ni" onclick="nav('financeiro')">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <line x1="12" y1="1" x2="12" y2="23" stroke-width="1.8" />
+              <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+            Financeiro <span class="nb y">3</span>
+          </div>
+          <div class="ni" onclick="nav('notificacoes')">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" stroke-width="1.8" />
+              <path d="M13.73 21a2 2 0 01-3.46 0" stroke-width="1.8" />
+            </svg>
+            Notificações <span class="nb">5</span>
+          </div>
+        </div>
+        <div class="sb-section">
+          <div class="sb-section-label">Cadastros</div>
+          <div class="ni" onclick="nav('unidades')">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke-width="1.8" />
+              <polyline points="9,22 9,12 15,12 15,22" stroke-width="1.8" />
+            </svg>
+            Unidades
+          </div>
+          <div class="ni" onclick="nav('moradores')">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke-width="1.8" />
+              <circle cx="9" cy="7" r="4" stroke-width="1.8" />
+              <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke-width="1.8" />
+            </svg>
+            Moradores
+          </div>
+        </div>
+        <div class="sb-section">
+          <div class="sb-section-label">Operações</div>
+          <div class="ni" onclick="nav('reservas')">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="18" rx="2" stroke-width="1.8" />
+              <line x1="16" y1="2" x2="16" y2="6" stroke-width="1.8" />
+              <line x1="8" y1="2" x2="8" y2="6" stroke-width="1.8" />
+              <line x1="3" y1="10" x2="21" y2="10" stroke-width="1.8" />
+            </svg>
+            Reservas
+          </div>
+          <div class="ni" onclick="nav('ocorrencias')">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+                stroke-width="1.8" />
+              <line x1="12" y1="9" x2="12" y2="13" stroke-width="1.8" />
+              <line x1="12" y1="17" x2="12.01" y2="17" stroke-width="2.5" />
+            </svg>
+            Ocorrências <span class="nb">2</span>
+          </div>
+          <div class="ni" onclick="nav('assembleias')">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke-width="1.8" />
+              <circle cx="9" cy="7" r="4" stroke-width="1.8" />
+              <path d="M23 11l-4 4-2-2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Assembleias
+          </div>
+        </div>
+      </nav>
+      <div class="sb-bottom">
+        <div class="ucard">
+          <div class="av">MR</div>
+          <div style="flex:1;min-width:0;">
+            <div class="u-name">Marco Ribeiro</div>
+            <div class="u-role">Síndico</div>
+          </div>
+          <svg width="14" height="14" fill="none" stroke="#64748b" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3" stroke-width="2" />
+            <path stroke-width="2"
+              d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+          </svg>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <div class="bread">
+          <span>Dominium</span><span>›</span>
+          <span class="cur" id="breadcrumb">Dashboard</span>
+        </div>
+        <div class="tb-actions">
+          <div class="sbar">
+            <svg width="14" height="14" fill="none" stroke="#94a3b8" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8" stroke-width="2" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            <input type="text" placeholder="Buscar...">
+          </div>
+          <div class="iBtn" onclick="nav('notificacoes')">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" stroke-width="1.8" />
+              <path d="M13.73 21a2 2 0 01-3.46 0" stroke-width="1.8" />
+            </svg>
+            <div class="ndot"></div>
+          </div>
+          <div class="av" style="cursor:pointer;width:34px;height:34px;font-size:11.5px;">MR</div>
+        </div>
+      </header>
+
+      <div class="content active" id="page-dashboard">
+        <div class="ph">
+          <div>
+            <div class="pt">Bom dia, Marco 👋</div>
+            <div class="ps">Quinta-feira, 05 de março de 2026 · Residencial Parque Verde</div>
+          </div>
+          <button class="btn btn-p" onclick="openModal('modal-unidade')">
+            <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24">
+              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round" />
+              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round" />
+            </svg>
+            Novo Registro
+          </button>
+        </div>
+        <div class="sg">
+          <div class="sc">
+            <div class="si" style="background:#dbeafe;">📅</div>
+            <div class="sv">3</div>
+            <div class="sl">Reservas hoje</div>
+            <div class="sch nt">Churrasqueira · Salão · Piscina</div>
+          </div>
+          <div class="sc">
+            <div class="si" style="background:#d1fae5;">💰</div>
+            <div class="sv">R$48,2k</div>
+            <div class="sl">Receita mensal</div>
+            <div class="sch up">↑ 4.2% vs mês anterior</div>
+          </div>
+          <div class="sc">
+            <div class="si" style="background:#fee2e2;">⚠️</div>
+            <div class="sv">7</div>
+            <div class="sl">Inadimplentes</div>
+            <div class="sch dn">↑ 2 desde mês passado</div>
+          </div>
+          <div class="sc">
+            <div class="si" style="background:#fef3c7;">🔔</div>
+            <div class="sv">2</div>
+            <div class="sl">Ocorrências abertas</div>
+            <div class="sch nt">Aguardando análise</div>
+          </div>
+          <div class="sc">
+            <div class="si" style="background:#ede9fe;">🗳️</div>
+            <div class="sv">1</div>
+            <div class="sl">Assembleia próxima</div>
+            <div class="sch nt">Em 8 dias</div>
+          </div>
+        </div>
+        <div class="dg">
+          <div class="dg-l">
+            <div class="card">
+              <div class="card-h">
+                <div class="card-t">Fluxo Financeiro — 2026</div>
+                <div style="display:flex;gap:8px;">
+                  <span class="badge bb">Receitas</span>
+                  <span class="badge bgr">Despesas</span>
+                </div>
+              </div>
+              <div class="chart">
+                <div class="cb-w">
+                  <div class="cb inc" style="height:72%"></div>
+                  <div class="clb">Jan</div>
+                </div>
+                <div class="cb-w">
+                  <div class="cb inc" style="height:85%"></div>
+                  <div class="clb">Fev</div>
+                </div>
+                <div class="cb-w">
+                  <div class="cb inc" style="height:78%"></div>
+                  <div class="clb">Mar</div>
+                </div>
+                <div class="cb-w">
+                  <div class="cb exp" style="height:45%"></div>
+                  <div class="clb">Abr</div>
+                </div>
+                <div class="cb-w">
+                  <div class="cb exp" style="height:52%"></div>
+                  <div class="clb">Mai</div>
+                </div>
+                <div class="cb-w">
+                  <div class="cb exp" style="height:38%"></div>
+                  <div class="clb">Jun</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:20px;margin-top:14px;padding-top:12px;border-top:1px solid var(--bdr);">
+                <div>
+                  <div style="font-size:11px;color:var(--tx4);margin-bottom:2px">RECEITA</div>
+                  <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--accent)">R$
+                    144.600</div>
+                </div>
+                <div>
+                  <div style="font-size:11px;color:var(--tx4);margin-bottom:2px">DESPESAS</div>
+                  <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--tx3)">R$ 98.300
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size:11px;color:var(--tx4);margin-bottom:2px">SALDO</div>
+                  <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--green)">R$ 46.300
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-h">
+                <div class="card-t">Atividade Recente</div><span class="card-lk">Ver tudo</span>
+              </div>
+              <div class="al">
+                <div class="ai">
+                  <div class="adot" style="background:var(--green)"></div>
+                  <div class="at"><strong>Apto 304</strong> realizou pagamento de R$ 580,00 — Cota março</div>
+                  <div class="atime">há 12min</div>
+                </div>
+                <div class="ai">
+                  <div class="adot" style="background:var(--yellow)"></div>
+                  <div class="at"><strong>Churrasqueira 2</strong> reservada por Ana Lima (Apto 102) para 07/03</div>
+                  <div class="atime">há 1h</div>
+                </div>
+                <div class="ai">
+                  <div class="adot" style="background:var(--red)"></div>
+                  <div class="at">Ocorrência registrada — <strong>Barulho excessivo</strong> Apto 508 às 23h</div>
+                  <div class="atime">há 3h</div>
+                </div>
+                <div class="ai">
+                  <div class="adot" style="background:var(--accent)"></div>
+                  <div class="at">Nova moradora adicionada — <strong>Carla Mendes</strong>, Apto 215</div>
+                  <div class="atime">ontem</div>
+                </div>
+                <div class="ai">
+                  <div class="adot" style="background:var(--tx4)"></div>
+                  <div class="at">Assembleia <strong>"Obras no Térreo"</strong> agendada para 13/03/2026</div>
+                  <div class="atime">ontem</div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="chart">
-            <div class="cb-w"><div class="cb inc" style="height:72%"></div><div class="clb">Jan</div></div>
-            <div class="cb-w"><div class="cb inc" style="height:85%"></div><div class="clb">Fev</div></div>
-            <div class="cb-w"><div class="cb inc" style="height:78%"></div><div class="clb">Mar</div></div>
-            <div class="cb-w"><div class="cb exp" style="height:45%"></div><div class="clb">Abr</div></div>
-            <div class="cb-w"><div class="cb exp" style="height:52%"></div><div class="clb">Mai</div></div>
-            <div class="cb-w"><div class="cb exp" style="height:38%"></div><div class="clb">Jun</div></div>
+          <div style="display:flex;flex-direction:column;gap:18px;">
+            <div class="card">
+              <div class="card-h">
+                <div class="card-t">Próximos Eventos</div><span class="card-lk"
+                  onclick="nav('reservas')">Calendário</span>
+              </div>
+              <div class="ul">
+                <div class="ui">
+                  <div class="ud" style="background:var(--accent)">
+                    <div class="dy">07</div>
+                    <div class="mo">Mar</div>
+                  </div>
+                  <div class="ui-inf">
+                    <div class="ui-title">Reserva — Churrasqueira 2</div>
+                    <div class="ui-meta">Ana Lima · Apto 102 · 12h–18h</div>
+                  </div>
+                </div>
+                <div class="ui">
+                  <div class="ud" style="background:#7c3aed">
+                    <div class="dy">13</div>
+                    <div class="mo">Mar</div>
+                  </div>
+                  <div class="ui-inf">
+                    <div class="ui-title">Assembleia Ordinária</div>
+                    <div class="ui-meta">19h · Salão de Festas · 3 pautas</div>
+                  </div>
+                </div>
+                <div class="ui">
+                  <div class="ud" style="background:var(--teal)">
+                    <div class="dy">15</div>
+                    <div class="mo">Mar</div>
+                  </div>
+                  <div class="ui-inf">
+                    <div class="ui-title">Vencimento Cotas</div>
+                    <div class="ui-meta">120 unidades · R$ 580,00/unid</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-h">
+                <div class="card-t">Inadimplência</div><span class="badge br">7 unidades</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div
+                  style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--surf2);border-radius:var(--r-sm);border:1px solid var(--bdr);">
+                  <div>
+                    <div style="font-size:13px;font-weight:500;">Apto 108 · Jorge Santos</div>
+                    <div style="font-size:11px;color:var(--tx4)">Venc. 15/02 · 18 dias</div>
+                  </div><span class="badge br">R$ 580</span>
+                </div>
+                <div
+                  style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--surf2);border-radius:var(--r-sm);border:1px solid var(--bdr);">
+                  <div>
+                    <div style="font-size:13px;font-weight:500;">Apto 312 · P. Oliveira</div>
+                    <div style="font-size:11px;color:var(--tx4)">Venc. 15/01 · 49 dias</div>
+                  </div><span class="badge br">R$ 1.160</span>
+                </div>
+                <div
+                  style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--surf2);border-radius:var(--r-sm);border:1px solid var(--bdr);">
+                  <div>
+                    <div style="font-size:13px;font-weight:500;">Apto 421 · R. Lima</div>
+                    <div style="font-size:11px;color:var(--tx4)">Venc. 15/02 · 18 dias</div>
+                  </div><span class="badge by">R$ 580</span>
+                </div>
+                <div style="text-align:center;margin-top:2px;"><span class="card-lk" onclick="nav('financeiro')">Ver
+                    todos os 7 →</span></div>
+              </div>
+            </div>
           </div>
-          <div style="display:flex;gap:20px;margin-top:14px;padding-top:12px;border-top:1px solid var(--bdr);">
-            <div><div style="font-size:11px;color:var(--tx4);margin-bottom:2px">RECEITA</div><div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--accent)">R$ 144.600</div></div>
-            <div><div style="font-size:11px;color:var(--tx4);margin-bottom:2px">DESPESAS</div><div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--tx3)">R$ 98.300</div></div>
-            <div><div style="font-size:11px;color:var(--tx4);margin-bottom:2px">SALDO</div><div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--green)">R$ 46.300</div></div>
+        </div>
+      </div>
+
+      <div class="content" id="page-unidades">
+        <div class="ph">
+          <div>
+            <div class="pt">Gestão de Unidades</div>
+            <div class="ps">120 unidades cadastradas · Blocos A, B, C e D</div>
+          </div>
+          <button class="btn btn-p" onclick="openModal('modal-unidade')">
+            <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24">
+              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round" />
+              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round" />
+            </svg>
+            Nova Unidade
+          </button>
+        </div>
+        <div class="fb">
+          <select class="fsel">
+            <option>Todos os Blocos</option>
+            <option>Bloco A</option>
+            <option>Bloco B</option>
+            <option>Bloco C</option>
+            <option>Bloco D</option>
+          </select>
+          <select class="fsel">
+            <option>Todos os Status</option>
+            <option>Em dia</option>
+            <option>Pendente</option>
+            <option>Inadimplente</option>
+          </select>
+          <input class="finp" placeholder="Buscar por unidade ou titular...">
+        </div>
+        <div class="card" style="padding:0;">
+          <div class="tw">
+            <table>
+              <thead>
+                <tr>
+                  <th>Unidade</th>
+                  <th>Titular</th>
+                  <th>Moradores</th>
+                  <th>Bloco/Andar</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tdb">101</td>
+                  <td>Roberto Alves</td>
+                  <td>3</td>
+                  <td>Bloco A · 1º</td>
+                  <td><span class="badge bg">Em dia</span></td>
+                  <td>
+                    <div class="abtns">
+                      <div class="abtn" title="Editar Unidade" onclick="openModal('modal-unidade')">✏️</div>
+                      <div class="abtn" title="Transferir Titularidade" onclick="openModal('modal-transferir-unidade')">
+                        🔄</div>
+                      <div class="abtn" title="Inativar Unidade" onclick="openModal('modal-inativar-unidade')">⏸</div>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="tdb">102</td>
+                  <td>Ana Lima</td>
+                  <td>2</td>
+                  <td>Bloco A · 1º</td>
+                  <td><span class="badge bg">Em dia</span></td>
+                  <td>
+                    <div class="abtns">
+                      <div class="abtn" title="Editar Unidade" onclick="openModal('modal-unidade')">✏️</div>
+                      <div class="abtn" title="Transferir Titularidade" onclick="openModal('modal-transferir-unidade')">
+                        🔄</div>
+                      <div class="abtn" title="Inativar Unidade" onclick="openModal('modal-inativar-unidade')">⏸</div>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="tdb">108</td>
+                  <td>Jorge Santos</td>
+                  <td>1</td>
+                  <td>Bloco A · 1º</td>
+                  <td><span class="badge br">Inadimplente</span></td>
+                  <td>
+                    <div class="abtns">
+                      <div class="abtn" title="Editar Unidade" onclick="openModal('modal-unidade')">✏️</div>
+                      <div class="abtn" title="Transferir Titularidade" onclick="openModal('modal-transferir-unidade')">
+                        🔄</div>
+                      <div class="abtn" title="Inativar Unidade" onclick="openModal('modal-inativar-unidade')">⏸</div>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="tdb">215</td>
+                  <td>Carla Mendes</td>
+                  <td>2</td>
+                  <td>Bloco B · 2º</td>
+                  <td><span class="badge bg">Em dia</span></td>
+                  <td>
+                    <div class="abtns">
+                      <div class="abtn" title="Editar Unidade" onclick="openModal('modal-unidade')">✏️</div>
+                      <div class="abtn" title="Transferir Titularidade" onclick="openModal('modal-transferir-unidade')">
+                        🔄</div>
+                      <div class="abtn" title="Inativar Unidade" onclick="openModal('modal-inativar-unidade')">⏸</div>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="tdb">304</td>
+                  <td>Fernanda Costa</td>
+                  <td>4</td>
+                  <td>Bloco C · 3º</td>
+                  <td><span class="badge bg">Em dia</span></td>
+                  <td>
+                    <div class="abtns">
+                      <div class="abtn" title="Editar Unidade" onclick="openModal('modal-unidade')">✏️</div>
+                      <div class="abtn" title="Transferir Titularidade" onclick="openModal('modal-transferir-unidade')">
+                        🔄</div>
+                      <div class="abtn" title="Inativar Unidade" onclick="openModal('modal-inativar-unidade')">⏸</div>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="tdb">312</td>
+                  <td>Paulo Oliveira</td>
+                  <td>3</td>
+                  <td>Bloco C · 3º</td>
+                  <td><span class="badge br">Inadimplente</span></td>
+                  <td>
+                    <div class="abtns">
+                      <div class="abtn" title="Editar Unidade" onclick="openModal('modal-unidade')">✏️</div>
+                      <div class="abtn" title="Transferir Titularidade" onclick="openModal('modal-transferir-unidade')">
+                        🔄</div>
+                      <div class="abtn" title="Inativar Unidade" onclick="openModal('modal-inativar-unidade')">⏸</div>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="tdb">421</td>
+                  <td>Rafael Lima</td>
+                  <td>2</td>
+                  <td>Bloco D · 4º</td>
+                  <td><span class="badge by">Pendente</span></td>
+                  <td>
+                    <div class="abtns">
+                      <div class="abtn" title="Editar Unidade" onclick="openModal('modal-unidade')">✏️</div>
+                      <div class="abtn" title="Transferir Titularidade" onclick="openModal('modal-transferir-unidade')">
+                        🔄</div>
+                      <div class="abtn" title="Inativar Unidade" onclick="openModal('modal-inativar-unidade')">⏸</div>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="tdb">508</td>
+                  <td>Marcos Pereira</td>
+                  <td>2</td>
+                  <td>Bloco A · 5º</td>
+                  <td><span class="badge bg">Em dia</span></td>
+                  <td>
+                    <div class="abtns">
+                      <div class="abtn" title="Editar Unidade" onclick="openModal('modal-unidade')">✏️</div>
+                      <div class="abtn" title="Transferir Titularidade" onclick="openModal('modal-transferir-unidade')">
+                        🔄</div>
+                      <div class="abtn" title="Inativar Unidade" onclick="openModal('modal-inativar-unidade')">⏸</div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div
+            style="padding:14px 16px;border-top:1px solid var(--bdr);display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12.5px;color:var(--tx4)">Mostrando 8 de 120 unidades</span>
+            <div style="display:flex;gap:6px;">
+              <button class="btn btn-s btn-sm">← Anterior</button>
+              <button class="btn btn-sm" style="background:var(--accent);color:#fff;border:none;">1</button>
+              <button class="btn btn-s btn-sm">2</button>
+              <button class="btn btn-s btn-sm">3</button>
+              <button class="btn btn-s btn-sm">Próxima →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content" id="page-moradores">
+        <div class="ph">
+          <div>
+            <div class="pt">Gestão de Moradores</div>
+            <div class="ps">284 moradores em 120 unidades</div>
+          </div>
+          <button class="btn btn-p" onclick="openModal('modal-morador')">
+            <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24">
+              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round" />
+              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round" />
+            </svg>
+            Adicionar Morador
+          </button>
+        </div>
+        <div class="fb">
+          <select class="fsel">
+            <option>Todos os Tipos</option>
+            <option>Titular</option>
+            <option>Dependente</option>
+            <option>Inquilino</option>
+          </select>
+          <input class="finp" placeholder="Buscar por nome ou unidade...">
+        </div>
+        <div class="card" style="padding:0;">
+          <div class="tw">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Unidade</th>
+                  <th>Tipo</th>
+                  <th>Telefone</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tdb">Roberto Alves</td>
+                  <td>101</td>
+                  <td><span class="badge bb">Titular</span></td>
+                  <td>(11) 9 8765-4321</td>
+                  <td><span class="badge bg">Ativo</span></td>
+                  <td>
+                    <div class="abtns">
+                      <div class="abtn" onclick="showToast('👁 Perfil de Roberto Alves')">👁</div>
+                      <div class="abtn" onclick="openModal('modal-morador')">✏️</div>
+                      <div class="abtn" onclick="showToast('🗑 Confirme remoção')">🗑</div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Luísa Alves</td>
+                  <td>101</td>
+                  <td><span class="badge bgr">Dependente</span></td>
+                  <td>—</td>
+                  <td><span class="badge bg">Ativo</span></td>
+                  <td>
+                    <div class="abtns">
+                      <div class="abtn">👁</div>
+                      <div class="abtn" onclick="openModal('modal-morador')">✏️</div>
+                      <div class="abtn">🗑</div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tdb">Ana Lima</td>
+                  <td>102</td>
+                  <td><span class="badge bb">Titular</span></td>
+                  <td>(11) 9 9876-5432</td>
+                  <td><span class="badge bg">Ativo</span></td>
+                  <td>
+                    <div class="abtns">
+                      <div class="abtn">👁</div>
+                      <div class="abtn" onclick="openModal('modal-morador')">✏️</div>
+                      <div class="abtn">🗑</div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tdb">Carla Mendes</td>
+                  <td>215</td>
+                  <td><span class="badge bb">Titular</span></td>
+                  <td>(11) 9 5555-0001</td>
+                  <td><span class="badge bg">Ativo</span></td>
+                  <td>
+                    <div class="abtns">
+                      <div class="abtn">👁</div>
+                      <div class="abtn" onclick="openModal('modal-morador')">✏️</div>
+                      <div class="abtn">🗑</div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tdb">Paulo Oliveira</td>
+                  <td>312</td>
+                  <td><span class="badge bb">Titular</span></td>
+                  <td>(11) 9 4444-3333</td>
+                  <td><span class="badge br">Inadimplente</span></td>
+                  <td>
+                    <div class="abtns">
+                      <div class="abtn">👁</div>
+                      <div class="abtn" onclick="openModal('modal-morador')">✏️</div>
+                      <div class="abtn">🗑</div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tdb">Marcos Pereira</td>
+                  <td>508</td>
+                  <td><span class="badge bb">Titular</span></td>
+                  <td>(11) 9 3333-2222</td>
+                  <td><span class="badge by">Ocorrência</span></td>
+                  <td>
+                    <div class="abtns">
+                      <div class="abtn">👁</div>
+                      <div class="abtn" onclick="openModal('modal-morador')">✏️</div>
+                      <div class="abtn">🗑</div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="content" id="page-reservas">
+        <div class="ph">
+          <div>
+            <div class="pt">Reservas de Áreas Comuns</div>
+            <div class="ps">Calendário de uso dos espaços compartilhados</div>
+          </div>
+          <button class="btn btn-p" onclick="openModal('modal-generico')">
+            <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24">
+              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round" />
+              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round" />
+            </svg>
+            Nova Reserva
+          </button>
+        </div>
+        <div class="cal-g">
+          <div class="card">
+            <div class="cal-hd">
+              <div class="cal-month">Março 2026</div>
+              <div style="display:flex;gap:6px;"><button class="btn btn-s btn-sm">‹</button><button
+                  class="btn btn-s btn-sm">›</button></div>
+            </div>
+            <div class="cal-grid">
+              <div class="cdl">Dom</div>
+              <div class="cdl">Seg</div>
+              <div class="cdl">Ter</div>
+              <div class="cdl">Qua</div>
+              <div class="cdl">Qui</div>
+              <div class="cdl">Sex</div>
+              <div class="cdl">Sáb</div>
+              <div class="cd om">23</div>
+              <div class="cd om">24</div>
+              <div class="cd om">25</div>
+              <div class="cd om">26</div>
+              <div class="cd om">27</div>
+              <div class="cd om">28</div>
+              <div class="cd">1</div>
+              <div class="cd">2</div>
+              <div class="cd">3</div>
+              <div class="cd">4</div>
+              <div class="cd today has-ev">5</div>
+              <div class="cd">6</div>
+              <div class="cd booked has-ev">7</div>
+              <div class="cd">8</div>
+              <div class="cd">9</div>
+              <div class="cd">10</div>
+              <div class="cd">11</div>
+              <div class="cd">12</div>
+              <div class="cd booked has-ev">13</div>
+              <div class="cd">14</div>
+              <div class="cd booked has-ev">15</div>
+              <div class="cd">16</div>
+              <div class="cd">17</div>
+              <div class="cd">18</div>
+              <div class="cd">19</div>
+              <div class="cd">20</div>
+              <div class="cd">21</div>
+              <div class="cd">22</div>
+              <div class="cd">23</div>
+              <div class="cd">24</div>
+              <div class="cd">25</div>
+              <div class="cd">26</div>
+              <div class="cd">27</div>
+              <div class="cd">28</div>
+              <div class="cd">29</div>
+              <div class="cd">30</div>
+              <div class="cd">31</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div class="card">
+              <div class="card-h">
+                <div class="card-t">Próximas Reservas</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div
+                  style="padding:10px;background:var(--blue-bg);border-radius:var(--r-sm);border-left:3px solid var(--accent);">
+                  <div style="font-size:13px;font-weight:500;">Churrasqueira 2</div>
+                  <div style="font-size:12px;color:var(--tx4);margin-top:2px;">07/03 · 12h–18h · Ana Lima (102)</div>
+                  <span class="badge bg" style="margin-top:6px;">Confirmada</span>
+                </div>
+                <div style="padding:10px;background:#faf5ff;border-radius:var(--r-sm);border-left:3px solid #7c3aed;">
+                  <div style="font-size:13px;font-weight:500;">Salão de Festas</div>
+                  <div style="font-size:12px;color:var(--tx4);margin-top:2px;">13/03 · 18h–23h · Félix Andrade (410)
+                  </div><span class="badge by" style="margin-top:6px;">Pendente</span>
+                </div>
+                <div
+                  style="padding:10px;background:#f0fdf4;border-radius:var(--r-sm);border-left:3px solid var(--green);">
+                  <div style="font-size:13px;font-weight:500;">Piscina (Área VIP)</div>
+                  <div style="font-size:12px;color:var(--tx4);margin-top:2px;">15/03 · 09h–13h · Bruno Rocha (217)</div>
+                  <span class="badge bg" style="margin-top:6px;">Confirmada</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div style="font-size:13.5px;font-weight:700;margin-bottom:10px;">Disponibilidade</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <div
+                  style="display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:6px 0;border-bottom:1px solid var(--bdr);">
+                  Churrasqueira 1<span class="badge bg">Livre</span></div>
+                <div
+                  style="display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:6px 0;border-bottom:1px solid var(--bdr);">
+                  Churrasqueira 2<span class="badge by">Reservada</span></div>
+                <div
+                  style="display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:6px 0;border-bottom:1px solid var(--bdr);">
+                  Salão de Festas<span class="badge bg">Livre</span></div>
+                <div
+                  style="display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:6px 0;">
+                  Piscina<span class="badge bg">Livre</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content" id="page-ocorrencias">
+        <div class="ph">
+          <div>
+            <div class="pt">Ocorrências e Multas</div>
+            <div class="ps">Registro e acompanhamento de infrações</div>
+          </div>
+          <button class="btn btn-p" onclick="openModal('modal-generico')">
+            <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24">
+              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round" />
+              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round" />
+            </svg>
+            Registrar Ocorrência
+          </button>
+        </div>
+        <div class="fb">
+          <select class="fsel">
+            <option>Todos os Status</option>
+            <option>Aberta</option>
+            <option>Em análise</option>
+            <option>Resolvida</option>
+          </select>
+          <select class="fsel">
+            <option>Todos os Tipos</option>
+            <option>Barulho</option>
+            <option>Descarte</option>
+            <option>Vandalismo</option>
+          </select>
+          <input class="finp" type="date">
+        </div>
+        <div class="card" style="padding:0;">
+          <div class="tw">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Unidade</th>
+                  <th>Tipo</th>
+                  <th>Descrição</th>
+                  <th>Data</th>
+                  <th>Multa</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tdb" style="color:var(--tx4)">#0023</td>
+                  <td>508</td>
+                  <td>Barulho</td>
+                  <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Som alto após
+                    22h por 3ª vez</td>
+                  <td>05/03/2026</td>
+                  <td><span class="badge br">R$ 200</span></td>
+                  <td><span class="badge by">Em análise</span></td>
+                  <td>
+                    <div class="abtns">
+                      <div class="abtn" onclick="showToast('📋 Ocorrência #0023')">👁</div>
+                      <div class="abtn" onclick="showToast('✅ Resolvida!')">✅</div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tdb" style="color:var(--tx4)">#0022</td>
+                  <td>312</td>
+                  <td>Descarte</td>
+                  <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Lixo fora do
+                    horário</td>
+                  <td>02/03/2026</td>
+                  <td><span class="badge by">R$ 100</span></td>
+                  <td><span class="badge by">Aberta</span></td>
+                  <td>
+                    <div class="abtns">
+                      <div class="abtn">👁</div>
+                      <div class="abtn" onclick="showToast('✅ Resolvida!')">✅</div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tdb" style="color:var(--tx4)">#0021</td>
+                  <td>110</td>
+                  <td>Vandalismo</td>
+                  <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Dano ao
+                    elevador Bloco A</td>
+                  <td>28/02/2026</td>
+                  <td><span class="badge br">R$ 500</span></td>
+                  <td><span class="badge bg">Resolvida</span></td>
+                  <td>
+                    <div class="abtns">
+                      <div class="abtn">👁</div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tdb" style="color:var(--tx4)">#0020</td>
+                  <td>204</td>
+                  <td>Barulho</td>
+                  <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Festa sem
+                    autorização</td>
+                  <td>22/02/2026</td>
+                  <td><span class="badge br">R$ 200</span></td>
+                  <td><span class="badge bg">Resolvida</span></td>
+                  <td>
+                    <div class="abtns">
+                      <div class="abtn">👁</div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="content" id="page-assembleias">
+        <div class="ph">
+          <div>
+            <div class="pt">Assembleias e Votações</div>
+            <div class="ps">Gestão de pautas, votos e resultados</div>
+          </div>
+          <button class="btn btn-p" onclick="openModal('modal-assembleia')">
+            <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24">
+              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round" />
+              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round" />
+            </svg>
+            Criar Assembleia
+          </button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;">
+          <div class="card" style="border:2px solid var(--accent);position:relative;overflow:hidden;">
+            <div
+              style="position:absolute;top:0;right:0;width:120px;height:120px;background:var(--accent-glow);border-radius:50%;transform:translate(30px,-30px);pointer-events:none;">
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><span
+                class="badge bb">Próxima</span><span style="font-size:12px;color:var(--tx4)">13/03/2026 · 19h</span>
+            </div>
+            <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:6px;">Assembleia
+              Ordinária — Março/2026</div>
+            <div style="font-size:13px;color:var(--tx3);margin-bottom:14px;">Salão de Festas · 120 convocados</div>
+            <div
+              style="font-size:12px;font-weight:600;color:var(--tx4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px;">
+              Pautas</div>
+            <div style="display:flex;flex-direction:column;gap:5px;">
+              <div style="display:flex;align-items:center;gap:8px;font-size:13px;"><span
+                  style="color:var(--accent);font-weight:600;">1.</span> Aprovação do orçamento 2026</div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:13px;"><span
+                  style="color:var(--accent);font-weight:600;">2.</span> Reforma da fachada (votação)</div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:13px;"><span
+                  style="color:var(--accent);font-weight:600;">3.</span> Eleição de subsíndico</div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:14px;">
+              <button class="btn btn-p btn-sm" onclick="showToast('📤 Convocação enviada a 120 unidades')">Enviar
+                Convocação</button>
+              <button class="btn btn-s btn-sm" onclick="openModal('modal-assembleia')">Editar Pauta</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-h">
+              <div class="card-t">Votação Ativa</div><span class="badge bg">Aberta</span>
+            </div>
+            <div style="font-size:14px;font-weight:500;margin-bottom:3px;">Reforma da fachada do Bloco B</div>
+            <div style="font-size:12.5px;color:var(--tx4);margin-bottom:14px;">Encerra 13/03/2026 · 47 votos</div>
+            <div class="vbw">
+              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:3px;">
+                <span>✅ Sim</span><span style="color:var(--green)">68%</span></div>
+              <div class="vbt">
+                <div class="vbf" style="width:68%;background:var(--green)"></div>
+              </div>
+              <div class="vbm"><span>32 votos</span><span>47 total</span></div>
+            </div>
+            <div class="vbw" style="margin-top:10px;">
+              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:3px;">
+                <span>❌ Não</span><span style="color:var(--red)">22%</span></div>
+              <div class="vbt">
+                <div class="vbf" style="width:22%;background:var(--red)"></div>
+              </div>
+              <div class="vbm"><span>10 votos</span></div>
+            </div>
+            <div class="vbw" style="margin-top:10px;">
+              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:3px;">
+                <span>⚪ Abstenção</span><span style="color:var(--tx4)">10%</span></div>
+              <div class="vbt">
+                <div class="vbf" style="width:10%;background:var(--tx4)"></div>
+              </div>
+              <div class="vbm"><span>5 votos</span></div>
+            </div>
+            <div style="margin-top:12px;font-size:12px;color:var(--tx4)">73 unidades ainda não votaram</div>
           </div>
         </div>
         <div class="card">
-          <div class="card-h"><div class="card-t">Atividade Recente</div><span class="card-lk">Ver tudo</span></div>
-          <div class="al">
-            <div class="ai"><div class="adot" style="background:var(--green)"></div><div class="at"><strong>Apto 304</strong> realizou pagamento de R$ 580,00 — Cota março</div><div class="atime">há 12min</div></div>
-            <div class="ai"><div class="adot" style="background:var(--yellow)"></div><div class="at"><strong>Churrasqueira 2</strong> reservada por Ana Lima (Apto 102) para 07/03</div><div class="atime">há 1h</div></div>
-            <div class="ai"><div class="adot" style="background:var(--red)"></div><div class="at">Ocorrência registrada — <strong>Barulho excessivo</strong> Apto 508 às 23h</div><div class="atime">há 3h</div></div>
-            <div class="ai"><div class="adot" style="background:var(--accent)"></div><div class="at">Nova moradora adicionada — <strong>Carla Mendes</strong>, Apto 215</div><div class="atime">ontem</div></div>
-            <div class="ai"><div class="adot" style="background:var(--tx4)"></div><div class="at">Assembleia <strong>"Obras no Térreo"</strong> agendada para 13/03/2026</div><div class="atime">ontem</div></div>
+          <div class="card-h">
+            <div class="card-t">Histórico de Assembleias</div>
+          </div>
+          <div class="tw">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Tipo</th>
+                  <th>Pautas</th>
+                  <th>Quórum</th>
+                  <th>Status</th>
+                  <th>Ata</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>15/11/2025</td>
+                  <td>Ordinária</td>
+                  <td>3 pautas</td>
+                  <td>78%</td>
+                  <td><span class="badge bg">Concluída</span></td>
+                  <td>
+                    <div class="abtn" onclick="showToast('📄 Ata disponível')">📄</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>22/08/2025</td>
+                  <td>Extraordinária</td>
+                  <td>1 pauta</td>
+                  <td>65%</td>
+                  <td><span class="badge bg">Concluída</span></td>
+                  <td>
+                    <div class="abtn" onclick="showToast('📄 Ata disponível')">📄</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>10/05/2025</td>
+                  <td>Ordinária</td>
+                  <td>4 pautas</td>
+                  <td>82%</td>
+                  <td><span class="badge bg">Concluída</span></td>
+                  <td>
+                    <div class="abtn" onclick="showToast('📄 Ata disponível')">📄</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:18px;">
-        <div class="card">
-          <div class="card-h"><div class="card-t">Próximos Eventos</div><span class="card-lk" onclick="nav('reservas')">Calendário</span></div>
-          <div class="ul">
-            <div class="ui"><div class="ud" style="background:var(--accent)"><div class="dy">07</div><div class="mo">Mar</div></div><div class="ui-inf"><div class="ui-title">Reserva — Churrasqueira 2</div><div class="ui-meta">Ana Lima · Apto 102 · 12h–18h</div></div></div>
-            <div class="ui"><div class="ud" style="background:#7c3aed"><div class="dy">13</div><div class="mo">Mar</div></div><div class="ui-inf"><div class="ui-title">Assembleia Ordinária</div><div class="ui-meta">19h · Salão de Festas · 3 pautas</div></div></div>
-            <div class="ui"><div class="ud" style="background:var(--teal)"><div class="dy">15</div><div class="mo">Mar</div></div><div class="ui-inf"><div class="ui-title">Vencimento Cotas</div><div class="ui-meta">120 unidades · R$ 580,00/unid</div></div></div>
+
+      <div class="content" id="page-financeiro">
+        <div class="ph">
+          <div>
+            <div class="pt">Financeiro</div>
+            <div class="ps">Cobranças, pagamentos e histórico</div>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-s" onclick="openModal('modal-orcamento')">Novo Orçamento</button>
+            <button class="btn btn-p" onclick="openModal('modal-despesa')">Nova Despesa</button>
+            <button class="btn btn-s" onclick="showToast('📊 Relatório exportado em PDF')">
+              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke-width="1.8" />
+                <polyline points="7 10 12 15 17 10" stroke-width="1.8" />
+                <line x1="12" y1="15" x2="12" y2="3" stroke-width="1.8" />
+              </svg>
+              Exportar
+            </button>
           </div>
         </div>
-        <div class="card">
-          <div class="card-h"><div class="card-t">Inadimplência</div><span class="badge br">7 unidades</span></div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--surf2);border-radius:var(--r-sm);border:1px solid var(--bdr);"><div><div style="font-size:13px;font-weight:500;">Apto 108 · Jorge Santos</div><div style="font-size:11px;color:var(--tx4)">Venc. 15/02 · 18 dias</div></div><span class="badge br">R$ 580</span></div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--surf2);border-radius:var(--r-sm);border:1px solid var(--bdr);"><div><div style="font-size:13px;font-weight:500;">Apto 312 · P. Oliveira</div><div style="font-size:11px;color:var(--tx4)">Venc. 15/01 · 49 dias</div></div><span class="badge br">R$ 1.160</span></div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--surf2);border-radius:var(--r-sm);border:1px solid var(--bdr);"><div><div style="font-size:13px;font-weight:500;">Apto 421 · R. Lima</div><div style="font-size:11px;color:var(--tx4)">Venc. 15/02 · 18 dias</div></div><span class="badge by">R$ 580</span></div>
-            <div style="text-align:center;margin-top:2px;"><span class="card-lk" onclick="nav('financeiro')">Ver todos os 7 →</span></div>
+        <div class="fs">
+          <div class="fc" style="border-top:3px solid var(--green);">
+            <div class="flab">Receita — Março/2026</div>
+            <div class="fa" style="color:var(--green)">R$ 48.200</div>
+            <div style="font-size:12px;color:var(--tx4);margin-top:6px;">83 pagamentos · 37 pendentes</div>
+          </div>
+          <div class="fc" style="border-top:3px solid var(--red);">
+            <div class="flab">Despesas — Março/2026</div>
+            <div class="fa" style="color:var(--red)">R$ 31.450</div>
+            <div style="font-size:12px;color:var(--tx4);margin-top:6px;">Manutenção, portaria, limpeza</div>
+          </div>
+          <div class="fc" style="border-top:3px solid var(--accent);">
+            <div class="flab">Inadimplência</div>
+            <div class="fa" style="color:var(--accent)">R$ 4.060</div>
+            <div style="font-size:12px;color:var(--tx4);margin-top:6px;">7 unidades · Cobrança ativa</div>
+          </div>
+        </div>
+        <div class="card" style="padding:0;">
+          <div
+            style="padding:14px 18px;border-bottom:1px solid var(--bdr);display:flex;justify-content:space-between;align-items:center;">
+            <div class="card-t">Cobranças — Março/2026</div>
+            <select class="fsel">
+              <option>Todos</option>
+              <option>Em dia</option>
+              <option>Pendente</option>
+              <option>Inadimplente</option>
+            </select>
+          </div>
+          <div class="tw">
+            <table>
+              <thead>
+                <tr>
+                  <th>Unidade</th>
+                  <th>Titular</th>
+                  <th>Cota</th>
+                  <th>Multa/Juros</th>
+                  <th>Total</th>
+                  <th>Vencimento</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>101</td>
+                  <td>Roberto Alves</td>
+                  <td>R$ 580</td>
+                  <td>—</td>
+                  <td class="tdb">R$ 580</td>
+                  <td>15/03</td>
+                  <td><span class="badge bg">Pago</span></td>
+                  <td>
+                    <div class="abtn" onclick="showToast('🧾 Comprovante gerado')">🧾</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>102</td>
+                  <td>Ana Lima</td>
+                  <td>R$ 580</td>
+                  <td>—</td>
+                  <td class="tdb">R$ 580</td>
+                  <td>15/03</td>
+                  <td><span class="badge bg">Pago</span></td>
+                  <td>
+                    <div class="abtn" onclick="showToast('🧾 Comprovante gerado')">🧾</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>108</td>
+                  <td>Jorge Santos</td>
+                  <td>R$ 580</td>
+                  <td>R$ 46</td>
+                  <td class="tdb">R$ 626</td>
+                  <td>15/02</td>
+                  <td><span class="badge br">Inadimplente</span></td>
+                  <td>
+                    <div class="abtn" onclick="showToast('📨 Notificação enviada')">📨</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>215</td>
+                  <td>Carla Mendes</td>
+                  <td>R$ 580</td>
+                  <td>—</td>
+                  <td class="tdb">R$ 580</td>
+                  <td>15/03</td>
+                  <td><span class="badge by">Pendente</span></td>
+                  <td>
+                    <div class="abtn" onclick="showToast('📨 Lembrete enviado')">📨</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>304</td>
+                  <td>Fernanda Costa</td>
+                  <td>R$ 580</td>
+                  <td>—</td>
+                  <td class="tdb">R$ 580</td>
+                  <td>15/03</td>
+                  <td><span class="badge bg">Pago</span></td>
+                  <td>
+                    <div class="abtn">🧾</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>312</td>
+                  <td>Paulo Oliveira</td>
+                  <td>R$ 580</td>
+                  <td>R$ 92</td>
+                  <td class="tdb">R$ 672</td>
+                  <td>15/01</td>
+                  <td><span class="badge br">Inadimplente</span></td>
+                  <td>
+                    <div class="abtn" onclick="showToast('📨 Notificação enviada')">📨</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>421</td>
+                  <td>Rafael Lima</td>
+                  <td>R$ 580</td>
+                  <td>R$ 17</td>
+                  <td class="tdb">R$ 597</td>
+                  <td>15/02</td>
+                  <td><span class="badge br">Inadimplente</span></td>
+                  <td>
+                    <div class="abtn">📨</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="content" id="page-notificacoes">
+        <div class="ph">
+          <div>
+            <div class="pt">Notificações</div>
+            <div class="ps">5 não lidas</div>
+          </div>
+          <button class="btn btn-s" onclick="showToast('✅ Todas marcadas como lidas')">Marcar como lidas</button>
+        </div>
+        <div class="nl">
+          <div class="ni2 unread">
+            <div class="niw" style="background:#fee2e2;">🔔</div>
+            <div class="nb2">
+              <div class="nt">Nova ocorrência — Barulho Apto 508</div>
+              <div class="nd">Ocorrência #0023 aguarda análise. Multa sugerida: R$ 200,00.</div>
+            </div>
+            <div class="ntime">há 3h</div>
+          </div>
+          <div class="ni2 unread">
+            <div class="niw" style="background:#dbeafe;">📅</div>
+            <div class="nb2">
+              <div class="nt">Reserva confirmada — Churrasqueira 2</div>
+              <div class="nd">Ana Lima (Apto 102) confirmou para 07/03 das 12h às 18h.</div>
+            </div>
+            <div class="ntime">há 1h</div>
+          </div>
+          <div class="ni2 unread">
+            <div class="niw" style="background:#d1fae5;">💰</div>
+            <div class="nb2">
+              <div class="nt">Pagamento recebido — Apto 304</div>
+              <div class="nd">Fernanda Costa pagou R$ 580,00 — cota de março/2026.</div>
+            </div>
+            <div class="ntime">há 12min</div>
+          </div>
+          <div class="ni2 unread">
+            <div class="niw" style="background:#ede9fe;">🗳️</div>
+            <div class="nb2">
+              <div class="nt">Votação ativa — Reforma fachada Bloco B</div>
+              <div class="nd">47 de 120 unidades votaram. Encerra em 13/03/2026.</div>
+            </div>
+            <div class="ntime">ontem</div>
+          </div>
+          <div class="ni2 unread">
+            <div class="niw" style="background:#fef3c7;">⚠️</div>
+            <div class="nb2">
+              <div class="nt">Inadimplência — 3 novas unidades</div>
+              <div class="nd">Apto 108, 312 e 421 estão inadimplentes. Considere notificações.</div>
+            </div>
+            <div class="ntime">2 dias</div>
+          </div>
+          <div class="ni2" style="opacity:.6;">
+            <div class="niw" style="background:var(--surf2);">📋</div>
+            <div class="nb2">
+              <div class="nt">Assembleia agendada para 13/03</div>
+              <div class="nd">Enviar convocação com 10 dias de antecedência.</div>
+            </div>
+            <div class="ntime">3 dias</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="content" id="page-unidades">
-    <div class="ph">
-      <div><div class="pt">Gestão de Unidades</div><div class="ps">120 unidades cadastradas · Blocos A, B, C e D</div></div>
-      <button class="btn btn-p" onclick="openModal('modal-unidade')">
-        <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round"/></svg>
-        Nova Unidade
-      </button>
-    </div>
-    <div class="fb">
-      <select class="fsel"><option>Todos os Blocos</option><option>Bloco A</option><option>Bloco B</option><option>Bloco C</option><option>Bloco D</option></select>
-      <select class="fsel"><option>Todos os Status</option><option>Em dia</option><option>Pendente</option><option>Inadimplente</option></select>
-      <input class="finp" placeholder="Buscar por unidade ou titular...">
-    </div>
-    <div class="card" style="padding:0;">
-      <div class="tw">
-        <table>
-          <thead><tr><th>Unidade</th><th>Titular</th><th>Moradores</th><th>Bloco/Andar</th><th>Status</th><th>Ações</th></tr></thead>
-          <tbody>
-            <tr><td class="tdb">101</td><td>Roberto Alves</td><td>3</td><td>Bloco A · 1º</td><td><span class="badge bg">Em dia</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 101')">👁</div><div class="abtn" onclick="openModal('modal-unidade')">✏️</div><div class="abtn" onclick="showToast('🔄 Transferência iniciada')">🔄</div></div></td></tr>
-            <tr><td class="tdb">102</td><td>Ana Lima</td><td>2</td><td>Bloco A · 1º</td><td><span class="badge bg">Em dia</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 102')">👁</div><div class="abtn" onclick="openModal('modal-unidade')">✏️</div><div class="abtn" onclick="showToast('🔄 Transferência iniciada')">🔄</div></div></td></tr>
-            <tr><td class="tdb">108</td><td>Jorge Santos</td><td>1</td><td>Bloco A · 1º</td><td><span class="badge br">Inadimplente</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 108')">👁</div><div class="abtn" onclick="openModal('modal-unidade')">✏️</div><div class="abtn" onclick="showToast('🔄 Transferência iniciada')">🔄</div></div></td></tr>
-            <tr><td class="tdb">215</td><td>Carla Mendes</td><td>2</td><td>Bloco B · 2º</td><td><span class="badge bg">Em dia</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 215')">👁</div><div class="abtn" onclick="openModal('modal-unidade')">✏️</div><div class="abtn">🔄</div></div></td></tr>
-            <tr><td class="tdb">304</td><td>Fernanda Costa</td><td>4</td><td>Bloco C · 3º</td><td><span class="badge bg">Em dia</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 304')">👁</div><div class="abtn" onclick="openModal('modal-unidade')">✏️</div><div class="abtn">🔄</div></div></td></tr>
-            <tr><td class="tdb">312</td><td>Paulo Oliveira</td><td>3</td><td>Bloco C · 3º</td><td><span class="badge br">Inadimplente</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 312')">👁</div><div class="abtn" onclick="openModal('modal-unidade')">✏️</div><div class="abtn">🔄</div></div></td></tr>
-            <tr><td class="tdb">421</td><td>Rafael Lima</td><td>2</td><td>Bloco D · 4º</td><td><span class="badge by">Pendente</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 421')">👁</div><div class="abtn" onclick="openModal('modal-unidade')">✏️</div><div class="abtn">🔄</div></div></td></tr>
-            <tr><td class="tdb">508</td><td>Marcos Pereira</td><td>2</td><td>Bloco A · 5º</td><td><span class="badge bg">Em dia</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 508')">👁</div><div class="abtn" onclick="openModal('modal-unidade')">✏️</div><div class="abtn">🔄</div></div></td></tr>
-          </tbody>
-        </table>
+  <div class="mo" id="modal-generico" onclick="closeModalOut(event)">
+    <div class="mbox">
+      <div class="mh">
+        <div class="mt">Novo Registro Genérico</div>
+        <div class="mc" onclick="closeModal('modal-generico')">✕</div>
       </div>
-      <div style="padding:14px 16px;border-top:1px solid var(--bdr);display:flex;justify-content:space-between;align-items:center;">
-        <span style="font-size:12.5px;color:var(--tx4)">Mostrando 8 de 120 unidades</span>
-        <div style="display:flex;gap:6px;">
-          <button class="btn btn-s btn-sm">← Anterior</button>
-          <button class="btn btn-sm" style="background:var(--accent);color:#fff;border:none;">1</button>
-          <button class="btn btn-s btn-sm">2</button>
-          <button class="btn btn-s btn-sm">3</button>
-          <button class="btn btn-s btn-sm">Próxima →</button>
+      <div class="fgg"><label class="fgl">Descrição</label><input class="fgi" placeholder="Preencha os dados"></div>
+      <div class="mf">
+        <button class="btn btn-s" onclick="closeModal('modal-generico')">Cancelar</button>
+        <button class="btn btn-p" onclick="saveModal('modal-generico')">Salvar Registro</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mo" id="modal-unidade" onclick="closeModalOut(event)">
+    <div class="mbox">
+      <div class="mh">
+        <div class="mt">Adicionar Unidade</div>
+        <div class="mc" onclick="closeModal('modal-unidade')">✕</div>
+      </div>
+      <div class="fgrid">
+        <div class="fgg"><label class="fgl">Unidade</label><input class="fgi" placeholder="Ex: 304" type="text"></div>
+        <div class="fgg"><label class="fgl">Bloco</label><select class="fgi">
+            <option>Bloco A</option>
+            <option>Bloco B</option>
+            <option>Bloco C</option>
+            <option>Bloco D</option>
+          </select></div>
+      </div>
+      <div class="fgg"><label class="fgl">Titular</label><input class="fgi" placeholder="Nome completo"></div>
+      <div class="fgg"><label class="fgl">E-mail</label><input class="fgi" type="email" placeholder="titular@email.com">
+      </div>
+      <div class="fgrid">
+        <div class="fgg"><label class="fgl">Telefone</label><input class="fgi" placeholder="(11) 9 0000-0000"></div>
+        <div class="fgg"><label class="fgl">Status</label><select class="fgi">
+            <option>Em dia</option>
+            <option>Pendente</option>
+            <option>Inadimplente</option>
+          </select></div>
+      </div>
+      <div class="mf">
+        <button class="btn btn-s" onclick="closeModal('modal-unidade')">Cancelar</button>
+        <button class="btn btn-p" onclick="saveModal('modal-unidade')">Salvar Unidade</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mo" id="modal-morador" onclick="closeModalOut(event)">
+    <div class="mbox">
+      <div class="mh">
+        <div class="mt">Adicionar Morador</div>
+        <div class="mc" onclick="closeModal('modal-morador')">✕</div>
+      </div>
+      <div class="fgg"><label class="fgl">Nome Completo</label><input class="fgi" placeholder="Nome do morador"></div>
+      <div class="fgrid">
+        <div class="fgg"><label class="fgl">Unidade</label><input class="fgi" placeholder="Ex: 304"></div>
+        <div class="fgg"><label class="fgl">Tipo</label><select class="fgi">
+            <option>Titular</option>
+            <option>Dependente</option>
+            <option>Inquilino</option>
+          </select></div>
+      </div>
+      <div class="fgrid">
+        <div class="fgg"><label class="fgl">Telefone</label><input class="fgi" placeholder="(11) 9 0000-0000"></div>
+        <div class="fgg"><label class="fgl">E-mail</label><input class="fgi" type="email"
+            placeholder="email@exemplo.com"></div>
+      </div>
+      <div class="mf">
+        <button class="btn btn-s" onclick="closeModal('modal-morador')">Cancelar</button>
+        <button class="btn btn-p" onclick="saveModal('modal-morador')">Salvar Morador</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mo" id="modal-assembleia" onclick="closeModalOut(event)">
+    <div class="mbox">
+      <div class="mh">
+        <div class="mt">Criar Assembleia</div>
+        <div class="mc" onclick="closeModal('modal-assembleia')">✕</div>
+      </div>
+      <div class="fgg"><label class="fgl">Título da Assembleia</label><input class="fgi"
+          placeholder="Ex: Assembleia Ordinária - Março"></div>
+      <div class="fgrid">
+        <div class="fgg"><label class="fgl">Data</label><input class="fgi" type="date"></div>
+        <div class="fgg"><label class="fgl">Hora</label><input class="fgi" type="time"></div>
+      </div>
+      <div class="fgg"><label class="fgl">Local</label><input class="fgi" placeholder="Ex: Salão de Festas"></div>
+      <div class="fgg"><label class="fgl">Pautas (uma por linha)</label><textarea class="fgi" rows="3"
+          placeholder="1. Aprovação do orçamento 2026..."></textarea></div>
+      <div class="mf">
+        <button class="btn btn-s" onclick="closeModal('modal-assembleia')">Cancelar</button>
+        <button class="btn btn-p" onclick="saveModal('modal-assembleia')">Agendar Assembleia</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mo" id="modal-orcamento" onclick="closeModalOut(event)">
+    <div class="mbox">
+      <div class="mh">
+        <div class="mt">Adicionar Orçamento</div>
+        <div class="mc" onclick="closeModal('modal-orcamento')">✕</div>
+      </div>
+      <div class="fgrid">
+        <div class="fgg"><label class="fgl">Ano / Período</label><input class="fgi" placeholder="Ex: 2026" type="text">
         </div>
+        <div class="fgg"><label class="fgl">Valor Total Previsto</label><input class="fgi" placeholder="R$ 0,00"
+            type="text"></div>
+      </div>
+      <div class="fgg"><label class="fgl">Descrição</label><input class="fgi"
+          placeholder="Ex: Orçamento Anual Ordinário"></div>
+      <div class="mf">
+        <button class="btn btn-s" onclick="closeModal('modal-orcamento')">Cancelar</button>
+        <button class="btn btn-p" onclick="saveModal('modal-orcamento')">Salvar Orçamento</button>
       </div>
     </div>
   </div>
 
-  <div class="content" id="page-moradores">
-    <div class="ph">
-      <div><div class="pt">Gestão de Moradores</div><div class="ps">284 moradores em 120 unidades</div></div>
-      <button class="btn btn-p" onclick="openModal('modal-morador')">
-        <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round"/></svg>
-        Adicionar Morador
-      </button>
-    </div>
-    <div class="fb">
-      <select class="fsel"><option>Todos os Tipos</option><option>Titular</option><option>Dependente</option><option>Inquilino</option></select>
-      <input class="finp" placeholder="Buscar por nome ou unidade...">
-    </div>
-    <div class="card" style="padding:0;">
-      <div class="tw">
-        <table>
-          <thead><tr><th>Nome</th><th>Unidade</th><th>Tipo</th><th>Telefone</th><th>Status</th><th>Ações</th></tr></thead>
-          <tbody>
-            <tr><td class="tdb">Roberto Alves</td><td>101</td><td><span class="badge bb">Titular</span></td><td>(11) 9 8765-4321</td><td><span class="badge bg">Ativo</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Perfil de Roberto Alves')">👁</div><div class="abtn" onclick="openModal('modal-morador')">✏️</div><div class="abtn" onclick="showToast('🗑 Confirme remoção')">🗑</div></div></td></tr>
-            <tr><td>Luísa Alves</td><td>101</td><td><span class="badge bgr">Dependente</span></td><td>—</td><td><span class="badge bg">Ativo</span></td><td><div class="abtns"><div class="abtn">👁</div><div class="abtn" onclick="openModal('modal-morador')">✏️</div><div class="abtn">🗑</div></div></td></tr>
-            <tr><td class="tdb">Ana Lima</td><td>102</td><td><span class="badge bb">Titular</span></td><td>(11) 9 9876-5432</td><td><span class="badge bg">Ativo</span></td><td><div class="abtns"><div class="abtn">👁</div><div class="abtn" onclick="openModal('modal-morador')">✏️</div><div class="abtn">🗑</div></div></td></tr>
-            <tr><td class="tdb">Carla Mendes</td><td>215</td><td><span class="badge bb">Titular</span></td><td>(11) 9 5555-0001</td><td><span class="badge bg">Ativo</span></td><td><div class="abtns"><div class="abtn">👁</div><div class="abtn" onclick="openModal('modal-morador')">✏️</div><div class="abtn">🗑</div></div></td></tr>
-            <tr><td class="tdb">Paulo Oliveira</td><td>312</td><td><span class="badge bb">Titular</span></td><td>(11) 9 4444-3333</td><td><span class="badge br">Inadimplente</span></td><td><div class="abtns"><div class="abtn">👁</div><div class="abtn" onclick="openModal('modal-morador')">✏️</div><div class="abtn">🗑</div></div></td></tr>
-            <tr><td class="tdb">Marcos Pereira</td><td>508</td><td><span class="badge bb">Titular</span></td><td>(11) 9 3333-2222</td><td><span class="badge by">Ocorrência</span></td><td><div class="abtns"><div class="abtn">👁</div><div class="abtn" onclick="openModal('modal-morador')">✏️</div><div class="abtn">🗑</div></div></td></tr>
-          </tbody>
-        </table>
+  <div class="mo" id="modal-despesa" onclick="closeModalOut(event)">
+    <div class="mbox">
+      <div class="mh">
+        <div class="mt">Adicionar Despesa no Orçamento</div>
+        <div class="mc" onclick="closeModal('modal-despesa')">✕</div>
+      </div>
+      <div class="fgg"><label class="fgl">Descrição da Despesa</label><input class="fgi"
+          placeholder="Ex: Manutenção dos Elevadores"></div>
+      <div class="fgrid">
+        <div class="fgg"><label class="fgl">Valor</label><input class="fgi" placeholder="R$ 0,00"></div>
+        <div class="fgg"><label class="fgl">Data</label><input class="fgi" type="date"></div>
+      </div>
+      <div class="fgg"><label class="fgl">Categoria</label><select class="fgi">
+          <option>Manutenção</option>
+          <option>Portaria</option>
+          <option>Limpeza e Conservação</option>
+          <option>Administrativo</option>
+          <option>Extraordinária</option>
+        </select></div>
+      <div class="fgg" style="margin-top:10px;">
+        <label style="font-size:12.5px;color:var(--tx2);display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <input type="checkbox" style="width:16px;height:16px;accent-color:var(--accent);">
+          Exige aprovação em assembleia (Despesa Extraordinária)
+        </label>
+      </div>
+      <div class="mf">
+        <button class="btn btn-s" onclick="closeModal('modal-despesa')">Cancelar</button>
+        <button class="btn btn-p" onclick="saveModal('modal-despesa')">Registrar Despesa</button>
       </div>
     </div>
   </div>
 
-  <div class="content" id="page-reservas">
-    <div class="ph">
-      <div><div class="pt">Reservas de Áreas Comuns</div><div class="ps">Calendário de uso dos espaços compartilhados</div></div>
-      <button class="btn btn-p" onclick="openModal('modal-generico')">
-        <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round"/></svg>
-        Nova Reserva
-      </button>
-    </div>
-    <div class="cal-g">
-      <div class="card">
-        <div class="cal-hd">
-          <div class="cal-month">Março 2026</div>
-          <div style="display:flex;gap:6px;"><button class="btn btn-s btn-sm">‹</button><button class="btn btn-s btn-sm">›</button></div>
-        </div>
-        <div class="cal-grid">
-          <div class="cdl">Dom</div><div class="cdl">Seg</div><div class="cdl">Ter</div><div class="cdl">Qua</div><div class="cdl">Qui</div><div class="cdl">Sex</div><div class="cdl">Sáb</div>
-          <div class="cd om">23</div><div class="cd om">24</div><div class="cd om">25</div><div class="cd om">26</div><div class="cd om">27</div><div class="cd om">28</div><div class="cd">1</div>
-          <div class="cd">2</div><div class="cd">3</div><div class="cd">4</div><div class="cd today has-ev">5</div><div class="cd">6</div><div class="cd booked has-ev">7</div><div class="cd">8</div>
-          <div class="cd">9</div><div class="cd">10</div><div class="cd">11</div><div class="cd">12</div><div class="cd booked has-ev">13</div><div class="cd">14</div><div class="cd booked has-ev">15</div>
-          <div class="cd">16</div><div class="cd">17</div><div class="cd">18</div><div class="cd">19</div><div class="cd">20</div><div class="cd">21</div><div class="cd">22</div>
-          <div class="cd">23</div><div class="cd">24</div><div class="cd">25</div><div class="cd">26</div><div class="cd">27</div><div class="cd">28</div><div class="cd">29</div>
-          <div class="cd">30</div><div class="cd">31</div>
-        </div>
+  <div class="mo" id="modal-unidade" onclick="closeModalOut(event)">
+    <div class="mbox">
+      <div class="mh">
+        <div class="mt">Criar / Editar Unidade</div>
+        <div class="mc" onclick="closeModal('modal-unidade')">✕</div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:14px;">
-        <div class="card">
-          <div class="card-h"><div class="card-t">Próximas Reservas</div></div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="padding:10px;background:var(--blue-bg);border-radius:var(--r-sm);border-left:3px solid var(--accent);"><div style="font-size:13px;font-weight:500;">Churrasqueira 2</div><div style="font-size:12px;color:var(--tx4);margin-top:2px;">07/03 · 12h–18h · Ana Lima (102)</div><span class="badge bg" style="margin-top:6px;">Confirmada</span></div>
-            <div style="padding:10px;background:#faf5ff;border-radius:var(--r-sm);border-left:3px solid #7c3aed;"><div style="font-size:13px;font-weight:500;">Salão de Festas</div><div style="font-size:12px;color:var(--tx4);margin-top:2px;">13/03 · 18h–23h · Félix Andrade (410)</div><span class="badge by" style="margin-top:6px;">Pendente</span></div>
-            <div style="padding:10px;background:#f0fdf4;border-radius:var(--r-sm);border-left:3px solid var(--green);"><div style="font-size:13px;font-weight:500;">Piscina (Área VIP)</div><div style="font-size:12px;color:var(--tx4);margin-top:2px;">15/03 · 09h–13h · Bruno Rocha (217)</div><span class="badge bg" style="margin-top:6px;">Confirmada</span></div>
-          </div>
-        </div>
-        <div class="card">
-          <div style="font-size:13.5px;font-weight:700;margin-bottom:10px;">Disponibilidade</div>
-          <div style="display:flex;flex-direction:column;gap:6px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:6px 0;border-bottom:1px solid var(--bdr);">Churrasqueira 1<span class="badge bg">Livre</span></div>
-            <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:6px 0;border-bottom:1px solid var(--bdr);">Churrasqueira 2<span class="badge by">Reservada</span></div>
-            <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:6px 0;border-bottom:1px solid var(--bdr);">Salão de Festas<span class="badge bg">Livre</span></div>
-            <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:6px 0;">Piscina<span class="badge bg">Livre</span></div>
-          </div>
-        </div>
+      <div class="fgrid">
+        <div class="fgg"><label class="fgl">Número da Unidade</label><input class="fgi" placeholder="Ex: 304"
+            type="text"></div>
+        <div class="fgg"><label class="fgl">Bloco</label><select class="fgi">
+            <option>Bloco A</option>
+            <option>Bloco B</option>
+            <option>Bloco C</option>
+            <option>Bloco D</option>
+          </select></div>
+      </div>
+      <div class="fgg"><label class="fgl">Titular</label><input class="fgi" placeholder="Nome completo do proprietário">
+      </div>
+      <div class="fgrid">
+        <div class="fgg"><label class="fgl">Telefone</label><input class="fgi" placeholder="(11) 9 0000-0000"></div>
+        <div class="fgg"><label class="fgl">Status da Unidade</label><select class="fgi">
+            <option>Ativa (Ocupada)</option>
+            <option>Ativa (Vazia)</option>
+          </select></div>
+      </div>
+      <div class="mf">
+        <button class="btn btn-s" onclick="closeModal('modal-unidade')">Cancelar</button>
+        <button class="btn btn-p" onclick="saveModal('modal-unidade')">Salvar Unidade</button>
       </div>
     </div>
   </div>
 
-  <div class="content" id="page-ocorrencias">
-    <div class="ph">
-      <div><div class="pt">Ocorrências e Multas</div><div class="ps">Registro e acompanhamento de infrações</div></div>
-      <button class="btn btn-p" onclick="openModal('modal-generico')">
-        <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round"/></svg>
-        Registrar Ocorrência
-      </button>
-    </div>
-    <div class="fb">
-      <select class="fsel"><option>Todos os Status</option><option>Aberta</option><option>Em análise</option><option>Resolvida</option></select>
-      <select class="fsel"><option>Todos os Tipos</option><option>Barulho</option><option>Descarte</option><option>Vandalismo</option></select>
-      <input class="finp" type="date">
-    </div>
-    <div class="card" style="padding:0;">
-      <div class="tw">
-        <table>
-          <thead><tr><th>#</th><th>Unidade</th><th>Tipo</th><th>Descrição</th><th>Data</th><th>Multa</th><th>Status</th><th>Ações</th></tr></thead>
-          <tbody>
-            <tr><td class="tdb" style="color:var(--tx4)">#0023</td><td>508</td><td>Barulho</td><td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Som alto após 22h por 3ª vez</td><td>05/03/2026</td><td><span class="badge br">R$ 200</span></td><td><span class="badge by">Em análise</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('📋 Ocorrência #0023')">👁</div><div class="abtn" onclick="showToast('✅ Resolvida!')">✅</div></div></td></tr>
-            <tr><td class="tdb" style="color:var(--tx4)">#0022</td><td>312</td><td>Descarte</td><td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Lixo fora do horário</td><td>02/03/2026</td><td><span class="badge by">R$ 100</span></td><td><span class="badge by">Aberta</span></td><td><div class="abtns"><div class="abtn">👁</div><div class="abtn" onclick="showToast('✅ Resolvida!')">✅</div></div></td></tr>
-            <tr><td class="tdb" style="color:var(--tx4)">#0021</td><td>110</td><td>Vandalismo</td><td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Dano ao elevador Bloco A</td><td>28/02/2026</td><td><span class="badge br">R$ 500</span></td><td><span class="badge bg">Resolvida</span></td><td><div class="abtns"><div class="abtn">👁</div></div></td></tr>
-            <tr><td class="tdb" style="color:var(--tx4)">#0020</td><td>204</td><td>Barulho</td><td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Festa sem autorização</td><td>22/02/2026</td><td><span class="badge br">R$ 200</span></td><td><span class="badge bg">Resolvida</span></td><td><div class="abtns"><div class="abtn">👁</div></div></td></tr>
-          </tbody>
-        </table>
+  <div class="mo" id="modal-transferir-unidade" onclick="closeModalOut(event)">
+    <div class="mbox">
+      <div class="mh">
+        <div class="mt">Transferir Titularidade</div>
+        <div class="mc" onclick="closeModal('modal-transferir-unidade')">✕</div>
+      </div>
+      <div
+        style="padding:10px; background:var(--yellow-bg); border-left:3px solid var(--yellow); border-radius:4px; margin-bottom:16px;">
+        <span style="font-size:12px; color:#92400e; font-weight:500;">Regra: A transferência será bloqueada se a unidade
+          possuir débitos ativos. O histórico do titular anterior será mantido.</span>
+      </div>
+      <div class="fgrid">
+        <div class="fgg"><label class="fgl">Unidade</label><input class="fgi" value="101 - Bloco A" disabled
+            style="background:var(--surf2);cursor:not-allowed;"></div>
+        <div class="fgg"><label class="fgl">Titular Atual</label><input class="fgi" value="Roberto Alves" disabled
+            style="background:var(--surf2);cursor:not-allowed;"></div>
+      </div>
+      <div class="fgg"><label class="fgl">Novo Titular</label><input class="fgi"
+          placeholder="Nome completo do novo proprietário"></div>
+      <div class="fgrid">
+        <div class="fgg"><label class="fgl">CPF / CNPJ</label><input class="fgi" placeholder="000.000.000-00"></div>
+        <div class="fgg"><label class="fgl">Data de Transferência</label><input class="fgi" type="date"></div>
+      </div>
+      <div class="mf">
+        <button class="btn btn-s" onclick="closeModal('modal-transferir-unidade')">Cancelar</button>
+        <button class="btn btn-p" onclick="saveModal('modal-transferir-unidade')">Concluir Transferência</button>
       </div>
     </div>
   </div>
 
-  <div class="content" id="page-assembleias">
-    <div class="ph">
-      <div><div class="pt">Assembleias e Votações</div><div class="ps">Gestão de pautas, votos e resultados</div></div>
-      <button class="btn btn-p" onclick="openModal('modal-assembleia')">
-        <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round"/></svg>
-        Criar Assembleia
-      </button>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;">
-      <div class="card" style="border:2px solid var(--accent);position:relative;overflow:hidden;">
-        <div style="position:absolute;top:0;right:0;width:120px;height:120px;background:var(--accent-glow);border-radius:50%;transform:translate(30px,-30px);pointer-events:none;"></div>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><span class="badge bb">Próxima</span><span style="font-size:12px;color:var(--tx4)">13/03/2026 · 19h</span></div>
-        <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:6px;">Assembleia Ordinária — Março/2026</div>
-        <div style="font-size:13px;color:var(--tx3);margin-bottom:14px;">Salão de Festas · 120 convocados</div>
-        <div style="font-size:12px;font-weight:600;color:var(--tx4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px;">Pautas</div>
-        <div style="display:flex;flex-direction:column;gap:5px;">
-          <div style="display:flex;align-items:center;gap:8px;font-size:13px;"><span style="color:var(--accent);font-weight:600;">1.</span> Aprovação do orçamento 2026</div>
-          <div style="display:flex;align-items:center;gap:8px;font-size:13px;"><span style="color:var(--accent);font-weight:600;">2.</span> Reforma da fachada (votação)</div>
-          <div style="display:flex;align-items:center;gap:8px;font-size:13px;"><span style="color:var(--accent);font-weight:600;">3.</span> Eleição de subsíndico</div>
-        </div>
-        <div style="display:flex;gap:8px;margin-top:14px;">
-          <button class="btn btn-p btn-sm" onclick="showToast('📤 Convocação enviada a 120 unidades')">Enviar Convocação</button>
-          <button class="btn btn-s btn-sm" onclick="openModal('modal-assembleia')">Editar Pauta</button>
-        </div>
+  <div class="mo" id="modal-inativar-unidade" onclick="closeModalOut(event)">
+    <div class="mbox">
+      <div class="mh">
+        <div class="mt">Inativar Unidade</div>
+        <div class="mc" onclick="closeModal('modal-inativar-unidade')">✕</div>
       </div>
-      <div class="card">
-        <div class="card-h"><div class="card-t">Votação Ativa</div><span class="badge bg">Aberta</span></div>
-        <div style="font-size:14px;font-weight:500;margin-bottom:3px;">Reforma da fachada do Bloco B</div>
-        <div style="font-size:12.5px;color:var(--tx4);margin-bottom:14px;">Encerra 13/03/2026 · 47 votos</div>
-        <div class="vbw"><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:3px;"><span>✅ Sim</span><span style="color:var(--green)">68%</span></div><div class="vbt"><div class="vbf" style="width:68%;background:var(--green)"></div></div><div class="vbm"><span>32 votos</span><span>47 total</span></div></div>
-        <div class="vbw" style="margin-top:10px;"><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:3px;"><span>❌ Não</span><span style="color:var(--red)">22%</span></div><div class="vbt"><div class="vbf" style="width:22%;background:var(--red)"></div></div><div class="vbm"><span>10 votos</span></div></div>
-        <div class="vbw" style="margin-top:10px;"><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:3px;"><span>⚪ Abstenção</span><span style="color:var(--tx4)">10%</span></div><div class="vbt"><div class="vbf" style="width:10%;background:var(--tx4)"></div></div><div class="vbm"><span>5 votos</span></div></div>
-        <div style="margin-top:12px;font-size:12px;color:var(--tx4)">73 unidades ainda não votaram</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-h"><div class="card-t">Histórico de Assembleias</div></div>
-      <div class="tw">
-        <table>
-          <thead><tr><th>Data</th><th>Tipo</th><th>Pautas</th><th>Quórum</th><th>Status</th><th>Ata</th></tr></thead>
-          <tbody>
-            <tr><td>15/11/2025</td><td>Ordinária</td><td>3 pautas</td><td>78%</td><td><span class="badge bg">Concluída</span></td><td><div class="abtn" onclick="showToast('📄 Ata disponível')">📄</div></td></tr>
-            <tr><td>22/08/2025</td><td>Extraordinária</td><td>1 pauta</td><td>65%</td><td><span class="badge bg">Concluída</span></td><td><div class="abtn" onclick="showToast('📄 Ata disponível')">📄</div></td></tr>
-            <tr><td>10/05/2025</td><td>Ordinária</td><td>4 pautas</td><td>82%</td><td><span class="badge bg">Concluída</span></td><td><div class="abtn" onclick="showToast('📄 Ata disponível')">📄</div></td></tr>
-          </tbody>
-        </table>
+      <p style="font-size:13.5px;color:var(--tx2);margin-bottom:16px;line-height:1.5;">Tem certeza que deseja inativar
+        esta unidade do sistema? <br><strong style="color:var(--red);">Atenção:</strong> A inativação não poderá ser
+        concluída se houver multas ou taxas pendentes.</p>
+      <div class="fgg"><label class="fgl">Unidade Selecionada</label><input class="fgi"
+          value="108 - Bloco A (Possui Débitos)" disabled
+          style="background:var(--red-bg);color:var(--red);border-color:var(--red);cursor:not-allowed;"></div>
+      <div class="mf">
+        <button class="btn btn-s" onclick="closeModal('modal-inativar-unidade')">Cancelar</button>
+        <button class="btn btn-p" style="background:var(--red);box-shadow:none;"
+          onclick="showToast('Erro: Unidade possui débitos ativos.'); closeModal('modal-inativar-unidade');">Confirmar
+          Inativação</button>
       </div>
     </div>
   </div>
 
-  <div class="content" id="page-financeiro">
-    <div class="ph">
-      <div><div class="pt">Financeiro</div><div class="ps">Cobranças, pagamentos e histórico</div></div>
-      <div style="display:flex; gap:8px;">
-        <button class="btn btn-s" onclick="openModal('modal-orcamento')">Novo Orçamento</button>
-        <button class="btn btn-p" onclick="openModal('modal-despesa')">Nova Despesa</button>
-        <button class="btn btn-s" onclick="showToast('📊 Relatório exportado em PDF')">
-          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke-width="1.8"/><polyline points="7 10 12 15 17 10" stroke-width="1.8"/><line x1="12" y1="15" x2="12" y2="3" stroke-width="1.8"/></svg>
-          Exportar
-        </button>
-      </div>
-    </div>
-    <div class="fs">
-      <div class="fc" style="border-top:3px solid var(--green);"><div class="flab">Receita — Março/2026</div><div class="fa" style="color:var(--green)">R$ 48.200</div><div style="font-size:12px;color:var(--tx4);margin-top:6px;">83 pagamentos · 37 pendentes</div></div>
-      <div class="fc" style="border-top:3px solid var(--red);"><div class="flab">Despesas — Março/2026</div><div class="fa" style="color:var(--red)">R$ 31.450</div><div style="font-size:12px;color:var(--tx4);margin-top:6px;">Manutenção, portaria, limpeza</div></div>
-      <div class="fc" style="border-top:3px solid var(--accent);"><div class="flab">Inadimplência</div><div class="fa" style="color:var(--accent)">R$ 4.060</div><div style="font-size:12px;color:var(--tx4);margin-top:6px;">7 unidades · Cobrança ativa</div></div>
-    </div>
-    <div class="card" style="padding:0;">
-      <div style="padding:14px 18px;border-bottom:1px solid var(--bdr);display:flex;justify-content:space-between;align-items:center;">
-        <div class="card-t">Cobranças — Março/2026</div>
-        <select class="fsel"><option>Todos</option><option>Em dia</option><option>Pendente</option><option>Inadimplente</option></select>
-      </div>
-      <div class="tw">
-        <table>
-          <thead><tr><th>Unidade</th><th>Titular</th><th>Cota</th><th>Multa/Juros</th><th>Total</th><th>Vencimento</th><th>Status</th><th>Ações</th></tr></thead>
-          <tbody>
-            <tr><td>101</td><td>Roberto Alves</td><td>R$ 580</td><td>—</td><td class="tdb">R$ 580</td><td>15/03</td><td><span class="badge bg">Pago</span></td><td><div class="abtn" onclick="showToast('🧾 Comprovante gerado')">🧾</div></td></tr>
-            <tr><td>102</td><td>Ana Lima</td><td>R$ 580</td><td>—</td><td class="tdb">R$ 580</td><td>15/03</td><td><span class="badge bg">Pago</span></td><td><div class="abtn" onclick="showToast('🧾 Comprovante gerado')">🧾</div></td></tr>
-            <tr><td>108</td><td>Jorge Santos</td><td>R$ 580</td><td>R$ 46</td><td class="tdb">R$ 626</td><td>15/02</td><td><span class="badge br">Inadimplente</span></td><td><div class="abtn" onclick="showToast('📨 Notificação enviada')">📨</div></td></tr>
-            <tr><td>215</td><td>Carla Mendes</td><td>R$ 580</td><td>—</td><td class="tdb">R$ 580</td><td>15/03</td><td><span class="badge by">Pendente</span></td><td><div class="abtn" onclick="showToast('📨 Lembrete enviado')">📨</div></td></tr>
-            <tr><td>304</td><td>Fernanda Costa</td><td>R$ 580</td><td>—</td><td class="tdb">R$ 580</td><td>15/03</td><td><span class="badge bg">Pago</span></td><td><div class="abtn">🧾</div></td></tr>
-            <tr><td>312</td><td>Paulo Oliveira</td><td>R$ 580</td><td>R$ 92</td><td class="tdb">R$ 672</td><td>15/01</td><td><span class="badge br">Inadimplente</span></td><td><div class="abtn" onclick="showToast('📨 Notificação enviada')">📨</div></td></tr>
-            <tr><td>421</td><td>Rafael Lima</td><td>R$ 580</td><td>R$ 17</td><td class="tdb">R$ 597</td><td>15/02</td><td><span class="badge br">Inadimplente</span></td><td><div class="abtn">📨</div></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+  <div class="tc" id="toastC"></div>
 
-  <div class="content" id="page-notificacoes">
-    <div class="ph">
-      <div><div class="pt">Notificações</div><div class="ps">5 não lidas</div></div>
-      <button class="btn btn-s" onclick="showToast('✅ Todas marcadas como lidas')">Marcar como lidas</button>
-    </div>
-    <div class="nl">
-      <div class="ni2 unread"><div class="niw" style="background:#fee2e2;">🔔</div><div class="nb2"><div class="nt">Nova ocorrência — Barulho Apto 508</div><div class="nd">Ocorrência #0023 aguarda análise. Multa sugerida: R$ 200,00.</div></div><div class="ntime">há 3h</div></div>
-      <div class="ni2 unread"><div class="niw" style="background:#dbeafe;">📅</div><div class="nb2"><div class="nt">Reserva confirmada — Churrasqueira 2</div><div class="nd">Ana Lima (Apto 102) confirmou para 07/03 das 12h às 18h.</div></div><div class="ntime">há 1h</div></div>
-      <div class="ni2 unread"><div class="niw" style="background:#d1fae5;">💰</div><div class="nb2"><div class="nt">Pagamento recebido — Apto 304</div><div class="nd">Fernanda Costa pagou R$ 580,00 — cota de março/2026.</div></div><div class="ntime">há 12min</div></div>
-      <div class="ni2 unread"><div class="niw" style="background:#ede9fe;">🗳️</div><div class="nb2"><div class="nt">Votação ativa — Reforma fachada Bloco B</div><div class="nd">47 de 120 unidades votaram. Encerra em 13/03/2026.</div></div><div class="ntime">ontem</div></div>
-      <div class="ni2 unread"><div class="niw" style="background:#fef3c7;">⚠️</div><div class="nb2"><div class="nt">Inadimplência — 3 novas unidades</div><div class="nd">Apto 108, 312 e 421 estão inadimplentes. Considere notificações.</div></div><div class="ntime">2 dias</div></div>
-      <div class="ni2" style="opacity:.6;"><div class="niw" style="background:var(--surf2);">📋</div><div class="nb2"><div class="nt">Assembleia agendada para 13/03</div><div class="nd">Enviar convocação com 10 dias de antecedência.</div></div><div class="ntime">3 dias</div></div>
-    </div>
-  </div>
-</div>
-</div>
+  <script>
+    function doLogin() {
+      const login = document.getElementById('loginScreen');
+      if (login) login.style.display = 'none';
 
-<div class="mo" id="modal-generico" onclick="closeModalOut(event)">
-  <div class="mbox">
-    <div class="mh"><div class="mt">Novo Registro Genérico</div><div class="mc" onclick="closeModal('modal-generico')">✕</div></div>
-    <div class="fgg"><label class="fgl">Descrição</label><input class="fgi" placeholder="Preencha os dados"></div>
-    <div class="mf">
-      <button class="btn btn-s" onclick="closeModal('modal-generico')">Cancelar</button>
-      <button class="btn btn-p" onclick="saveModal('modal-generico')">Salvar Registro</button>
-    </div>
-  </div>
-</div>
+      const app = document.getElementById('app');
+      if (app) app.style.display = 'flex';
 
-<div class="mo" id="modal-unidade" onclick="closeModalOut(event)">
-  <div class="mbox">
-    <div class="mh"><div class="mt">Adicionar Unidade</div><div class="mc" onclick="closeModal('modal-unidade')">✕</div></div>
-    <div class="fgrid">
-      <div class="fgg"><label class="fgl">Unidade</label><input class="fgi" placeholder="Ex: 304" type="text"></div>
-      <div class="fgg"><label class="fgl">Bloco</label><select class="fgi"><option>Bloco A</option><option>Bloco B</option><option>Bloco C</option><option>Bloco D</option></select></div>
-    </div>
-    <div class="fgg"><label class="fgl">Titular</label><input class="fgi" placeholder="Nome completo"></div>
-    <div class="fgg"><label class="fgl">E-mail</label><input class="fgi" type="email" placeholder="titular@email.com"></div>
-    <div class="fgrid">
-      <div class="fgg"><label class="fgl">Telefone</label><input class="fgi" placeholder="(11) 9 0000-0000"></div>
-      <div class="fgg"><label class="fgl">Status</label><select class="fgi"><option>Em dia</option><option>Pendente</option><option>Inadimplente</option></select></div>
-    </div>
-    <div class="mf">
-      <button class="btn btn-s" onclick="closeModal('modal-unidade')">Cancelar</button>
-      <button class="btn btn-p" onclick="saveModal('modal-unidade')">Salvar Unidade</button>
-    </div>
-  </div>
-</div>
+      showToast('✅ Bem-vindo, Marco Ribeiro!');
+    }
+    const pages = ['dashboard', 'unidades', 'moradores', 'reservas', 'ocorrencias', 'assembleias', 'financeiro', 'notificacoes'];
+    const bcs = { dashboard: 'Dashboard', unidades: 'Unidades', moradores: 'Moradores', reservas: 'Reservas', ocorrencias: 'Ocorrências', assembleias: 'Assembleias', financeiro: 'Financeiro', notificacoes: 'Notificações' };
+    function nav(p) {
+      pages.forEach(x => { const e = document.getElementById('page-' + x); if (e) e.classList.remove('active'); });
+      const t = document.getElementById('page-' + p); if (t) t.classList.add('active');
+      document.querySelectorAll('.ni').forEach(e => { e.classList.remove('active'); const o = e.getAttribute('onclick') || ''; if (o.includes("'" + p + "'")) e.classList.add('active'); });
+      document.getElementById('breadcrumb').textContent = bcs[p] || p;
+    }
 
-<div class="mo" id="modal-morador" onclick="closeModalOut(event)">
-  <div class="mbox">
-    <div class="mh"><div class="mt">Adicionar Morador</div><div class="mc" onclick="closeModal('modal-morador')">✕</div></div>
-    <div class="fgg"><label class="fgl">Nome Completo</label><input class="fgi" placeholder="Nome do morador"></div>
-    <div class="fgrid">
-      <div class="fgg"><label class="fgl">Unidade</label><input class="fgi" placeholder="Ex: 304"></div>
-      <div class="fgg"><label class="fgl">Tipo</label><select class="fgi"><option>Titular</option><option>Dependente</option><option>Inquilino</option></select></div>
-    </div>
-    <div class="fgrid">
-      <div class="fgg"><label class="fgl">Telefone</label><input class="fgi" placeholder="(11) 9 0000-0000"></div>
-      <div class="fgg"><label class="fgl">E-mail</label><input class="fgi" type="email" placeholder="email@exemplo.com"></div>
-    </div>
-    <div class="mf">
-      <button class="btn btn-s" onclick="closeModal('modal-morador')">Cancelar</button>
-      <button class="btn btn-p" onclick="saveModal('modal-morador')">Salvar Morador</button>
-    </div>
-  </div>
-</div>
+    // Lógica de Modais Atualizada
+    function openModal(id) {
+      const modalId = id || 'modal-generico';
+      const m = document.getElementById(modalId);
+      if (!m) return;
+      m.style.display = 'flex';
+      setTimeout(() => m.classList.add('open'), 10);
+    }
 
-<div class="mo" id="modal-assembleia" onclick="closeModalOut(event)">
-  <div class="mbox">
-    <div class="mh"><div class="mt">Criar Assembleia</div><div class="mc" onclick="closeModal('modal-assembleia')">✕</div></div>
-    <div class="fgg"><label class="fgl">Título da Assembleia</label><input class="fgi" placeholder="Ex: Assembleia Ordinária - Março"></div>
-    <div class="fgrid">
-      <div class="fgg"><label class="fgl">Data</label><input class="fgi" type="date"></div>
-      <div class="fgg"><label class="fgl">Hora</label><input class="fgi" type="time"></div>
-    </div>
-    <div class="fgg"><label class="fgl">Local</label><input class="fgi" placeholder="Ex: Salão de Festas"></div>
-    <div class="fgg"><label class="fgl">Pautas (uma por linha)</label><textarea class="fgi" rows="3" placeholder="1. Aprovação do orçamento 2026..."></textarea></div>
-    <div class="mf">
-      <button class="btn btn-s" onclick="closeModal('modal-assembleia')">Cancelar</button>
-      <button class="btn btn-p" onclick="saveModal('modal-assembleia')">Agendar Assembleia</button>
-    </div>
-  </div>
-</div>
+    function closeModal(id) {
+      if (id) {
+        const m = document.getElementById(id);
+        if (!m) return;
+        m.classList.remove('open');
+        setTimeout(() => { m.style.display = 'none'; }, 200);
+      } else {
+        document.querySelectorAll('.mo.open').forEach(m => {
+          m.classList.remove('open');
+          setTimeout(() => { m.style.display = 'none'; }, 200);
+        });
+      }
+    }
 
-<div class="mo" id="modal-orcamento" onclick="closeModalOut(event)">
-  <div class="mbox">
-    <div class="mh"><div class="mt">Adicionar Orçamento</div><div class="mc" onclick="closeModal('modal-orcamento')">✕</div></div>
-    <div class="fgrid">
-      <div class="fgg"><label class="fgl">Ano / Período</label><input class="fgi" placeholder="Ex: 2026" type="text"></div>
-      <div class="fgg"><label class="fgl">Valor Total Previsto</label><input class="fgi" placeholder="R$ 0,00" type="text"></div>
-    </div>
-    <div class="fgg"><label class="fgl">Descrição</label><input class="fgi" placeholder="Ex: Orçamento Anual Ordinário"></div>
-    <div class="mf">
-      <button class="btn btn-s" onclick="closeModal('modal-orcamento')">Cancelar</button>
-      <button class="btn btn-p" onclick="saveModal('modal-orcamento')">Salvar Orçamento</button>
-    </div>
-  </div>
-</div>
+    function closeModalOut(e) {
+      if (e.target.classList.contains('mo')) {
+        closeModal(e.target.id);
+      }
+    }
 
-<div class="mo" id="modal-despesa" onclick="closeModalOut(event)">
-  <div class="mbox">
-    <div class="mh"><div class="mt">Adicionar Despesa no Orçamento</div><div class="mc" onclick="closeModal('modal-despesa')">✕</div></div>
-    <div class="fgg"><label class="fgl">Descrição da Despesa</label><input class="fgi" placeholder="Ex: Manutenção dos Elevadores"></div>
-    <div class="fgrid">
-      <div class="fgg"><label class="fgl">Valor</label><input class="fgi" placeholder="R$ 0,00"></div>
-      <div class="fgg"><label class="fgl">Data</label><input class="fgi" type="date"></div>
-    </div>
-    <div class="fgg"><label class="fgl">Categoria</label><select class="fgi"><option>Manutenção</option><option>Portaria</option><option>Limpeza e Conservação</option><option>Administrativo</option><option>Extraordinária</option></select></div>
-    <div class="fgg" style="margin-top:10px;">
-      <label style="font-size:12.5px;color:var(--tx2);display:flex;align-items:center;gap:8px;cursor:pointer;">
-        <input type="checkbox" style="width:16px;height:16px;accent-color:var(--accent);">
-        Exige aprovação em assembleia (Despesa Extraordinária)
-      </label>
-    </div>
-    <div class="mf">
-      <button class="btn btn-s" onclick="closeModal('modal-despesa')">Cancelar</button>
-      <button class="btn btn-p" onclick="saveModal('modal-despesa')">Registrar Despesa</button>
-    </div>
-  </div>
-</div>
+    function saveModal(id) {
+      closeModal(id);
+      showToast('✅ Registro salvo com sucesso!');
+    }
 
-<div class="tc" id="toastC"></div>
-
-<script>
-function doLogin() {
-  const login = document.getElementById('loginScreen');
-  if (login) login.style.display = 'none';
-
-  const app = document.getElementById('app');
-  if (app) app.style.display = 'flex';
-
-  showToast('✅ Bem-vindo, Marco Ribeiro!');
-}
-const pages=['dashboard','unidades','moradores','reservas','ocorrencias','assembleias','financeiro','notificacoes'];
-const bcs={dashboard:'Dashboard',unidades:'Unidades',moradores:'Moradores',reservas:'Reservas',ocorrencias:'Ocorrências',assembleias:'Assembleias',financeiro:'Financeiro',notificacoes:'Notificações'};
-function nav(p){
-  pages.forEach(x=>{const e=document.getElementById('page-'+x);if(e)e.classList.remove('active');});
-  const t=document.getElementById('page-'+p);if(t)t.classList.add('active');
-  document.querySelectorAll('.ni').forEach(e=>{e.classList.remove('active');const o=e.getAttribute('onclick')||'';if(o.includes("'"+p+"'"))e.classList.add('active');});
-  document.getElementById('breadcrumb').textContent=bcs[p]||p;
-}
-
-// Lógica de Modais Atualizada
-function openModal(id) {
-  const modalId = id || 'modal-generico';
-  const m = document.getElementById(modalId);
-  if(!m) return;
-  m.style.display = 'flex';
-  setTimeout(() => m.classList.add('open'), 10);
-}
-
-function closeModal(id) {
-  if(id) {
-    const m = document.getElementById(id);
-    if(!m) return;
-    m.classList.remove('open');
-    setTimeout(() => { m.style.display = 'none'; }, 200);
-  } else {
-    document.querySelectorAll('.mo.open').forEach(m => {
-      m.classList.remove('open');
-      setTimeout(() => { m.style.display = 'none'; }, 200);
-    });
-  }
-}
-
-function closeModalOut(e) {
-  if(e.target.classList.contains('mo')) {
-    closeModal(e.target.id);
-  }
-}
-
-function saveModal(id) {
-  closeModal(id);
-  showToast('✅ Registro salvo com sucesso!');
-}
-
-function showToast(msg){
-  const c=document.getElementById('toastC');
-  const t=document.createElement('div');t.className='toast';t.textContent=msg;c.appendChild(t);
-  setTimeout(()=>{t.style.transition='all .3s';t.style.opacity='0';t.style.transform='translateX(100%)';setTimeout(()=>t.remove(),300);},2800);
-}
-</script>
+    function showToast(msg) {
+      const c = document.getElementById('toastC');
+      const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; c.appendChild(t);
+      setTimeout(() => { t.style.transition = 'all .3s'; t.style.opacity = '0'; t.style.transform = 'translateX(100%)'; setTimeout(() => t.remove(), 300); }, 2800);
+    }
+  </script>
 </body>
+
 </html>
