@@ -221,7 +221,7 @@ tbody tr:hover td{background:var(--surf2);}
 .mf{display:flex;justify-content:flex-end;gap:8px;margin-top:24px;padding-top:16px;border-top:1px solid var(--bdr);}
 .fgg{margin-bottom:16px;}
 .fgl{display:block;font-size:12.5px;font-weight:500;color:var(--tx3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.3px;}
-.fgi{width:100%;padding:9px 12px;border:1px solid var(--bdr);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--tx);outline:none;transition:border-color .15s;background:var(--surf);}
+.fgi{width:100%;padding:9px 12px;border:1px solid var(--bdr);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--tx);outline:none;transition:border-color .15s;background:var(--surf);resize:vertical;}
 .fgi:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);}
 .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 
@@ -236,7 +236,6 @@ tbody tr:hover td{background:var(--surf2);}
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="loginScreen">
   <div class="lcard">
     <div class="llogo">
@@ -258,10 +257,8 @@ tbody tr:hover td{background:var(--surf2);}
   </div>
 </div>
 
-<!-- APP -->
 <div id="app" style="display:none;width:100%;min-height:100vh;flex-direction:row;">
 
-<!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sb-logo">
     <div class="sb-logo-mark">
@@ -331,7 +328,6 @@ tbody tr:hover td{background:var(--surf2);}
   </div>
 </aside>
 
-<!-- MAIN -->
 <div class="main">
   <header class="topbar">
     <div class="bread">
@@ -351,14 +347,13 @@ tbody tr:hover td{background:var(--surf2);}
     </div>
   </header>
 
-  <!-- DASHBOARD -->
   <div class="content active" id="page-dashboard">
     <div class="ph">
       <div>
         <div class="pt">Bom dia, Marco 👋</div>
         <div class="ps">Quinta-feira, 05 de março de 2026 · Residencial Parque Verde</div>
       </div>
-      <button class="btn btn-p" onclick="openModal()">
+      <button class="btn btn-p" onclick="openModal('modal-unidade')">
         <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round"/></svg>
         Novo Registro
       </button>
@@ -427,11 +422,10 @@ tbody tr:hover td{background:var(--surf2);}
     </div>
   </div>
 
-  <!-- UNIDADES -->
   <div class="content" id="page-unidades">
     <div class="ph">
       <div><div class="pt">Gestão de Unidades</div><div class="ps">120 unidades cadastradas · Blocos A, B, C e D</div></div>
-      <button class="btn btn-p" onclick="showToast('✅ Nova unidade adicionada')">
+      <button class="btn btn-p" onclick="openModal('modal-unidade')">
         <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round"/></svg>
         Nova Unidade
       </button>
@@ -446,14 +440,14 @@ tbody tr:hover td{background:var(--surf2);}
         <table>
           <thead><tr><th>Unidade</th><th>Titular</th><th>Moradores</th><th>Bloco/Andar</th><th>Status</th><th>Ações</th></tr></thead>
           <tbody>
-            <tr><td class="tdb">101</td><td>Roberto Alves</td><td>3</td><td>Bloco A · 1º</td><td><span class="badge bg">Em dia</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 101')">👁</div><div class="abtn" onclick="openModal()">✏️</div><div class="abtn" onclick="showToast('🔄 Transferência iniciada')">🔄</div></div></td></tr>
-            <tr><td class="tdb">102</td><td>Ana Lima</td><td>2</td><td>Bloco A · 1º</td><td><span class="badge bg">Em dia</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 102')">👁</div><div class="abtn" onclick="openModal()">✏️</div><div class="abtn" onclick="showToast('🔄 Transferência iniciada')">🔄</div></div></td></tr>
-            <tr><td class="tdb">108</td><td>Jorge Santos</td><td>1</td><td>Bloco A · 1º</td><td><span class="badge br">Inadimplente</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 108')">👁</div><div class="abtn" onclick="openModal()">✏️</div><div class="abtn" onclick="showToast('🔄 Transferência iniciada')">🔄</div></div></td></tr>
-            <tr><td class="tdb">215</td><td>Carla Mendes</td><td>2</td><td>Bloco B · 2º</td><td><span class="badge bg">Em dia</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 215')">👁</div><div class="abtn" onclick="openModal()">✏️</div><div class="abtn">🔄</div></div></td></tr>
-            <tr><td class="tdb">304</td><td>Fernanda Costa</td><td>4</td><td>Bloco C · 3º</td><td><span class="badge bg">Em dia</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 304')">👁</div><div class="abtn" onclick="openModal()">✏️</div><div class="abtn">🔄</div></div></td></tr>
-            <tr><td class="tdb">312</td><td>Paulo Oliveira</td><td>3</td><td>Bloco C · 3º</td><td><span class="badge br">Inadimplente</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 312')">👁</div><div class="abtn" onclick="openModal()">✏️</div><div class="abtn">🔄</div></div></td></tr>
-            <tr><td class="tdb">421</td><td>Rafael Lima</td><td>2</td><td>Bloco D · 4º</td><td><span class="badge by">Pendente</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 421')">👁</div><div class="abtn" onclick="openModal()">✏️</div><div class="abtn">🔄</div></div></td></tr>
-            <tr><td class="tdb">508</td><td>Marcos Pereira</td><td>2</td><td>Bloco A · 5º</td><td><span class="badge bg">Em dia</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 508')">👁</div><div class="abtn" onclick="openModal()">✏️</div><div class="abtn">🔄</div></div></td></tr>
+            <tr><td class="tdb">101</td><td>Roberto Alves</td><td>3</td><td>Bloco A · 1º</td><td><span class="badge bg">Em dia</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 101')">👁</div><div class="abtn" onclick="openModal('modal-unidade')">✏️</div><div class="abtn" onclick="showToast('🔄 Transferência iniciada')">🔄</div></div></td></tr>
+            <tr><td class="tdb">102</td><td>Ana Lima</td><td>2</td><td>Bloco A · 1º</td><td><span class="badge bg">Em dia</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 102')">👁</div><div class="abtn" onclick="openModal('modal-unidade')">✏️</div><div class="abtn" onclick="showToast('🔄 Transferência iniciada')">🔄</div></div></td></tr>
+            <tr><td class="tdb">108</td><td>Jorge Santos</td><td>1</td><td>Bloco A · 1º</td><td><span class="badge br">Inadimplente</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 108')">👁</div><div class="abtn" onclick="openModal('modal-unidade')">✏️</div><div class="abtn" onclick="showToast('🔄 Transferência iniciada')">🔄</div></div></td></tr>
+            <tr><td class="tdb">215</td><td>Carla Mendes</td><td>2</td><td>Bloco B · 2º</td><td><span class="badge bg">Em dia</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 215')">👁</div><div class="abtn" onclick="openModal('modal-unidade')">✏️</div><div class="abtn">🔄</div></div></td></tr>
+            <tr><td class="tdb">304</td><td>Fernanda Costa</td><td>4</td><td>Bloco C · 3º</td><td><span class="badge bg">Em dia</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 304')">👁</div><div class="abtn" onclick="openModal('modal-unidade')">✏️</div><div class="abtn">🔄</div></div></td></tr>
+            <tr><td class="tdb">312</td><td>Paulo Oliveira</td><td>3</td><td>Bloco C · 3º</td><td><span class="badge br">Inadimplente</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 312')">👁</div><div class="abtn" onclick="openModal('modal-unidade')">✏️</div><div class="abtn">🔄</div></div></td></tr>
+            <tr><td class="tdb">421</td><td>Rafael Lima</td><td>2</td><td>Bloco D · 4º</td><td><span class="badge by">Pendente</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 421')">👁</div><div class="abtn" onclick="openModal('modal-unidade')">✏️</div><div class="abtn">🔄</div></div></td></tr>
+            <tr><td class="tdb">508</td><td>Marcos Pereira</td><td>2</td><td>Bloco A · 5º</td><td><span class="badge bg">Em dia</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Unidade 508')">👁</div><div class="abtn" onclick="openModal('modal-unidade')">✏️</div><div class="abtn">🔄</div></div></td></tr>
           </tbody>
         </table>
       </div>
@@ -470,11 +464,10 @@ tbody tr:hover td{background:var(--surf2);}
     </div>
   </div>
 
-  <!-- MORADORES -->
   <div class="content" id="page-moradores">
     <div class="ph">
       <div><div class="pt">Gestão de Moradores</div><div class="ps">284 moradores em 120 unidades</div></div>
-      <button class="btn btn-p" onclick="openModal()">
+      <button class="btn btn-p" onclick="openModal('modal-morador')">
         <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round"/></svg>
         Adicionar Morador
       </button>
@@ -488,23 +481,22 @@ tbody tr:hover td{background:var(--surf2);}
         <table>
           <thead><tr><th>Nome</th><th>Unidade</th><th>Tipo</th><th>Telefone</th><th>Status</th><th>Ações</th></tr></thead>
           <tbody>
-            <tr><td class="tdb">Roberto Alves</td><td>101</td><td><span class="badge bb">Titular</span></td><td>(11) 9 8765-4321</td><td><span class="badge bg">Ativo</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Perfil de Roberto Alves')">👁</div><div class="abtn" onclick="openModal()">✏️</div><div class="abtn" onclick="showToast('🗑 Confirme remoção')">🗑</div></div></td></tr>
-            <tr><td>Luísa Alves</td><td>101</td><td><span class="badge bgr">Dependente</span></td><td>—</td><td><span class="badge bg">Ativo</span></td><td><div class="abtns"><div class="abtn">👁</div><div class="abtn" onclick="openModal()">✏️</div><div class="abtn">🗑</div></div></td></tr>
-            <tr><td class="tdb">Ana Lima</td><td>102</td><td><span class="badge bb">Titular</span></td><td>(11) 9 9876-5432</td><td><span class="badge bg">Ativo</span></td><td><div class="abtns"><div class="abtn">👁</div><div class="abtn" onclick="openModal()">✏️</div><div class="abtn">🗑</div></div></td></tr>
-            <tr><td class="tdb">Carla Mendes</td><td>215</td><td><span class="badge bb">Titular</span></td><td>(11) 9 5555-0001</td><td><span class="badge bg">Ativo</span></td><td><div class="abtns"><div class="abtn">👁</div><div class="abtn" onclick="openModal()">✏️</div><div class="abtn">🗑</div></div></td></tr>
-            <tr><td class="tdb">Paulo Oliveira</td><td>312</td><td><span class="badge bb">Titular</span></td><td>(11) 9 4444-3333</td><td><span class="badge br">Inadimplente</span></td><td><div class="abtns"><div class="abtn">👁</div><div class="abtn" onclick="openModal()">✏️</div><div class="abtn">🗑</div></div></td></tr>
-            <tr><td class="tdb">Marcos Pereira</td><td>508</td><td><span class="badge bb">Titular</span></td><td>(11) 9 3333-2222</td><td><span class="badge by">Ocorrência</span></td><td><div class="abtns"><div class="abtn">👁</div><div class="abtn" onclick="openModal()">✏️</div><div class="abtn">🗑</div></div></td></tr>
+            <tr><td class="tdb">Roberto Alves</td><td>101</td><td><span class="badge bb">Titular</span></td><td>(11) 9 8765-4321</td><td><span class="badge bg">Ativo</span></td><td><div class="abtns"><div class="abtn" onclick="showToast('👁 Perfil de Roberto Alves')">👁</div><div class="abtn" onclick="openModal('modal-morador')">✏️</div><div class="abtn" onclick="showToast('🗑 Confirme remoção')">🗑</div></div></td></tr>
+            <tr><td>Luísa Alves</td><td>101</td><td><span class="badge bgr">Dependente</span></td><td>—</td><td><span class="badge bg">Ativo</span></td><td><div class="abtns"><div class="abtn">👁</div><div class="abtn" onclick="openModal('modal-morador')">✏️</div><div class="abtn">🗑</div></div></td></tr>
+            <tr><td class="tdb">Ana Lima</td><td>102</td><td><span class="badge bb">Titular</span></td><td>(11) 9 9876-5432</td><td><span class="badge bg">Ativo</span></td><td><div class="abtns"><div class="abtn">👁</div><div class="abtn" onclick="openModal('modal-morador')">✏️</div><div class="abtn">🗑</div></div></td></tr>
+            <tr><td class="tdb">Carla Mendes</td><td>215</td><td><span class="badge bb">Titular</span></td><td>(11) 9 5555-0001</td><td><span class="badge bg">Ativo</span></td><td><div class="abtns"><div class="abtn">👁</div><div class="abtn" onclick="openModal('modal-morador')">✏️</div><div class="abtn">🗑</div></div></td></tr>
+            <tr><td class="tdb">Paulo Oliveira</td><td>312</td><td><span class="badge bb">Titular</span></td><td>(11) 9 4444-3333</td><td><span class="badge br">Inadimplente</span></td><td><div class="abtns"><div class="abtn">👁</div><div class="abtn" onclick="openModal('modal-morador')">✏️</div><div class="abtn">🗑</div></div></td></tr>
+            <tr><td class="tdb">Marcos Pereira</td><td>508</td><td><span class="badge bb">Titular</span></td><td>(11) 9 3333-2222</td><td><span class="badge by">Ocorrência</span></td><td><div class="abtns"><div class="abtn">👁</div><div class="abtn" onclick="openModal('modal-morador')">✏️</div><div class="abtn">🗑</div></div></td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
 
-  <!-- RESERVAS -->
   <div class="content" id="page-reservas">
     <div class="ph">
       <div><div class="pt">Reservas de Áreas Comuns</div><div class="ps">Calendário de uso dos espaços compartilhados</div></div>
-      <button class="btn btn-p" onclick="openModal()">
+      <button class="btn btn-p" onclick="openModal('modal-generico')">
         <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round"/></svg>
         Nova Reserva
       </button>
@@ -547,11 +539,10 @@ tbody tr:hover td{background:var(--surf2);}
     </div>
   </div>
 
-  <!-- OCORRÊNCIAS -->
   <div class="content" id="page-ocorrencias">
     <div class="ph">
       <div><div class="pt">Ocorrências e Multas</div><div class="ps">Registro e acompanhamento de infrações</div></div>
-      <button class="btn btn-p" onclick="openModal()">
+      <button class="btn btn-p" onclick="openModal('modal-generico')">
         <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round"/></svg>
         Registrar Ocorrência
       </button>
@@ -576,11 +567,10 @@ tbody tr:hover td{background:var(--surf2);}
     </div>
   </div>
 
-  <!-- ASSEMBLEIAS -->
   <div class="content" id="page-assembleias">
     <div class="ph">
       <div><div class="pt">Assembleias e Votações</div><div class="ps">Gestão de pautas, votos e resultados</div></div>
-      <button class="btn btn-p" onclick="openModal()">
+      <button class="btn btn-p" onclick="openModal('modal-assembleia')">
         <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round"/></svg>
         Criar Assembleia
       </button>
@@ -599,7 +589,7 @@ tbody tr:hover td{background:var(--surf2);}
         </div>
         <div style="display:flex;gap:8px;margin-top:14px;">
           <button class="btn btn-p btn-sm" onclick="showToast('📤 Convocação enviada a 120 unidades')">Enviar Convocação</button>
-          <button class="btn btn-s btn-sm" onclick="openModal()">Editar Pauta</button>
+          <button class="btn btn-s btn-sm" onclick="openModal('modal-assembleia')">Editar Pauta</button>
         </div>
       </div>
       <div class="card">
@@ -627,14 +617,17 @@ tbody tr:hover td{background:var(--surf2);}
     </div>
   </div>
 
-  <!-- FINANCEIRO -->
   <div class="content" id="page-financeiro">
     <div class="ph">
       <div><div class="pt">Financeiro</div><div class="ps">Cobranças, pagamentos e histórico</div></div>
-      <button class="btn btn-p" onclick="showToast('📊 Relatório exportado em PDF')">
-        <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke-width="1.8"/><polyline points="7 10 12 15 17 10" stroke-width="1.8"/><line x1="12" y1="15" x2="12" y2="3" stroke-width="1.8"/></svg>
-        Exportar Relatório
-      </button>
+      <div style="display:flex; gap:8px;">
+        <button class="btn btn-s" onclick="openModal('modal-orcamento')">Novo Orçamento</button>
+        <button class="btn btn-p" onclick="openModal('modal-despesa')">Nova Despesa</button>
+        <button class="btn btn-s" onclick="showToast('📊 Relatório exportado em PDF')">
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke-width="1.8"/><polyline points="7 10 12 15 17 10" stroke-width="1.8"/><line x1="12" y1="15" x2="12" y2="3" stroke-width="1.8"/></svg>
+          Exportar
+        </button>
+      </div>
     </div>
     <div class="fs">
       <div class="fc" style="border-top:3px solid var(--green);"><div class="flab">Receita — Março/2026</div><div class="fa" style="color:var(--green)">R$ 48.200</div><div style="font-size:12px;color:var(--tx4);margin-top:6px;">83 pagamentos · 37 pendentes</div></div>
@@ -663,7 +656,6 @@ tbody tr:hover td{background:var(--surf2);}
     </div>
   </div>
 
-  <!-- NOTIFICAÇÕES -->
   <div class="content" id="page-notificacoes">
     <div class="ph">
       <div><div class="pt">Notificações</div><div class="ps">5 não lidas</div></div>
@@ -681,10 +673,20 @@ tbody tr:hover td{background:var(--surf2);}
 </div>
 </div>
 
-<!-- MODAL -->
-<div class="mo" id="modal" onclick="closeModalOut(event)">
+<div class="mo" id="modal-generico" onclick="closeModalOut(event)">
   <div class="mbox">
-    <div class="mh"><div class="mt">Novo Registro</div><div class="mc" onclick="closeModal()">✕</div></div>
+    <div class="mh"><div class="mt">Novo Registro Genérico</div><div class="mc" onclick="closeModal('modal-generico')">✕</div></div>
+    <div class="fgg"><label class="fgl">Descrição</label><input class="fgi" placeholder="Preencha os dados"></div>
+    <div class="mf">
+      <button class="btn btn-s" onclick="closeModal('modal-generico')">Cancelar</button>
+      <button class="btn btn-p" onclick="saveModal('modal-generico')">Salvar Registro</button>
+    </div>
+  </div>
+</div>
+
+<div class="mo" id="modal-unidade" onclick="closeModalOut(event)">
+  <div class="mbox">
+    <div class="mh"><div class="mt">Adicionar Unidade</div><div class="mc" onclick="closeModal('modal-unidade')">✕</div></div>
     <div class="fgrid">
       <div class="fgg"><label class="fgl">Unidade</label><input class="fgi" placeholder="Ex: 304" type="text"></div>
       <div class="fgg"><label class="fgl">Bloco</label><select class="fgi"><option>Bloco A</option><option>Bloco B</option><option>Bloco C</option><option>Bloco D</option></select></div>
@@ -696,8 +698,81 @@ tbody tr:hover td{background:var(--surf2);}
       <div class="fgg"><label class="fgl">Status</label><select class="fgi"><option>Em dia</option><option>Pendente</option><option>Inadimplente</option></select></div>
     </div>
     <div class="mf">
-      <button class="btn btn-s" onclick="closeModal()">Cancelar</button>
-      <button class="btn btn-p" onclick="saveModal()">Salvar Registro</button>
+      <button class="btn btn-s" onclick="closeModal('modal-unidade')">Cancelar</button>
+      <button class="btn btn-p" onclick="saveModal('modal-unidade')">Salvar Unidade</button>
+    </div>
+  </div>
+</div>
+
+<div class="mo" id="modal-morador" onclick="closeModalOut(event)">
+  <div class="mbox">
+    <div class="mh"><div class="mt">Adicionar Morador</div><div class="mc" onclick="closeModal('modal-morador')">✕</div></div>
+    <div class="fgg"><label class="fgl">Nome Completo</label><input class="fgi" placeholder="Nome do morador"></div>
+    <div class="fgrid">
+      <div class="fgg"><label class="fgl">Unidade</label><input class="fgi" placeholder="Ex: 304"></div>
+      <div class="fgg"><label class="fgl">Tipo</label><select class="fgi"><option>Titular</option><option>Dependente</option><option>Inquilino</option></select></div>
+    </div>
+    <div class="fgrid">
+      <div class="fgg"><label class="fgl">Telefone</label><input class="fgi" placeholder="(11) 9 0000-0000"></div>
+      <div class="fgg"><label class="fgl">E-mail</label><input class="fgi" type="email" placeholder="email@exemplo.com"></div>
+    </div>
+    <div class="mf">
+      <button class="btn btn-s" onclick="closeModal('modal-morador')">Cancelar</button>
+      <button class="btn btn-p" onclick="saveModal('modal-morador')">Salvar Morador</button>
+    </div>
+  </div>
+</div>
+
+<div class="mo" id="modal-assembleia" onclick="closeModalOut(event)">
+  <div class="mbox">
+    <div class="mh"><div class="mt">Criar Assembleia</div><div class="mc" onclick="closeModal('modal-assembleia')">✕</div></div>
+    <div class="fgg"><label class="fgl">Título da Assembleia</label><input class="fgi" placeholder="Ex: Assembleia Ordinária - Março"></div>
+    <div class="fgrid">
+      <div class="fgg"><label class="fgl">Data</label><input class="fgi" type="date"></div>
+      <div class="fgg"><label class="fgl">Hora</label><input class="fgi" type="time"></div>
+    </div>
+    <div class="fgg"><label class="fgl">Local</label><input class="fgi" placeholder="Ex: Salão de Festas"></div>
+    <div class="fgg"><label class="fgl">Pautas (uma por linha)</label><textarea class="fgi" rows="3" placeholder="1. Aprovação do orçamento 2026..."></textarea></div>
+    <div class="mf">
+      <button class="btn btn-s" onclick="closeModal('modal-assembleia')">Cancelar</button>
+      <button class="btn btn-p" onclick="saveModal('modal-assembleia')">Agendar Assembleia</button>
+    </div>
+  </div>
+</div>
+
+<div class="mo" id="modal-orcamento" onclick="closeModalOut(event)">
+  <div class="mbox">
+    <div class="mh"><div class="mt">Adicionar Orçamento</div><div class="mc" onclick="closeModal('modal-orcamento')">✕</div></div>
+    <div class="fgrid">
+      <div class="fgg"><label class="fgl">Ano / Período</label><input class="fgi" placeholder="Ex: 2026" type="text"></div>
+      <div class="fgg"><label class="fgl">Valor Total Previsto</label><input class="fgi" placeholder="R$ 0,00" type="text"></div>
+    </div>
+    <div class="fgg"><label class="fgl">Descrição</label><input class="fgi" placeholder="Ex: Orçamento Anual Ordinário"></div>
+    <div class="mf">
+      <button class="btn btn-s" onclick="closeModal('modal-orcamento')">Cancelar</button>
+      <button class="btn btn-p" onclick="saveModal('modal-orcamento')">Salvar Orçamento</button>
+    </div>
+  </div>
+</div>
+
+<div class="mo" id="modal-despesa" onclick="closeModalOut(event)">
+  <div class="mbox">
+    <div class="mh"><div class="mt">Adicionar Despesa no Orçamento</div><div class="mc" onclick="closeModal('modal-despesa')">✕</div></div>
+    <div class="fgg"><label class="fgl">Descrição da Despesa</label><input class="fgi" placeholder="Ex: Manutenção dos Elevadores"></div>
+    <div class="fgrid">
+      <div class="fgg"><label class="fgl">Valor</label><input class="fgi" placeholder="R$ 0,00"></div>
+      <div class="fgg"><label class="fgl">Data</label><input class="fgi" type="date"></div>
+    </div>
+    <div class="fgg"><label class="fgl">Categoria</label><select class="fgi"><option>Manutenção</option><option>Portaria</option><option>Limpeza e Conservação</option><option>Administrativo</option><option>Extraordinária</option></select></div>
+    <div class="fgg" style="margin-top:10px;">
+      <label style="font-size:12.5px;color:var(--tx2);display:flex;align-items:center;gap:8px;cursor:pointer;">
+        <input type="checkbox" style="width:16px;height:16px;accent-color:var(--accent);">
+        Exige aprovação em assembleia (Despesa Extraordinária)
+      </label>
+    </div>
+    <div class="mf">
+      <button class="btn btn-s" onclick="closeModal('modal-despesa')">Cancelar</button>
+      <button class="btn btn-p" onclick="saveModal('modal-despesa')">Registrar Despesa</button>
     </div>
   </div>
 </div>
@@ -706,11 +781,9 @@ tbody tr:hover td{background:var(--surf2);}
 
 <script>
 function doLogin() {
-  // 1. Esconde a tela de login e o fundo preto
   const login = document.getElementById('loginScreen');
   if (login) login.style.display = 'none';
 
-  // 2. Mostra o dashboard
   const app = document.getElementById('app');
   if (app) app.style.display = 'flex';
 
@@ -724,20 +797,41 @@ function nav(p){
   document.querySelectorAll('.ni').forEach(e=>{e.classList.remove('active');const o=e.getAttribute('onclick')||'';if(o.includes("'"+p+"'"))e.classList.add('active');});
   document.getElementById('breadcrumb').textContent=bcs[p]||p;
 }
-function openModal() {
-  const m = document.getElementById('modal');
-  m.style.display = 'flex'; // Garante que o elemento existe para o flex
+
+// Lógica de Modais Atualizada
+function openModal(id) {
+  const modalId = id || 'modal-generico';
+  const m = document.getElementById(modalId);
+  if(!m) return;
+  m.style.display = 'flex';
   setTimeout(() => m.classList.add('open'), 10);
 }
 
-function closeModal() {
-  const m = document.getElementById('modal');
-  m.classList.remove('open');
-  // Esconde o elemento totalmente após a transição de 0.2s
-  setTimeout(() => { m.style.display = 'none'; }, 200);
+function closeModal(id) {
+  if(id) {
+    const m = document.getElementById(id);
+    if(!m) return;
+    m.classList.remove('open');
+    setTimeout(() => { m.style.display = 'none'; }, 200);
+  } else {
+    document.querySelectorAll('.mo.open').forEach(m => {
+      m.classList.remove('open');
+      setTimeout(() => { m.style.display = 'none'; }, 200);
+    });
+  }
 }
-function closeModalOut(e){if(e.target===document.getElementById('modal'))closeModal();}
-function saveModal(){closeModal();showToast('✅ Registro salvo com sucesso!');}
+
+function closeModalOut(e) {
+  if(e.target.classList.contains('mo')) {
+    closeModal(e.target.id);
+  }
+}
+
+function saveModal(id) {
+  closeModal(id);
+  showToast('✅ Registro salvo com sucesso!');
+}
+
 function showToast(msg){
   const c=document.getElementById('toastC');
   const t=document.createElement('div');t.className='toast';t.textContent=msg;c.appendChild(t);
