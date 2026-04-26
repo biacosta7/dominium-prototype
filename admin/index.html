@@ -2043,8 +2043,8 @@
             <div class="pt">Reservas de Áreas Comuns</div>
             <div class="ps">Calendário de uso dos espaços compartilhados</div>
           </div>
-          <button class="btn btn-p" onclick="openModal('modal-generico')">
-            <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24">
+          <button class="btn btn-p" onclick="openModal('modal-reserva')"><svg width="14" height="14" fill="none"
+              stroke="white" viewBox="0 0 24 24">
               <line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round" />
               <line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round" />
             </svg>
@@ -2112,21 +2112,55 @@
               </div>
               <div style="display:flex;flex-direction:column;gap:8px;">
                 <div
-                  style="padding:10px;background:var(--blue-bg);border-radius:var(--r-sm);border-left:3px solid var(--accent);">
+                  style="padding:10px;background:var(--blue-bg);border-radius:var(--r-sm);border-left:3px solid var(--accent);position:relative;">
                   <div style="font-size:13px;font-weight:500;">Churrasqueira 2</div>
                   <div style="font-size:12px;color:var(--tx4);margin-top:2px;">07/03 · 12h–18h · Ana Lima (102)</div>
                   <span class="badge bg" style="margin-top:6px;">Confirmada</span>
-                </div>
-                <div style="padding:10px;background:#faf5ff;border-radius:var(--r-sm);border-left:3px solid #7c3aed;">
-                  <div style="font-size:13px;font-weight:500;">Salão de Festas</div>
-                  <div style="font-size:12px;color:var(--tx4);margin-top:2px;">13/03 · 18h–23h · Félix Andrade (410)
-                  </div><span class="badge by" style="margin-top:6px;">Pendente</span>
+                  <div style="position:absolute;top:10px;right:10px;display:flex;gap:4px;">
+                    <button class="btn btn-s btn-sm" style="padding:2px 6px;font-size:11px;"
+                      onclick="openModal('modal-reserva')">Editar</button>
+                    <button class="btn btn-s btn-sm" style="padding:2px 6px;font-size:11px;color:var(--red);"
+                      onclick="openModal('modal-cancelar-reserva')">Cancelar</button>
+                  </div>
                 </div>
                 <div
-                  style="padding:10px;background:#f0fdf4;border-radius:var(--r-sm);border-left:3px solid var(--green);">
+                  style="padding:10px;background:var(--blue-bg);border-radius:var(--r-sm);border-left:3px solid var(--accent);position:relative;">
+                  <div style="font-size:13px;font-weight:500;">Salão de Festas</div>
+                  <div style="font-size:12px;color:var(--tx4);margin-top:2px;">
+                    13/03 · 18h–23h · Félix Andrade (410)
+                  </div>
+                  <span class="badge by" style="margin-top:6px;">Pendente</span>
+
+                  <div style="position:absolute;top:10px;right:10px;display:flex;gap:4px;">
+                    <button class="btn btn-s btn-sm" style="padding:2px 6px;font-size:11px;"
+                      onclick="openModal('modal-reserva')">
+                      Editar
+                    </button>
+                    <button class="btn btn-s btn-sm" style="padding:2px 6px;font-size:11px;color:var(--red);"
+                      onclick="openModal('modal-cancelar-reserva')">
+                      Cancelar
+                    </button>
+                  </div>
+                </div>
+
+                <div
+                  style="padding:10px;background:var(--blue-bg);border-radius:var(--r-sm);border-left:3px solid var(--accent);position:relative;">
                   <div style="font-size:13px;font-weight:500;">Piscina (Área VIP)</div>
-                  <div style="font-size:12px;color:var(--tx4);margin-top:2px;">15/03 · 09h–13h · Bruno Rocha (217)</div>
+                  <div style="font-size:12px;color:var(--tx4);margin-top:2px;">
+                    15/03 · 09h–13h · Bruno Rocha (217)
+                  </div>
                   <span class="badge bg" style="margin-top:6px;">Confirmada</span>
+
+                  <div style="position:absolute;top:10px;right:10px;display:flex;gap:4px;">
+                    <button class="btn btn-s btn-sm" style="padding:2px 6px;font-size:11px;"
+                      onclick="openModal('modal-reserva')">
+                      Editar
+                    </button>
+                    <button class="btn btn-s btn-sm" style="padding:2px 6px;font-size:11px;color:var(--red);"
+                      onclick="openModal('modal-cancelar-reserva')">
+                      Cancelar
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -2314,7 +2348,8 @@
             <div style="font-size:12.5px;color:var(--tx4);margin-bottom:14px;">Encerra 13/03/2026 · 47 votos</div>
             <div class="vbw">
               <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:3px;">
-                <span>✅ Sim</span><span style="color:var(--green)">68%</span></div>
+                <span>✅ Sim</span><span style="color:var(--green)">68%</span>
+              </div>
               <div class="vbt">
                 <div class="vbf" style="width:68%;background:var(--green)"></div>
               </div>
@@ -2322,7 +2357,8 @@
             </div>
             <div class="vbw" style="margin-top:10px;">
               <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:3px;">
-                <span>❌ Não</span><span style="color:var(--red)">22%</span></div>
+                <span>❌ Não</span><span style="color:var(--red)">22%</span>
+              </div>
               <div class="vbt">
                 <div class="vbf" style="width:22%;background:var(--red)"></div>
               </div>
@@ -2330,7 +2366,8 @@
             </div>
             <div class="vbw" style="margin-top:10px;">
               <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:3px;">
-                <span>⚪ Abstenção</span><span style="color:var(--tx4)">10%</span></div>
+                <span>⚪ Abstenção</span><span style="color:var(--tx4)">10%</span>
+              </div>
               <div class="vbt">
                 <div class="vbf" style="width:10%;background:var(--tx4)"></div>
               </div>
@@ -2834,6 +2871,153 @@
         <button class="btn btn-p" style="background:var(--red);box-shadow:none;"
           onclick="showToast('Erro: Unidade possui débitos ativos.'); closeModal('modal-inativar-unidade');">Confirmar
           Inativação</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mo" id="modal-editar-morador" onclick="closeModalOut(event)">
+    <div class="mbox">
+      <div class="mh">
+        <div class="mt">Editar Morador</div>
+        <div class="mc" onclick="closeModal('modal-editar-morador')">✕</div>
+      </div>
+      <div class="fgg"><label class="fgl">Nome Completo</label><input class="fgi" value="Roberto Alves"></div>
+      <div class="fgrid">
+        <div class="fgg"><label class="fgl">Unidade</label><input class="fgi" value="101" disabled
+            style="background:var(--surf2);cursor:not-allowed;"></div>
+        <div class="fgg"><label class="fgl">Tipo</label><select class="fgi">
+            <option selected>Titular</option>
+            <option>Dependente</option>
+            <option>Inquilino</option>
+          </select></div>
+      </div>
+      <div class="fgrid">
+        <div class="fgg"><label class="fgl">Telefone</label><input class="fgi" value="(11) 9 8765-4321"></div>
+        <div class="fgg"><label class="fgl">E-mail</label><input class="fgi" type="email" value="roberto@email.com">
+        </div>
+      </div>
+      <div class="mf">
+        <button class="btn btn-s" onclick="closeModal('modal-editar-morador')">Cancelar</button>
+        <button class="btn btn-p" onclick="saveModal('modal-editar-morador')">Salvar Alterações</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mo" id="modal-remover-morador" onclick="closeModalOut(event)">
+    <div class="mbox">
+      <div class="mh">
+        <div class="mt">Remover Morador</div>
+        <div class="mc" onclick="closeModal('modal-remover-morador')">✕</div>
+      </div>
+      <div
+        style="padding:10px; background:var(--yellow-bg); border-left:3px solid var(--yellow); border-radius:4px; margin-bottom:16px;">
+        <span style="font-size:12px; color:#92400e; font-weight:500;">Regra: Apenas o titular da unidade ou o síndico
+          possuem permissão para remover um dependente.</span>
+      </div>
+      <p style="font-size:13.5px;color:var(--tx2);margin-bottom:16px;">Tem certeza que deseja remover o morador
+        <strong>Luísa Alves</strong> da Unidade 101?
+      </p>
+      <div class="mf">
+        <button class="btn btn-s" onclick="closeModal('modal-remover-morador')">Cancelar</button>
+        <button class="btn btn-p" style="background:var(--red);box-shadow:none;"
+          onclick="showToast('Morador removido com sucesso.'); closeModal('modal-remover-morador');">Confirmar
+          Remoção</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mo" id="modal-reserva" onclick="closeModalOut(event)">
+    <div class="mbox">
+      <div class="mh">
+        <div class="mt">Nova Reserva</div>
+        <div class="mc" onclick="closeModal('modal-reserva')">✕</div>
+      </div>
+
+      <div
+        style="padding:10px; background:var(--blue-bg); border-left:3px solid var(--accent); border-radius:var(--r-sm); margin-bottom:16px;">
+        <span style="font-size:12px; color:#1e40af; line-height:1.4; display:block;">
+          <strong>Regras (US03):</strong> Unidades com débitos não podem reservar. Limite de 2 reservas/mês.
+          Cancelamentos com menos de 24h geram multa automática.
+        </span>
+      </div>
+
+      <div class="fgrid">
+        <div class="fgg">
+          <label class="fgl">Unidade Solicitante</label>
+          <div style="display:flex;gap:6px;">
+            <input class="fgi" placeholder="Ex: 102" style="flex:1;">
+            <button class="btn btn-s" style="padding:0 12px; font-size:12px;"
+              onclick="showToast('✅ Unidade Adimplente. Permitido.')">Validar</button>
+          </div>
+        </div>
+        <div class="fgg">
+          <label class="fgl">Área Comum</label>
+          <select class="fgi">
+            <option>Churrasqueira 1</option>
+            <option>Churrasqueira 2</option>
+            <option>Salão de Festas</option>
+            <option>Piscina (Área VIP)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="fgrid">
+        <div class="fgg"><label class="fgl">Data da Reserva</label><input class="fgi" type="date"></div>
+        <div class="fgg">
+          <label class="fgl">Horário</label>
+          <select class="fgi">
+            <option>09:00 - 13:00 (Livre)</option>
+            <option disabled style="color:var(--red);">14:00 - 18:00 (Ocupado)</option>
+            <option>19:00 - 23:00 (Livre)</option>
+          </select>
+        </div>
+      </div>
+
+      <div
+        style="padding:12px; background:var(--surf2); border:1px solid var(--bdr); border-radius:var(--r-sm); margin-bottom:16px;">
+        <label style="font-size:12.5px;color:var(--tx2);display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
+          <input type="checkbox" style="width:16px;height:16px;accent-color:var(--accent);margin-top:2px;">
+          <span>
+            <strong style="color:var(--tx);display:block;margin-bottom:2px;">Entrar na Lista de Espera</strong>
+            Se o horário desejado estiver ocupado, marque aqui para ser notificado caso haja desistência.
+          </span>
+        </label>
+      </div>
+
+      <div class="fgg" style="margin-bottom:24px;">
+        <label style="font-size:12.5px;color:var(--tx2);display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <input type="checkbox" style="width:16px;height:16px;accent-color:var(--accent);" checked>
+          Ciente da aplicação de multa por danos ou cancelamento tardio.
+        </label>
+      </div>
+
+      <div class="mf">
+        <button class="btn btn-s" onclick="closeModal('modal-reserva')">Cancelar</button>
+        <button class="btn btn-p" onclick="saveModal('modal-reserva')">Confirmar Reserva</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mo" id="modal-cancelar-reserva" onclick="closeModalOut(event)">
+    <div class="mbox">
+      <div class="mh">
+        <div class="mt">Cancelar Reserva</div>
+        <div class="mc" onclick="closeModal('modal-cancelar-reserva')">✕</div>
+      </div>
+      <div
+        style="padding:10px; background:var(--red-bg); border-left:3px solid var(--red); border-radius:4px; margin-bottom:16px;">
+        <span style="font-size:12px; color:#991b1b; font-weight:500;">Aviso: Cancelamentos com menos de 24h de
+          antecedência geram multa automática. A lista de espera será notificada.</span>
+      </div>
+      <div class="fgg"><label class="fgl">Reserva Selecionada</label><input class="fgi"
+          value="Churrasqueira 2 - 07/03 (Ana Lima)" disabled style="background:var(--surf2);cursor:not-allowed;"></div>
+      <div class="fgg"><label class="fgl">Motivo do Cancelamento (Opcional)</label><input class="fgi"
+          placeholder="Descreva o motivo..."></div>
+      <div class="mf">
+        <button class="btn btn-s" onclick="closeModal('modal-cancelar-reserva')">Voltar</button>
+        <button class="btn btn-p" style="background:var(--red);box-shadow:none;"
+          onclick="showToast('Cancelamento concluído. Lista de espera acionada.'); closeModal('modal-cancelar-reserva');">Cancelar
+          Reserva</button>
       </div>
     </div>
   </div>
