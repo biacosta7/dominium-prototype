@@ -1,2041 +1,2934 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dominium — Portal do Morador</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #f7f8fc;
-    --surface: #ffffff;
-    --surface-2: #f0f2f8;
-    --surface-3: #e8ebf4;
-    --border: #e4e7f0;
-    --border-mid: #d0d5e8;
-    --primary: #3d5af1;
-    --primary-dark: #2d47d6;
-    --primary-light: #eef0fd;
-    --primary-glow: rgba(61,90,241,0.12);
-    --teal: #0cb8a0;
-    --teal-light: #e0f7f4;
-    --amber: #f59e0b;
-    --amber-light: #fef8e7;
-    --red: #f04438;
-    --red-light: #fef0ee;
-    --green: #12b76a;
-    --green-light: #e6f7ee;
-    --text: #111827;
-    --text-2: #374151;
-    --text-3: #6b7280;
-    --text-4: #9ca3af;
-    --nav-h: 68px;
-    --r: 16px;
-    --r-sm: 10px;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05), 0 2px 8px rgba(0,0,0,0.04);
-    --shadow: 0 4px 16px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.04);
-    --shadow-lg: 0 12px 40px rgba(0,0,0,0.10);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-  }
-
-  /* ─── LOGIN ─── */
-  #loginScreen {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(145deg, #1a1f3c 0%, #2d3875 50%, #1a1f3c 100%);
-    position: relative;
-    overflow: hidden;
-  }
-
-  #loginScreen::before {
-    content: '';
-    position: absolute;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(61,90,241,0.25) 0%, transparent 70%);
-    top: -100px; right: -100px;
-    pointer-events: none;
-  }
-
-  #loginScreen::after {
-    content: '';
-    position: absolute;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(12,184,160,0.2) 0%, transparent 70%);
-    bottom: -80px; left: -80px;
-    pointer-events: none;
-  }
-
-  .login-wrap {
-    position: relative; z-index: 1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    max-width: 860px; width: 90%;
-    background: var(--surface);
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 40px 100px rgba(0,0,0,0.4);
-  }
-
-  .login-left {
-    background: linear-gradient(160deg, #3d5af1, #0cb8a0);
-    padding: 48px 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    color: white;
-  }
-
-  .login-left-logo {
-    display: flex; align-items: center; gap: 12px;
-  }
-
-  .login-left-logo-icon {
-    width: 42px; height: 42px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Fraunces', serif;
-    font-size: 22px; font-weight: 700;
-    backdrop-filter: blur(8px);
-  }
-
-  .login-left-logo-text {
-    font-family: 'Fraunces', serif;
-    font-size: 22px; font-weight: 700;
-    letter-spacing: -0.3px;
-  }
-
-  .login-left-body { }
-
-  .login-left-headline {
-    font-family: 'Fraunces', serif;
-    font-size: 32px; font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 16px;
-  }
-
-  .login-left-sub {
-    font-size: 14px;
-    opacity: 0.8;
-    line-height: 1.6;
-  }
-
-  .login-left-condo {
-    background: rgba(255,255,255,0.15);
-    border-radius: 12px;
-    padding: 14px 16px;
-    backdrop-filter: blur(8px);
-    font-size: 13px;
-  }
-
-  .login-right {
-    padding: 48px 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .login-right-title {
-    font-family: 'Fraunces', serif;
-    font-size: 24px; font-weight: 600;
-    color: var(--text);
-    margin-bottom: 8px;
-  }
-
-  .login-right-sub {
-    font-size: 13.5px;
-    color: var(--text-3);
-    margin-bottom: 28px;
-  }
-
-  .form-group { margin-bottom: 16px; }
-
-  .form-label {
-    display: block;
-    font-size: 12px; font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    color: var(--text-3);
-    margin-bottom: 7px;
-  }
-
-  .form-input {
-    width: 100%;
-    padding: 11px 14px;
-    border: 1.5px solid var(--border);
-    border-radius: var(--r-sm);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14px;
-    color: var(--text);
-    background: var(--surface);
-    outline: none;
-    transition: all 0.15s;
-  }
-
-  .form-input:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px var(--primary-glow);
-  }
-
-  .form-forgot {
-    text-align: right;
-    font-size: 12.5px;
-    color: var(--primary);
-    cursor: pointer;
-    margin-top: 6px;
-    font-weight: 500;
-  }
-
-  .btn-login {
-    width: 100%;
-    padding: 13px;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: var(--r-sm);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 15px; font-weight: 600;
-    cursor: pointer;
-    margin-top: 8px;
-    transition: all 0.18s;
-    box-shadow: 0 4px 14px rgba(61,90,241,0.35);
-  }
-
-  .btn-login:hover {
-    background: var(--primary-dark);
-    box-shadow: 0 8px 20px rgba(61,90,241,0.4);
-    transform: translateY(-1px);
-  }
-
-  /* ─── APP SHELL ─── */
-  #app { display: none; min-height: 100vh; }
-
-  /* TOP NAV */
-  .topnav {
-    height: var(--nav-h);
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    padding: 0 24px;
-    gap: 20px;
-    position: sticky; top: 0; z-index: 100;
-    box-shadow: var(--shadow-sm);
-  }
-
-  .nav-logo {
-    display: flex; align-items: center; gap: 9px;
-    flex-shrink: 0;
-  }
-
-  .nav-logo-icon {
-    width: 34px; height: 34px;
-    background: linear-gradient(135deg, var(--primary), var(--teal));
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Fraunces', serif;
-    font-size: 17px; font-weight: 700;
-    color: white;
-  }
-
-  .nav-logo-text {
-    font-family: 'Fraunces', serif;
-    font-size: 18px; font-weight: 700;
-    color: var(--text);
-    letter-spacing: -0.2px;
-  }
-
-  .nav-divider {
-    width: 1px; height: 24px;
-    background: var(--border);
-    margin: 0 4px;
-  }
-
-  .nav-tabs {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    flex: 1;
-  }
-
-  .nav-tab {
-    display: flex; align-items: center; gap: 7px;
-    padding: 8px 14px;
-    border-radius: var(--r-sm);
-    font-size: 13.5px; font-weight: 500;
-    color: var(--text-3);
-    cursor: pointer;
-    transition: all 0.15s;
-    white-space: nowrap;
-    position: relative;
-  }
-
-  .nav-tab:hover { background: var(--surface-2); color: var(--text-2); }
-
-  .nav-tab.active {
-    background: var(--primary-light);
-    color: var(--primary);
-    font-weight: 600;
-  }
-
-  .nav-tab svg { width: 16px; height: 16px; flex-shrink: 0; }
-
-  .tab-badge {
-    width: 18px; height: 18px;
-    background: var(--red);
-    color: white;
-    border-radius: 50%;
-    font-size: 10px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-    margin-left: 2px;
-  }
-
-  .nav-right {
-    display: flex; align-items: center; gap: 10px;
-    flex-shrink: 0;
-  }
-
-  .nav-notif-btn {
-    width: 38px; height: 38px;
-    border-radius: var(--r-sm);
-    border: 1.5px solid var(--border);
-    background: var(--surface);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    color: var(--text-3);
-    transition: all 0.15s;
-    position: relative;
-  }
-
-  .nav-notif-btn:hover { background: var(--surface-2); color: var(--text); border-color: var(--border-mid); }
-
-  .notif-dot {
-    position: absolute; top: 7px; right: 7px;
-    width: 7px; height: 7px;
-    background: var(--red); border-radius: 50%;
-    border: 1.5px solid white;
-  }
-
-  .nav-user {
-    display: flex; align-items: center; gap: 9px;
-    padding: 6px 10px;
-    border-radius: var(--r-sm);
-    cursor: pointer;
-    border: 1.5px solid var(--border);
-    transition: all 0.15s;
-  }
-
-  .nav-user:hover { background: var(--surface-2); border-color: var(--border-mid); }
-
-  .avatar {
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary), #7c5af1);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px; font-weight: 700;
-    color: white; flex-shrink: 0;
-  }
-
-  .nav-user-info { line-height: 1.2; }
-
-  .nav-user-name { font-size: 13px; font-weight: 600; color: var(--text); }
-  .nav-user-unit { font-size: 11px; color: var(--text-3); }
-
-  /* ─── CONTENT ─── */
-  .content {
-    max-width: 1060px;
-    margin: 0 auto;
-    padding: 32px 24px;
-    display: none;
-  }
-
-  .content.active { display: block; }
-
-  .page-header {
-    margin-bottom: 28px;
-  }
-
-  .page-title {
-    font-family: 'Fraunces', serif;
-    font-size: 26px; font-weight: 700;
-    color: var(--text);
-    letter-spacing: -0.4px;
-    line-height: 1.2;
-  }
-
-  .page-sub {
-    font-size: 14px;
-    color: var(--text-3);
-    margin-top: 5px;
-  }
-
-  /* ─── CARDS ─── */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--r);
-    padding: 24px;
-    box-shadow: var(--shadow-sm);
-  }
-
-  .card-title {
-    font-size: 14px; font-weight: 700;
-    color: var(--text);
-    margin-bottom: 16px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-
-  .card-link {
-    font-size: 13px;
-    color: var(--primary);
-    font-weight: 500;
-    cursor: pointer;
-  }
-
-  /* ─── BADGES ─── */
-  .badge {
-    display: inline-flex; align-items: center; gap: 5px;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 12px; font-weight: 600;
-  }
-
-  .badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; }
-
-  .badge-green { background: var(--green-light); color: #027a48; }
-  .badge-green::before { background: var(--green); }
-  .badge-yellow { background: var(--amber-light); color: #92400e; }
-  .badge-yellow::before { background: var(--amber); }
-  .badge-red { background: var(--red-light); color: #b42318; }
-  .badge-red::before { background: var(--red); }
-  .badge-blue { background: var(--primary-light); color: var(--primary); }
-  .badge-blue::before { background: var(--primary); }
-  .badge-gray { background: var(--surface-2); color: var(--text-3); }
-  .badge-gray::before { background: var(--text-4); }
-  .badge-teal { background: var(--teal-light); color: #065f55; }
-  .badge-teal::before { background: var(--teal); }
-
-  /* ─── BUTTONS ─── */
-  .btn {
-    display: inline-flex; align-items: center; gap: 7px;
-    padding: 9px 18px;
-    border-radius: var(--r-sm);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 13.5px; font-weight: 600;
-    cursor: pointer; border: none;
-    transition: all 0.15s;
-  }
-
-  .btn-primary {
-    background: var(--primary); color: white;
-    box-shadow: 0 2px 8px rgba(61,90,241,0.3);
-  }
-
-  .btn-primary:hover {
-    background: var(--primary-dark);
-    box-shadow: 0 4px 14px rgba(61,90,241,0.38);
-    transform: translateY(-1px);
-  }
-
-  .btn-outline {
-    background: var(--surface);
-    color: var(--text-2);
-    border: 1.5px solid var(--border);
-  }
-
-  .btn-outline:hover { background: var(--surface-2); border-color: var(--border-mid); }
-
-  .btn-teal {
-    background: var(--teal); color: white;
-    box-shadow: 0 2px 8px rgba(12,184,160,0.3);
-  }
-
-  .btn-teal:hover { background: #0aa08b; transform: translateY(-1px); }
-
-  .btn-sm { padding: 7px 14px; font-size: 12.5px; }
-
-  .btn-icon {
-    width: 36px; height: 36px; padding: 0;
-    border-radius: var(--r-sm);
-    justify-content: center;
-  }
-
-  /* ═══ DASHBOARD ═══ */
-  .dash-hero {
-    background: linear-gradient(135deg, var(--primary) 0%, #5a7af8 50%, var(--teal) 100%);
-    border-radius: 20px;
-    padding: 28px 32px;
-    color: white;
-    margin-bottom: 24px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .dash-hero::before {
-    content: '';
-    position: absolute;
-    width: 300px; height: 300px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 50%;
-    top: -80px; right: -60px;
-    pointer-events: none;
-  }
-
-  .dash-hero::after {
-    content: '';
-    position: absolute;
-    width: 200px; height: 200px;
-    background: rgba(255,255,255,0.04);
-    border-radius: 50%;
-    bottom: -60px; left: 40%;
-    pointer-events: none;
-  }
-
-  .hero-greeting {
-    font-family: 'Fraunces', serif;
-    font-size: 28px; font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 6px;
-    position: relative; z-index: 1;
-  }
-
-  .hero-sub {
-    font-size: 14px;
-    opacity: 0.85;
-    margin-bottom: 22px;
-    position: relative; z-index: 1;
-  }
-
-  .hero-chips {
-    display: flex; gap: 10px; flex-wrap: wrap;
-    position: relative; z-index: 1;
-  }
-
-  .hero-chip {
-    display: flex; align-items: center; gap: 8px;
-    background: rgba(255,255,255,0.18);
-    backdrop-filter: blur(8px);
-    border-radius: 10px;
-    padding: 8px 14px;
-    font-size: 13px;
-    border: 1px solid rgba(255,255,255,0.2);
-  }
-
-  .hero-chip .chip-icon { font-size: 16px; }
-
-  .hero-chip .chip-label { opacity: 0.85; font-size: 11px; }
-
-  .hero-chip .chip-value { font-weight: 700; font-size: 14px; }
-
-  .dash-grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
-
-  .dash-grid-3 {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
-
-  /* ALERT CARD */
-  .alert-card {
-    border-radius: var(--r);
-    padding: 16px 18px;
-    display: flex; align-items: flex-start; gap: 12px;
-    font-size: 13.5px;
-  }
-
-  .alert-card.warn {
-    background: var(--amber-light);
-    border: 1px solid #fde68a;
-  }
-
-  .alert-card.danger {
-    background: var(--red-light);
-    border: 1px solid #fecaca;
-  }
-
-  .alert-card.info {
-    background: var(--primary-light);
-    border: 1px solid #bfdbfe;
-  }
-
-  .alert-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
-
-  .alert-title { font-weight: 600; margin-bottom: 2px; }
-
-  .alert-sub { font-size: 12.5px; color: var(--text-3); }
-
-  /* QUICK ACTION */
-  .quick-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-bottom: 24px;
-  }
-
-  .quick-btn {
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: var(--r);
-    padding: 20px 16px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.18s;
-    display: flex; flex-direction: column;
-    align-items: center; gap: 10px;
-  }
-
-  .quick-btn:hover {
-    border-color: var(--primary);
-    background: var(--primary-light);
-    box-shadow: var(--shadow);
-    transform: translateY(-2px);
-  }
-
-  .quick-btn:hover .quick-icon { transform: scale(1.1); }
-
-  .quick-icon {
-    width: 48px; height: 48px;
-    border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-    transition: transform 0.18s;
-  }
-
-  .quick-label {
-    font-size: 13px; font-weight: 600;
-    color: var(--text-2);
-  }
-
-  /* ─ MINI EVENT ─ */
-  .mini-events { display: flex; flex-direction: column; gap: 10px; }
-
-  .mini-event {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px;
-    background: var(--surface-2);
-    border-radius: var(--r-sm);
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-
-  .mini-event:hover { background: var(--surface-3); }
-
-  .mini-event-date {
-    width: 40px; height: 44px;
-    border-radius: 10px;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    color: white; flex-shrink: 0;
-    font-size: 10px;
-  }
-
-  .mini-event-date .d { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700; line-height: 1; }
-  .mini-event-date .m { opacity: 0.85; text-transform: uppercase; letter-spacing: 0.5px; }
-
-  .mini-event-info { flex: 1; }
-  .mini-event-title { font-size: 13.5px; font-weight: 600; }
-  .mini-event-sub { font-size: 12px; color: var(--text-3); margin-top: 1px; }
-
-  /* ═══ RESERVAS ═══ */
-  .reservas-grid {
-    display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 20px;
-  }
-
-  /* CALENDAR */
-  .cal-nav-row {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 16px;
-  }
-
-  .cal-month-title {
-    font-family: 'Fraunces', serif;
-    font-size: 17px; font-weight: 600;
-  }
-
-  .cal-nav-btns { display: flex; gap: 6px; }
-
-  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-
-  .cal-day-label {
-    text-align: center;
-    font-size: 10.5px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.6px;
-    color: var(--text-4);
-    padding-bottom: 8px;
-  }
-
-  .cal-day {
-    aspect-ratio: 1;
-    display: flex; align-items: center; justify-content: center;
-    border-radius: 8px;
-    font-size: 13.5px;
-    cursor: pointer;
-    transition: all 0.12s;
-    color: var(--text-2);
-    font-weight: 500;
-  }
-
-  .cal-day:hover:not(.empty):not(.other) { background: var(--surface-2); }
-  .cal-day.other { color: var(--text-4); }
-  .cal-day.today { background: var(--primary); color: white; font-weight: 700; }
-  .cal-day.selected { background: var(--primary-light); color: var(--primary); font-weight: 700; outline: 2px solid var(--primary); }
-  .cal-day.has-reserva { background: #dbeafe; color: #1d4ed8; font-weight: 600; }
-  .cal-day.disponivel { background: var(--teal-light); color: #065f55; }
-
-  .espacos-list { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
-
-  .espaco-item {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 14px;
-    background: var(--surface-2);
-    border-radius: var(--r-sm);
-    border: 1.5px solid var(--border);
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-
-  .espaco-item:hover { border-color: var(--primary); background: var(--primary-light); }
-
-  .espaco-icon { font-size: 22px; flex-shrink: 0; }
-
-  .espaco-name { font-size: 13.5px; font-weight: 600; flex: 1; }
-
-  .espaco-cap { font-size: 12px; color: var(--text-3); }
-
-  /* MINHAS RESERVAS */
-  .res-card {
-    border-radius: var(--r-sm);
-    padding: 14px 16px;
-    border: 1.5px solid var(--border);
-    background: var(--surface);
-    display: flex; gap: 12px; align-items: flex-start;
-    margin-bottom: 10px;
-    transition: all 0.15s;
-  }
-
-  .res-card:hover { box-shadow: var(--shadow); border-color: var(--border-mid); }
-
-  .res-color-bar {
-    width: 4px;
-    border-radius: 4px;
-    flex-shrink: 0;
-    align-self: stretch;
-  }
-
-  .res-info { flex: 1; }
-  .res-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
-  .res-meta { font-size: 12.5px; color: var(--text-3); }
-
-  .res-actions { display: flex; gap: 6px; align-items: flex-start; }
-
-  /* ═══ FINANCEIRO ═══ */
-  .fin-hero {
-    background: linear-gradient(135deg, #0d1117 0%, #1a2540 100%);
-    border-radius: 20px;
-    padding: 28px 32px;
-    color: white;
-    margin-bottom: 24px;
-    display: flex; align-items: center; justify-content: space-between;
-    position: relative; overflow: hidden;
-  }
-
-  .fin-hero::before {
-    content: '';
-    position: absolute;
-    width: 280px; height: 280px;
-    background: radial-gradient(circle, rgba(61,90,241,0.3), transparent 70%);
-    right: -60px; top: -60px;
-    pointer-events: none;
-  }
-
-  .fin-hero-left { position: relative; z-index: 1; }
-
-  .fin-hero-label { font-size: 12px; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 6px; }
-
-  .fin-hero-amount {
-    font-family: 'Fraunces', serif;
-    font-size: 42px; font-weight: 700;
-    line-height: 1; letter-spacing: -1px;
-    margin-bottom: 8px;
-  }
-
-  .fin-hero-due { font-size: 13px; opacity: 0.75; }
-
-  .fin-pay-btn {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 14px 28px;
-    border-radius: 12px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 15px; font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 4px 16px rgba(61,90,241,0.4);
-    transition: all 0.18s;
-    position: relative; z-index: 1;
-  }
-
-  .fin-pay-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(61,90,241,0.5); }
-
-  .hist-item {
-    display: flex; align-items: center; gap: 12px;
-    padding: 13px 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .hist-item:last-child { border-bottom: none; }
-
-  .hist-icon {
-    width: 38px; height: 38px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 17px; flex-shrink: 0;
-  }
-
-  .hist-info { flex: 1; }
-  .hist-title { font-size: 13.5px; font-weight: 600; }
-  .hist-date { font-size: 12px; color: var(--text-3); margin-top: 1px; }
-
-  .hist-amount { font-size: 14px; font-weight: 700; }
-  .hist-amount.paid { color: var(--green); }
-  .hist-amount.due { color: var(--red); }
-  .hist-amount.pending { color: var(--amber); }
-
-  /* MINI PAYMENT HISTORY CHART */
-  .pay-dots {
-    display: flex; gap: 6px; align-items: flex-end;
-    height: 50px;
-    margin: 12px 0;
-  }
-
-  .pay-dot-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-
-  .pay-dot {
-    width: 100%; border-radius: 4px;
-    transition: all 0.2s;
-  }
-
-  .pay-dot.ok { background: var(--green); }
-  .pay-dot.late { background: var(--amber); }
-  .pay-dot.miss { background: var(--red); }
-
-  .pay-dot-label { font-size: 9.5px; color: var(--text-4); }
-
-  /* ═══ ASSEMBLEIAS ═══ */
-  .assembleia-card {
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1.5px solid var(--border);
-    margin-bottom: 16px;
-    box-shadow: var(--shadow-sm);
-    transition: box-shadow 0.18s;
-  }
-
-  .assembleia-card:hover { box-shadow: var(--shadow); }
-
-  .assembleia-header {
-    padding: 20px 24px;
-    display: flex; align-items: center; gap: 16px;
-  }
-
-  .assembleia-date-badge {
-    width: 54px; height: 60px;
-    border-radius: 12px;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    color: white; flex-shrink: 0;
-  }
-
-  .assembleia-date-badge .dd { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700; line-height: 1; }
-  .assembleia-date-badge .mm { font-size: 11px; text-transform: uppercase; opacity: 0.85; }
-
-  .assembleia-info { flex: 1; }
-  .assembleia-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
-  .assembleia-meta { font-size: 13px; color: var(--text-3); }
-
-  .assembleia-pautas {
-    padding: 0 24px 20px;
-  }
-
-  .pauta-item {
-    display: flex; align-items: flex-start; gap: 10px;
-    padding: 10px 0;
-    border-top: 1px solid var(--border);
-  }
-
-  .pauta-num {
-    width: 24px; height: 24px;
-    background: var(--primary-light);
-    color: var(--primary);
-    border-radius: 6px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 700;
-    flex-shrink: 0;
-  }
-
-  .pauta-text { font-size: 13.5px; padding-top: 2px; flex: 1; }
-
-  /* VOTE */
-  .vote-section {
-    background: var(--surface);
-    border: 1.5px solid var(--primary);
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 16px;
-    box-shadow: 0 0 0 3px var(--primary-glow);
-  }
-
-  .vote-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-  .vote-sub { font-size: 13px; color: var(--text-3); margin-bottom: 20px; }
-
-  .vote-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-
-  .vote-option {
-    display: flex; align-items: center; gap: 12px;
-    padding: 14px 16px;
-    border-radius: 12px;
-    border: 2px solid var(--border);
-    cursor: pointer;
-    transition: all 0.15s;
-    font-size: 14px; font-weight: 500;
-  }
-
-  .vote-option:hover { border-color: var(--primary); background: var(--primary-light); }
-
-  .vote-option.selected { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
-
-  .vote-option-icon { font-size: 20px; }
-
-  .vote-bar-row { margin-bottom: 8px; }
-
-  .vote-bar-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; }
-
-  .vote-bar-track {
-    height: 8px; background: var(--surface-3);
-    border-radius: 20px; overflow: hidden;
-  }
-
-  .vote-bar-fill { height: 100%; border-radius: 20px; }
-
-  /* ═══ OCORRÊNCIAS ═══ */
-  .ocor-card {
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: var(--r);
-    padding: 18px 20px;
-    margin-bottom: 12px;
-    display: flex; gap: 14px; align-items: flex-start;
-    transition: all 0.15s;
-  }
-
-  .ocor-card:hover { box-shadow: var(--shadow); border-color: var(--border-mid); }
-
-  .ocor-icon {
-    width: 42px; height: 42px;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px; flex-shrink: 0;
-  }
-
-  .ocor-info { flex: 1; }
-  .ocor-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
-  .ocor-desc { font-size: 12.5px; color: var(--text-3); margin-bottom: 6px; line-height: 1.4; }
-  .ocor-date { font-size: 11.5px; color: var(--text-4); }
-
-  /* ═══ NOTIFICAÇÕES ═══ */
-  .notif-item {
-    display: flex; gap: 14px; align-items: flex-start;
-    padding: 16px 18px;
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: var(--r);
-    margin-bottom: 10px;
-    cursor: pointer;
-    transition: all 0.15s;
-    position: relative;
-  }
-
-  .notif-item:hover { box-shadow: var(--shadow); border-color: var(--border-mid); }
-
-  .notif-item.unread { border-left: 3px solid var(--primary); padding-left: 16px; }
-
-  .notif-icon-wrap {
-    width: 40px; height: 40px;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px; flex-shrink: 0;
-  }
-
-  .notif-body { flex: 1; }
-  .notif-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
-  .notif-desc { font-size: 13px; color: var(--text-3); line-height: 1.45; }
-  .notif-time { font-size: 11.5px; color: var(--text-4); margin-top: 5px; }
-
-  /* ═══ PERFIL ═══ */
-  .perfil-hero {
-    background: var(--surface);
-    border-radius: 20px;
-    padding: 32px;
-    display: flex; align-items: center; gap: 24px;
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow-sm);
-    margin-bottom: 20px;
-  }
-
-  .perfil-avatar {
-    width: 80px; height: 80px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary), #7c5af1);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 30px; font-weight: 800; color: white;
-    flex-shrink: 0;
-    box-shadow: 0 6px 20px rgba(61,90,241,0.3);
-  }
-
-  .perfil-name { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; margin-bottom: 4px; }
-  .perfil-unit { font-size: 14px; color: var(--text-3); margin-bottom: 10px; }
-
-  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-
-  .info-field { }
-
-  .info-field-label { font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-3); margin-bottom: 5px; }
-
-  .info-field-val { font-size: 14px; color: var(--text); }
-
-  .moradores-list { display: flex; flex-direction: column; gap: 8px; }
-
-  .morador-item {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 14px;
-    background: var(--surface-2);
-    border-radius: var(--r-sm);
-    border: 1px solid var(--border);
-  }
-
-  .morador-av {
-    width: 36px; height: 36px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 700; color: white;
-    flex-shrink: 0;
-  }
-
-  .morador-name { font-size: 13.5px; font-weight: 500; flex: 1; }
-
-  /* MODAL */
-  .modal-overlay {
-    position: fixed; inset: 0;
-    background: rgba(17,24,39,0.5);
-    backdrop-filter: blur(4px);
-    z-index: 200;
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.2s;
-  }
-
-  .modal-overlay.open { opacity: 1; pointer-events: all; }
-
-  .modal {
-    background: var(--surface);
-    border-radius: 20px;
-    width: 480px; max-width: 90vw;
-    padding: 32px;
-    box-shadow: var(--shadow-lg);
-    transform: translateY(24px) scale(0.97);
-    transition: all 0.25s;
-  }
-
-  .modal-overlay.open .modal { transform: translateY(0) scale(1); }
-
-  .modal-head {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 22px;
-  }
-
-  .modal-title { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 700; }
-
-  .modal-close {
-    width: 30px; height: 30px;
-    border-radius: 8px; border: 1.5px solid var(--border);
-    background: var(--surface); cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--text-3); font-size: 16px;
-    transition: all 0.15s;
-  }
-
-  .modal-close:hover { background: var(--surface-2); color: var(--text); }
-
-  .modal-footer {
-    display: flex; justify-content: flex-end; gap: 8px;
-    margin-top: 24px; padding-top: 18px;
-    border-top: 1px solid var(--border);
-  }
-
-  .form-select {
-    width: 100%;
-    padding: 11px 14px;
-    border: 1.5px solid var(--border);
-    border-radius: var(--r-sm);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14px; color: var(--text);
-    background: var(--surface);
-    outline: none;
-    transition: all 0.15s;
-  }
-
-  .form-select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
-
-  .form-textarea {
-    width: 100%;
-    padding: 11px 14px;
-    border: 1.5px solid var(--border);
-    border-radius: var(--r-sm);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14px; color: var(--text);
-    background: var(--surface);
-    outline: none;
-    resize: vertical; min-height: 90px;
-    transition: all 0.15s;
-  }
-
-  .form-textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
-
-  /* TOAST */
-  .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 500; display: flex; flex-direction: column; gap: 8px; }
-
-  .toast {
-    display: flex; align-items: center; gap: 10px;
-    padding: 14px 18px;
-    background: #1a1f3c;
-    color: white;
-    border-radius: 12px;
-    font-size: 13.5px; font-weight: 500;
-    box-shadow: 0 8px 28px rgba(0,0,0,0.25);
-    animation: slideUp 0.3s ease;
-    min-width: 240px;
-  }
-
-  @keyframes slideUp {
-    from { transform: translateY(16px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-
-  /* SEPARADOR SECTION */
-  .section-sep { margin: 24px 0 16px; }
-  .section-sep-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-4); }
-
-  hr.sep { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dominium — Portal do Morador</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f8fc;
+      --surface: #ffffff;
+      --surface-2: #f0f2f8;
+      --surface-3: #e8ebf4;
+      --border: #e4e7f0;
+      --border-mid: #d0d5e8;
+      --primary: #3d5af1;
+      --primary-dark: #2d47d6;
+      --primary-light: #eef0fd;
+      --primary-glow: rgba(61, 90, 241, 0.12);
+      --teal: #0cb8a0;
+      --teal-light: #e0f7f4;
+      --amber: #f59e0b;
+      --amber-light: #fef8e7;
+      --red: #f04438;
+      --red-light: #fef0ee;
+      --green: #12b76a;
+      --green-light: #e6f7ee;
+      --text: #111827;
+      --text-2: #374151;
+      --text-3: #6b7280;
+      --text-4: #9ca3af;
+      --nav-h: 68px;
+      --r: 16px;
+      --r-sm: 10px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow: 0 4px 16px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.10);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ─── LOGIN ─── */
+    #loginScreen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, #1a1f3c 0%, #2d3875 50%, #1a1f3c 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #loginScreen::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(61, 90, 241, 0.25) 0%, transparent 70%);
+      top: -100px;
+      right: -100px;
+      pointer-events: none;
+    }
+
+    #loginScreen::after {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(12, 184, 160, 0.2) 0%, transparent 70%);
+      bottom: -80px;
+      left: -80px;
+      pointer-events: none;
+    }
+
+    .login-wrap {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      max-width: 860px;
+      width: 90%;
+      background: var(--surface);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
+    }
+
+    .login-left {
+      background: linear-gradient(160deg, #3d5af1, #0cb8a0);
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: white;
+    }
+
+    .login-left-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .login-left-logo-icon {
+      width: 42px;
+      height: 42px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      font-weight: 700;
+      backdrop-filter: blur(8px);
+    }
+
+    .login-left-logo-text {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .login-left-body {}
+
+    .login-left-headline {
+      font-family: 'Fraunces', serif;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .login-left-sub {
+      font-size: 14px;
+      opacity: 0.8;
+      line-height: 1.6;
+    }
+
+    .login-left-condo {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 14px 16px;
+      backdrop-filter: blur(8px);
+      font-size: 13px;
+    }
+
+    .login-right {
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .login-right-title {
+      font-family: 'Fraunces', serif;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .login-right-sub {
+      font-size: 13.5px;
+      color: var(--text-3);
+      margin-bottom: 28px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-3);
+      margin-bottom: 7px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-sm);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--surface);
+      outline: none;
+      transition: all 0.15s;
+    }
+
+    .form-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .form-forgot {
+      text-align: right;
+      font-size: 12.5px;
+      color: var(--primary);
+      cursor: pointer;
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 13px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--r-sm);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: all 0.18s;
+      box-shadow: 0 4px 14px rgba(61, 90, 241, 0.35);
+    }
+
+    .btn-login:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 8px 20px rgba(61, 90, 241, 0.4);
+      transform: translateY(-1px);
+    }
+
+    /* ─── APP SHELL ─── */
+    #app {
+      display: none;
+      min-height: 100vh;
+    }
+
+    /* TOP NAV */
+    .topnav {
+      height: var(--nav-h);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-icon {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, var(--primary), var(--teal));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .nav-logo-text {
+      font-family: 'Fraunces', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.2px;
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--border);
+      margin: 0 4px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex: 1;
+    }
+
+    .nav-tab {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 14px;
+      border-radius: var(--r-sm);
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-3);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .nav-tab:hover {
+      background: var(--surface-2);
+      color: var(--text-2);
+    }
+
+    .nav-tab.active {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .nav-tab svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .tab-badge {
+      width: 18px;
+      height: 18px;
+      background: var(--red);
+      color: white;
+      border-radius: 50%;
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 2px;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .nav-notif-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--r-sm);
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-3);
+      transition: all 0.15s;
+      position: relative;
+    }
+
+    .nav-notif-btn:hover {
+      background: var(--surface-2);
+      color: var(--text);
+      border-color: var(--border-mid);
+    }
+
+    .notif-dot {
+      position: absolute;
+      top: 7px;
+      right: 7px;
+      width: 7px;
+      height: 7px;
+      background: var(--red);
+      border-radius: 50%;
+      border: 1.5px solid white;
+    }
+
+    .nav-user {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 6px 10px;
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      border: 1.5px solid var(--border);
+      transition: all 0.15s;
+    }
+
+    .nav-user:hover {
+      background: var(--surface-2);
+      border-color: var(--border-mid);
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), #7c5af1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .nav-user-info {
+      line-height: 1.2;
+    }
+
+    .nav-user-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .nav-user-unit {
+      font-size: 11px;
+      color: var(--text-3);
+    }
+
+    /* ─── CONTENT ─── */
+    .content {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 32px 24px;
+      display: none;
+    }
+
+    .content.active {
+      display: block;
+    }
+
+    .page-header {
+      margin-bottom: 28px;
+    }
+
+    .page-title {
+      font-family: 'Fraunces', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.4px;
+      line-height: 1.2;
+    }
+
+    .page-sub {
+      font-size: 14px;
+      color: var(--text-3);
+      margin-top: 5px;
+    }
+
+    /* ─── CARDS ─── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-link {
+      font-size: 13px;
+      color: var(--primary);
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    /* ─── BADGES ─── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .badge-green {
+      background: var(--green-light);
+      color: #027a48;
+    }
+
+    .badge-green::before {
+      background: var(--green);
+    }
+
+    .badge-yellow {
+      background: var(--amber-light);
+      color: #92400e;
+    }
+
+    .badge-yellow::before {
+      background: var(--amber);
+    }
+
+    .badge-red {
+      background: var(--red-light);
+      color: #b42318;
+    }
+
+    .badge-red::before {
+      background: var(--red);
+    }
+
+    .badge-blue {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .badge-blue::before {
+      background: var(--primary);
+    }
+
+    .badge-gray {
+      background: var(--surface-2);
+      color: var(--text-3);
+    }
+
+    .badge-gray::before {
+      background: var(--text-4);
+    }
+
+    .badge-teal {
+      background: var(--teal-light);
+      color: #065f55;
+    }
+
+    .badge-teal::before {
+      background: var(--teal);
+    }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 18px;
+      border-radius: var(--r-sm);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 2px 8px rgba(61, 90, 241, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 4px 14px rgba(61, 90, 241, 0.38);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: var(--surface);
+      color: var(--text-2);
+      border: 1.5px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      background: var(--surface-2);
+      border-color: var(--border-mid);
+    }
+
+    .btn-teal {
+      background: var(--teal);
+      color: white;
+      box-shadow: 0 2px 8px rgba(12, 184, 160, 0.3);
+    }
+
+    .btn-teal:hover {
+      background: #0aa08b;
+      transform: translateY(-1px);
+    }
+
+    .btn-sm {
+      padding: 7px 14px;
+      font-size: 12.5px;
+    }
+
+    .btn-icon {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border-radius: var(--r-sm);
+      justify-content: center;
+    }
+
+    /* ═══ DASHBOARD ═══ */
+    .dash-hero {
+      background: linear-gradient(135deg, var(--primary) 0%, #5a7af8 50%, var(--teal) 100%);
+      border-radius: 20px;
+      padding: 28px 32px;
+      color: white;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dash-hero::before {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 50%;
+      top: -80px;
+      right: -60px;
+      pointer-events: none;
+    }
+
+    .dash-hero::after {
+      content: '';
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 50%;
+      bottom: -60px;
+      left: 40%;
+      pointer-events: none;
+    }
+
+    .hero-greeting {
+      font-family: 'Fraunces', serif;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-sub {
+      font-size: 14px;
+      opacity: 0.85;
+      margin-bottom: 22px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-chips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(8px);
+      border-radius: 10px;
+      padding: 8px 14px;
+      font-size: 13px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-chip .chip-icon {
+      font-size: 16px;
+    }
+
+    .hero-chip .chip-label {
+      opacity: 0.85;
+      font-size: 11px;
+    }
+
+    .hero-chip .chip-value {
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .dash-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .dash-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    /* ALERT CARD */
+    .alert-card {
+      border-radius: var(--r);
+      padding: 16px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 13.5px;
+    }
+
+    .alert-card.warn {
+      background: var(--amber-light);
+      border: 1px solid #fde68a;
+    }
+
+    .alert-card.danger {
+      background: var(--red-light);
+      border: 1px solid #fecaca;
+    }
+
+    .alert-card.info {
+      background: var(--primary-light);
+      border: 1px solid #bfdbfe;
+    }
+
+    .alert-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .alert-title {
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .alert-sub {
+      font-size: 12.5px;
+      color: var(--text-3);
+    }
+
+    /* QUICK ACTION */
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .quick-btn {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r);
+      padding: 20px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.18s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quick-btn:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+
+    .quick-btn:hover .quick-icon {
+      transform: scale(1.1);
+    }
+
+    .quick-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      transition: transform 0.18s;
+    }
+
+    .quick-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-2);
+    }
+
+    /* ─ MINI EVENT ─ */
+    .mini-events {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mini-event {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--surface-2);
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .mini-event:hover {
+      background: var(--surface-3);
+    }
+
+    .mini-event-date {
+      width: 40px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      flex-shrink: 0;
+      font-size: 10px;
+    }
+
+    .mini-event-date .d {
+      font-family: 'Fraunces', serif;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .mini-event-date .m {
+      opacity: 0.85;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .mini-event-info {
+      flex: 1;
+    }
+
+    .mini-event-title {
+      font-size: 13.5px;
+      font-weight: 600;
+    }
+
+    .mini-event-sub {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 1px;
+    }
+
+    /* ═══ RESERVAS ═══ */
+    .reservas-grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 20px;
+    }
+
+    /* CALENDAR */
+    .cal-nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .cal-month-title {
+      font-family: 'Fraunces', serif;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .cal-nav-btns {
+      display: flex;
+      gap: 6px;
+    }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .cal-day-label {
+      text-align: center;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-4);
+      padding-bottom: 8px;
+    }
+
+    .cal-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: all 0.12s;
+      color: var(--text-2);
+      font-weight: 500;
+    }
+
+    .cal-day:hover:not(.empty):not(.other) {
+      background: var(--surface-2);
+    }
+
+    .cal-day.other {
+      color: var(--text-4);
+    }
+
+    .cal-day.today {
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+    }
+
+    .cal-day.selected {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+      outline: 2px solid var(--primary);
+    }
+
+    .cal-day.has-reserva {
+      background: #dbeafe;
+      color: #1d4ed8;
+      font-weight: 600;
+    }
+
+    .cal-day.disponivel {
+      background: var(--teal-light);
+      color: #065f55;
+    }
+
+    .espacos-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .espaco-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      background: var(--surface-2);
+      border-radius: var(--r-sm);
+      border: 1.5px solid var(--border);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .espaco-item:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .espaco-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .espaco-name {
+      font-size: 13.5px;
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .espaco-cap {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* MINHAS RESERVAS */
+    .res-card {
+      border-radius: var(--r-sm);
+      padding: 14px 16px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      transition: all 0.15s;
+    }
+
+    .res-card:hover {
+      box-shadow: var(--shadow);
+      border-color: var(--border-mid);
+    }
+
+    .res-color-bar {
+      width: 4px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      align-self: stretch;
+    }
+
+    .res-info {
+      flex: 1;
+    }
+
+    .res-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+
+    .res-meta {
+      font-size: 12.5px;
+      color: var(--text-3);
+    }
+
+    .res-actions {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    /* ═══ FINANCEIRO ═══ */
+    .fin-hero {
+      background: linear-gradient(135deg, #0d1117 0%, #1a2540 100%);
+      border-radius: 20px;
+      padding: 28px 32px;
+      color: white;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .fin-hero::before {
+      content: '';
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(61, 90, 241, 0.3), transparent 70%);
+      right: -60px;
+      top: -60px;
+      pointer-events: none;
+    }
+
+    .fin-hero-left {
+      position: relative;
+      z-index: 1;
+    }
+
+    .fin-hero-label {
+      font-size: 12px;
+      opacity: 0.6;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      margin-bottom: 6px;
+    }
+
+    .fin-hero-amount {
+      font-family: 'Fraunces', serif;
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+
+    .fin-hero-due {
+      font-size: 13px;
+      opacity: 0.75;
+    }
+
+    .fin-pay-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(61, 90, 241, 0.4);
+      transition: all 0.18s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .fin-pay-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(61, 90, 241, 0.5);
+    }
+
+    .hist-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hist-item:last-child {
+      border-bottom: none;
+    }
+
+    .hist-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .hist-info {
+      flex: 1;
+    }
+
+    .hist-title {
+      font-size: 13.5px;
+      font-weight: 600;
+    }
+
+    .hist-date {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 1px;
+    }
+
+    .hist-amount {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .hist-amount.paid {
+      color: var(--green);
+    }
+
+    .hist-amount.due {
+      color: var(--red);
+    }
+
+    .hist-amount.pending {
+      color: var(--amber);
+    }
+
+    /* MINI PAYMENT HISTORY CHART */
+    .pay-dots {
+      display: flex;
+      gap: 6px;
+      align-items: flex-end;
+      height: 50px;
+      margin: 12px 0;
+    }
+
+    .pay-dot-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .pay-dot {
+      width: 100%;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .pay-dot.ok {
+      background: var(--green);
+    }
+
+    .pay-dot.late {
+      background: var(--amber);
+    }
+
+    .pay-dot.miss {
+      background: var(--red);
+    }
+
+    .pay-dot-label {
+      font-size: 9.5px;
+      color: var(--text-4);
+    }
+
+    /* ═══ ASSEMBLEIAS ═══ */
+    .assembleia-card {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.18s;
+    }
+
+    .assembleia-card:hover {
+      box-shadow: var(--shadow);
+    }
+
+    .assembleia-header {
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .assembleia-date-badge {
+      width: 54px;
+      height: 60px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .assembleia-date-badge .dd {
+      font-family: 'Fraunces', serif;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .assembleia-date-badge .mm {
+      font-size: 11px;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    .assembleia-info {
+      flex: 1;
+    }
+
+    .assembleia-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .assembleia-meta {
+      font-size: 13px;
+      color: var(--text-3);
+    }
+
+    .assembleia-pautas {
+      padding: 0 24px 20px;
+    }
+
+    .pauta-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .pauta-num {
+      width: 24px;
+      height: 24px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .pauta-text {
+      font-size: 13.5px;
+      padding-top: 2px;
+      flex: 1;
+    }
+
+    /* VOTE */
+    .vote-section {
+      background: var(--surface);
+      border: 1.5px solid var(--primary);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .vote-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .vote-sub {
+      font-size: 13px;
+      color: var(--text-3);
+      margin-bottom: 20px;
+    }
+
+    .vote-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .vote-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .vote-option:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .vote-option.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .vote-option-icon {
+      font-size: 20px;
+    }
+
+    .vote-bar-row {
+      margin-bottom: 8px;
+    }
+
+    .vote-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .vote-bar-track {
+      height: 8px;
+      background: var(--surface-3);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .vote-bar-fill {
+      height: 100%;
+      border-radius: 20px;
+    }
+
+    /* ═══ OCORRÊNCIAS ═══ */
+    .ocor-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r);
+      padding: 18px 20px;
+      margin-bottom: 12px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      transition: all 0.15s;
+    }
+
+    .ocor-card:hover {
+      box-shadow: var(--shadow);
+      border-color: var(--border-mid);
+    }
+
+    .ocor-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .ocor-info {
+      flex: 1;
+    }
+
+    .ocor-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+
+    .ocor-desc {
+      font-size: 12.5px;
+      color: var(--text-3);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .ocor-date {
+      font-size: 11.5px;
+      color: var(--text-4);
+    }
+
+    /* ═══ NOTIFICAÇÕES ═══ */
+    .notif-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 16px 18px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r);
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.15s;
+      position: relative;
+    }
+
+    .notif-item:hover {
+      box-shadow: var(--shadow);
+      border-color: var(--border-mid);
+    }
+
+    .notif-item.unread {
+      border-left: 3px solid var(--primary);
+      padding-left: 16px;
+    }
+
+    .notif-icon-wrap {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .notif-body {
+      flex: 1;
+    }
+
+    .notif-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+
+    .notif-desc {
+      font-size: 13px;
+      color: var(--text-3);
+      line-height: 1.45;
+    }
+
+    .notif-time {
+      font-size: 11.5px;
+      color: var(--text-4);
+      margin-top: 5px;
+    }
+
+    /* ═══ PERFIL ═══ */
+    .perfil-hero {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 20px;
+    }
+
+    .perfil-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), #7c5af1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      font-weight: 800;
+      color: white;
+      flex-shrink: 0;
+      box-shadow: 0 6px 20px rgba(61, 90, 241, 0.3);
+    }
+
+    .perfil-name {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .perfil-unit {
+      font-size: 14px;
+      color: var(--text-3);
+      margin-bottom: 10px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .info-field {}
+
+    .info-field-label {
+      font-size: 11.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-3);
+      margin-bottom: 5px;
+    }
+
+    .info-field-val {
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .moradores-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .morador-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      background: var(--surface-2);
+      border-radius: var(--r-sm);
+      border: 1px solid var(--border);
+    }
+
+    .morador-av {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .morador-name {
+      font-size: 13.5px;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(17, 24, 39, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--surface);
+      border-radius: 20px;
+      width: 480px;
+      max-width: 90vw;
+      padding: 32px;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(24px) scale(0.97);
+      transition: all 0.25s;
+    }
+
+    .modal-overlay.open .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+
+    .modal-title {
+      font-family: 'Fraunces', serif;
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .modal-close {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-3);
+      font-size: 16px;
+      transition: all 0.15s;
+    }
+
+    .modal-close:hover {
+      background: var(--surface-2);
+      color: var(--text);
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-sm);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--surface);
+      outline: none;
+      transition: all 0.15s;
+    }
+
+    .form-select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .form-textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-sm);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--surface);
+      outline: none;
+      resize: vertical;
+      min-height: 90px;
+      transition: all 0.15s;
+    }
+
+    .form-textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    /* TOAST */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 500;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toast {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      background: #1a1f3c;
+      color: white;
+      border-radius: 12px;
+      font-size: 13.5px;
+      font-weight: 500;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+      animation: slideUp 0.3s ease;
+      min-width: 240px;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(16px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* SEPARADOR SECTION */
+    .section-sep {
+      margin: 24px 0 16px;
+    }
+
+    .section-sep-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-4);
+    }
+
+    hr.sep {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 20px 0;
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- ─── LOGIN ─── -->
-<div id="loginScreen">
-  <div class="login-wrap">
-    <div class="login-left">
-      <div class="login-left-logo">
-        <div class="login-left-logo-icon">D</div>
-        <div style="font-family:'Fraunces',serif;font-size:22px;font-weight:700;">Dominium</div>
+  <!-- ─── LOGIN ─── -->
+  <div id="loginScreen">
+    <div class="login-wrap">
+      <div class="login-left">
+        <div class="login-left-logo">
+          <div class="login-left-logo-icon">D</div>
+          <div style="font-family:'Fraunces',serif;font-size:22px;font-weight:700;">Dominium</div>
+        </div>
+        <div class="login-left-body">
+          <div class="login-left-headline">Seu condomínio<br>na palma da mão.</div>
+          <div class="login-left-sub">Reserve áreas comuns, acompanhe taxas, participe das assembleias e muito mais —
+            tudo em um só lugar.</div>
+        </div>
+        <div class="login-left-condo">
+          <div style="font-size:12px;opacity:0.65;margin-bottom:2px;text-transform:uppercase;letter-spacing:0.6px;">
+            Condomínio</div>
+          <div style="font-weight:700;font-size:15px;">Residencial Parque Verde</div>
+          <div style="font-size:12px;opacity:0.7;margin-top:1px;">Blocos A–D · 120 unidades</div>
+        </div>
       </div>
-      <div class="login-left-body">
-        <div class="login-left-headline">Seu condomínio<br>na palma da mão.</div>
-        <div class="login-left-sub">Reserve áreas comuns, acompanhe taxas, participe das assembleias e muito mais — tudo em um só lugar.</div>
+      <div class="login-right">
+        <div class="login-right-title">Bem-vindo(a)!</div>
+        <div class="login-right-sub">Acesse o portal do morador com seu e-mail e senha.</div>
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input class="form-input" type="email" placeholder="seu@email.com" value="ana.lima@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Senha</label>
+          <input class="form-input" type="password" placeholder="••••••••" value="senha123">
+          <div class="form-forgot">Esqueci minha senha</div>
+        </div>
+        <button class="btn-login" onclick="doLogin()">Entrar →</button>
+        <div style="font-size:12px;color:var(--text-4);text-align:center;margin-top:20px;">Problemas com acesso? Contate
+          o síndico.</div>
       </div>
-      <div class="login-left-condo">
-        <div style="font-size:12px;opacity:0.65;margin-bottom:2px;text-transform:uppercase;letter-spacing:0.6px;">Condomínio</div>
-        <div style="font-weight:700;font-size:15px;">Residencial Parque Verde</div>
-        <div style="font-size:12px;opacity:0.7;margin-top:1px;">Blocos A–D · 120 unidades</div>
-      </div>
-    </div>
-    <div class="login-right">
-      <div class="login-right-title">Bem-vindo(a)!</div>
-      <div class="login-right-sub">Acesse o portal do morador com seu e-mail e senha.</div>
-      <div class="form-group">
-        <label class="form-label">E-mail</label>
-        <input class="form-input" type="email" placeholder="seu@email.com" value="ana.lima@email.com">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Senha</label>
-        <input class="form-input" type="password" placeholder="••••••••" value="senha123">
-        <div class="form-forgot">Esqueci minha senha</div>
-      </div>
-      <button class="btn-login" onclick="doLogin()">Entrar →</button>
-      <div style="font-size:12px;color:var(--text-4);text-align:center;margin-top:20px;">Problemas com acesso? Contate o síndico.</div>
     </div>
   </div>
-</div>
 
-<!-- ─── APP ─── -->
-<div id="app">
-  <!-- TOP NAV -->
-  <nav class="topnav">
-    <div class="nav-logo">
-      <div class="nav-logo-icon">D</div>
-      <div class="nav-logo-text">Dominium</div>
-    </div>
-    <div class="nav-divider"></div>
-    <div class="nav-tabs">
-      <div class="nav-tab active" onclick="navigate('dashboard')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke-width="1.8"/></svg>
-        Início
+  <!-- ─── APP ─── -->
+  <div id="app">
+    <!-- TOP NAV -->
+    <nav class="topnav">
+      <div class="nav-logo">
+        <div class="nav-logo-icon">D</div>
+        <div class="nav-logo-text">Dominium</div>
       </div>
-      <div class="nav-tab" onclick="navigate('reservas')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke-width="1.8"/><line x1="16" y1="2" x2="16" y2="6" stroke-width="1.8"/><line x1="8" y1="2" x2="8" y2="6" stroke-width="1.8"/><line x1="3" y1="10" x2="21" y2="10" stroke-width="1.8"/></svg>
-        Reservas
-      </div>
-      <div class="nav-tab" onclick="navigate('financeiro')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23" stroke-width="1.8"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke-width="1.8" stroke-linecap="round"/></svg>
-        Financeiro
-      </div>
-      <div class="nav-tab" onclick="navigate('assembleias')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke-width="1.8"/><circle cx="9" cy="7" r="4" stroke-width="1.8"/><path d="M23 11l-4 4-2-2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Assembleias
-      </div>
-      <div class="nav-tab" onclick="navigate('ocorrencias')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke-width="1.8"/><line x1="12" y1="9" x2="12" y2="13" stroke-width="1.8"/><line x1="12" y1="17" x2="12.01" y2="17" stroke-width="2.5"/></svg>
-        Ocorrências
-      </div>
-      <div class="nav-tab" onclick="navigate('notificacoes')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke-width="1.8"/><path d="M13.73 21a2 2 0 0 1-3.46 0" stroke-width="1.8"/></svg>
-        Avisos
-        <div class="tab-badge">4</div>
-      </div>
-    </div>
-    <div class="nav-right">
-      <div class="nav-notif-btn" onclick="navigate('notificacoes')">
-        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke-width="1.8"/><path d="M13.73 21a2 2 0 0 1-3.46 0" stroke-width="1.8"/></svg>
-        <div class="notif-dot"></div>
-      </div>
-      <div class="nav-user" onclick="navigate('perfil')">
-        <div class="avatar" style="width:30px;height:30px;font-size:11px;">AL</div>
-        <div class="nav-user-info">
-          <div class="nav-user-name">Ana Lima</div>
-          <div class="nav-user-unit">Apto 102 · Bloco A</div>
+      <div class="nav-divider"></div>
+      <div class="nav-tabs">
+        <div class="nav-tab active" onclick="navigate('dashboard')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7" rx="1.5" stroke-width="1.8" />
+            <rect x="14" y="3" width="7" height="7" rx="1.5" stroke-width="1.8" />
+            <rect x="3" y="14" width="7" height="7" rx="1.5" stroke-width="1.8" />
+            <rect x="14" y="14" width="7" height="7" rx="1.5" stroke-width="1.8" />
+          </svg>
+          Início
+        </div>
+        <div class="nav-tab" onclick="navigate('reservas')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="18" rx="2" stroke-width="1.8" />
+            <line x1="16" y1="2" x2="16" y2="6" stroke-width="1.8" />
+            <line x1="8" y1="2" x2="8" y2="6" stroke-width="1.8" />
+            <line x1="3" y1="10" x2="21" y2="10" stroke-width="1.8" />
+          </svg>
+          Reservas
+        </div>
+        <div class="nav-tab" onclick="navigate('financeiro')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <line x1="12" y1="1" x2="12" y2="23" stroke-width="1.8" />
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+          Financeiro
+        </div>
+        <div class="nav-tab" onclick="navigate('assembleias')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke-width="1.8" />
+            <circle cx="9" cy="7" r="4" stroke-width="1.8" />
+            <path d="M23 11l-4 4-2-2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          Assembleias
+        </div>
+        <div class="nav-tab" onclick="navigate('ocorrencias')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+              stroke-width="1.8" />
+            <line x1="12" y1="9" x2="12" y2="13" stroke-width="1.8" />
+            <line x1="12" y1="17" x2="12.01" y2="17" stroke-width="2.5" />
+          </svg>
+          Ocorrências
+        </div>
+        <div class="nav-tab" onclick="navigate('notificacoes')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke-width="1.8" />
+            <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke-width="1.8" />
+          </svg>
+          Avisos
+          <div class="tab-badge">4</div>
         </div>
       </div>
-    </div>
-  </nav>
-
-  <!-- ═══ DASHBOARD ═══ -->
-  <div class="content active" id="page-dashboard">
-    <div class="dash-hero">
-      <div class="hero-greeting">Olá, Ana! 👋</div>
-      <div class="hero-sub">Quinta-feira, 05 de março de 2026 · Apto 102, Bloco A</div>
-      <div class="hero-chips">
-        <div class="hero-chip">
-          <span class="chip-icon">📅</span>
-          <div>
-            <div class="chip-label">Próxima reserva</div>
-            <div class="chip-value">07/03 · Churrasqueira</div>
-          </div>
+      <div class="nav-right">
+        <div class="nav-notif-btn" onclick="navigate('notificacoes')">
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke-width="1.8" />
+            <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke-width="1.8" />
+          </svg>
+          <div class="notif-dot"></div>
         </div>
-        <div class="hero-chip">
-          <span class="chip-icon">💰</span>
-          <div>
-            <div class="chip-label">Cota de março</div>
-            <div class="chip-value">R$ 580 · Em dia ✓</div>
-          </div>
-        </div>
-        <div class="hero-chip">
-          <span class="chip-icon">🗳️</span>
-          <div>
-            <div class="chip-label">Votação aberta</div>
-            <div class="chip-value">Reforma fachada B</div>
+        <div class="nav-user" onclick="navigate('perfil')">
+          <div class="avatar" style="width:30px;height:30px;font-size:11px;">AL</div>
+          <div class="nav-user-info">
+            <div class="nav-user-name">Ana Lima</div>
+            <div class="nav-user-unit">Apto 102 · Bloco A</div>
           </div>
         </div>
       </div>
-    </div>
+    </nav>
 
-    <!-- AÇÕES RÁPIDAS -->
-    <div class="section-sep"><div class="section-sep-label">Ações rápidas</div></div>
-    <div class="quick-grid">
-      <div class="quick-btn" onclick="navigate('reservas')">
-        <div class="quick-icon" style="background:#eef0fd;">🏊</div>
-        <div class="quick-label">Fazer Reserva</div>
-      </div>
-      <div class="quick-btn" onclick="navigate('financeiro')">
-        <div class="quick-icon" style="background:#e0f7f4;">💳</div>
-        <div class="quick-label">Ver Financeiro</div>
-      </div>
-      <div class="quick-btn" onclick="navigate('assembleias')">
-        <div class="quick-icon" style="background:#fef8e7;">🗳️</div>
-        <div class="quick-label">Votar Agora</div>
-      </div>
-      <div class="quick-btn" onclick="openModal('ocorrencia')">
-        <div class="quick-icon" style="background:#fef0ee;">🔔</div>
-        <div class="quick-label">Registrar Ocorrência</div>
-      </div>
-    </div>
-
-    <div class="dash-grid-2">
-      <!-- ALERTAS -->
-      <div>
-        <div class="section-sep"><div class="section-sep-label">Atenção</div></div>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <div class="alert-card info">
-            <div class="alert-icon">🗳️</div>
+    <!-- ═══ DASHBOARD ═══ -->
+    <div class="content active" id="page-dashboard">
+      <div class="dash-hero">
+        <div class="hero-greeting">Olá, Ana! 👋</div>
+        <div class="hero-sub">Quinta-feira, 05 de março de 2026 · Apto 102, Bloco A</div>
+        <div class="hero-chips">
+          <div class="hero-chip">
+            <span class="chip-icon">📅</span>
             <div>
-              <div class="alert-title">Votação disponível</div>
-              <div class="alert-sub">Reforma da fachada do Bloco B está em votação. Encerra em 13/03. <span style="color:var(--primary);cursor:pointer;font-weight:600;" onclick="navigate('assembleias')">Votar →</span></div>
+              <div class="chip-label">Próxima reserva</div>
+              <div class="chip-value">07/03 · Churrasqueira</div>
             </div>
           </div>
-          <div class="alert-card warn">
-            <div class="alert-icon">📢</div>
+          <div class="hero-chip">
+            <span class="chip-icon">💰</span>
             <div>
-              <div class="alert-title">Assembleia em 8 dias</div>
-              <div class="alert-sub">Assembleia Ordinária de Março/2026 — 13/03 às 19h no Salão de Festas.</div>
+              <div class="chip-label">Cota de março</div>
+              <div class="chip-value">R$ 580 · Em dia ✓</div>
+            </div>
+          </div>
+          <div class="hero-chip">
+            <span class="chip-icon">🗳️</span>
+            <div>
+              <div class="chip-label">Votação aberta</div>
+              <div class="chip-value">Reforma fachada B</div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- PRÓXIMOS EVENTOS -->
-      <div>
-        <div class="section-sep"><div class="section-sep-label">Agenda</div></div>
-        <div class="card" style="padding:16px;">
-          <div class="mini-events">
-            <div class="mini-event">
-              <div class="mini-event-date" style="background:var(--primary);">
-                <div class="d">07</div>
-                <div class="m">Mar</div>
-              </div>
-              <div class="mini-event-info">
-                <div class="mini-event-title">Sua reserva — Churrasqueira 2</div>
-                <div class="mini-event-sub">12h às 18h · Confirmada ✓</div>
-              </div>
-              <span class="badge badge-green">Conf.</span>
-            </div>
-            <div class="mini-event">
-              <div class="mini-event-date" style="background:#7c5af1;">
-                <div class="d">13</div>
-                <div class="m">Mar</div>
-              </div>
-              <div class="mini-event-info">
-                <div class="mini-event-title">Assembleia Ordinária</div>
-                <div class="mini-event-sub">19h · Salão de Festas</div>
-              </div>
-              <span class="badge badge-blue">Hoje</span>
-            </div>
-            <div class="mini-event">
-              <div class="mini-event-date" style="background:var(--teal);">
-                <div class="d">15</div>
-                <div class="m">Mar</div>
-              </div>
-              <div class="mini-event-info">
-                <div class="mini-event-title">Vencimento cota abril</div>
-                <div class="mini-event-sub">R$ 580,00 · Bloco A/102</div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <!-- AÇÕES RÁPIDAS -->
+      <div class="section-sep">
+        <div class="section-sep-label">Ações rápidas</div>
       </div>
-    </div>
-
-    <!-- COMUNICADO -->
-    <div class="section-sep"><div class="section-sep-label">Último comunicado</div></div>
-    <div class="card" style="display:flex;align-items:flex-start;gap:16px;">
-      <div style="width:44px;height:44px;background:var(--primary-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">📋</div>
-      <div style="flex:1;">
-        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Manutenção do elevador Bloco A</div>
-        <div style="font-size:13.5px;color:var(--text-3);line-height:1.55;">O elevador do Bloco A passará por manutenção preventiva no dia <strong>09/03 (segunda-feira)</strong>, das 8h às 12h. Durante esse período, apenas a escada estará disponível. Pedimos desculpas pelo transtorno.</div>
-        <div style="font-size:11.5px;color:var(--text-4);margin-top:8px;">Síndico Marco Ribeiro · 03/03/2026</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ RESERVAS ═══ -->
-  <div class="content" id="page-reservas">
-    <div class="page-header">
-      <div class="page-title">Reservas de Áreas Comuns</div>
-      <div class="page-sub">Agende e acompanhe o uso dos espaços do condomínio</div>
-    </div>
-    <div class="reservas-grid">
-      <div>
-        <div class="card" style="margin-bottom:16px;">
-          <div class="cal-nav-row">
-            <div class="cal-month-title">Março 2026</div>
-            <div class="cal-nav-btns">
-              <button class="btn btn-outline btn-sm">‹</button>
-              <button class="btn btn-outline btn-sm">›</button>
-            </div>
-          </div>
-          <div class="cal-grid">
-            <div class="cal-day-label">Dom</div><div class="cal-day-label">Seg</div><div class="cal-day-label">Ter</div><div class="cal-day-label">Qua</div><div class="cal-day-label">Qui</div><div class="cal-day-label">Sex</div><div class="cal-day-label">Sáb</div>
-            <div class="cal-day other">23</div><div class="cal-day other">24</div><div class="cal-day other">25</div><div class="cal-day other">26</div><div class="cal-day other">27</div><div class="cal-day other">28</div><div class="cal-day">1</div>
-            <div class="cal-day">2</div><div class="cal-day">3</div><div class="cal-day">4</div><div class="cal-day today">5</div><div class="cal-day">6</div><div class="cal-day has-reserva" title="Sua reserva">7</div><div class="cal-day disponivel">8</div>
-            <div class="cal-day">9</div><div class="cal-day">10</div><div class="cal-day">11</div><div class="cal-day">12</div><div class="cal-day disponivel">13</div><div class="cal-day">14</div><div class="cal-day disponivel">15</div>
-            <div class="cal-day">16</div><div class="cal-day">17</div><div class="cal-day">18</div><div class="cal-day">19</div><div class="cal-day">20</div><div class="cal-day disponivel">21</div><div class="cal-day">22</div>
-            <div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div><div class="cal-day">29</div>
-            <div class="cal-day">30</div><div class="cal-day">31</div>
-          </div>
-          <div style="display:flex;gap:16px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--text-3);">
-            <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;background:#dbeafe;border-radius:3px;display:inline-block;"></span>Sua reserva</span>
-            <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;background:var(--teal-light);border-radius:3px;display:inline-block;"></span>Disponível</span>
-          </div>
+      <div class="quick-grid">
+        <div class="quick-btn" onclick="navigate('reservas')">
+          <div class="quick-icon" style="background:#eef0fd;">🏊</div>
+          <div class="quick-label">Fazer Reserva</div>
         </div>
-
-        <div class="card">
-          <div class="card-title">
-            Minhas Reservas
-            <button class="btn btn-primary btn-sm" onclick="openModal('reserva')">+ Nova Reserva</button>
-          </div>
-          <div class="res-card">
-            <div class="res-color-bar" style="background:var(--primary);"></div>
-            <div class="res-info">
-              <div class="res-title">🍖 Churrasqueira 2</div>
-              <div class="res-meta">07/03/2026 · Sábado · 12h00 às 18h00</div>
-            </div>
-            <div class="res-actions">
-              <span class="badge badge-green">Confirmada</span>
-              <button class="btn btn-outline btn-sm" onclick="showToast('🗑 Reserva cancelada')">Cancelar</button>
-            </div>
-          </div>
-          <div style="background:var(--surface-2);border-radius:var(--r-sm);padding:16px;text-align:center;color:var(--text-3);font-size:13.5px;">
-            Nenhuma outra reserva agendada.<br>
-            <span style="color:var(--primary);cursor:pointer;font-weight:600;" onclick="openModal('reserva')">+ Fazer nova reserva</span>
-          </div>
+        <div class="quick-btn" onclick="navigate('financeiro')">
+          <div class="quick-icon" style="background:#e0f7f4;">💳</div>
+          <div class="quick-label">Ver Financeiro</div>
+        </div>
+        <div class="quick-btn" onclick="navigate('assembleias')">
+          <div class="quick-icon" style="background:#fef8e7;">🗳️</div>
+          <div class="quick-label">Votar Agora</div>
+        </div>
+        <div class="quick-btn" onclick="openModal('ocorrencia')">
+          <div class="quick-icon" style="background:#fef0ee;">🔔</div>
+          <div class="quick-label">Registrar Ocorrência</div>
         </div>
       </div>
 
-      <div style="display:flex;flex-direction:column;gap:16px;">
-        <div class="card">
-          <div class="card-title">Espaços Disponíveis</div>
-          <div class="espacos-list">
-            <div class="espaco-item" onclick="openModal('reserva')">
-              <div class="espaco-icon">🍖</div>
-              <div>
-                <div class="espaco-name">Churrasqueira 1</div>
-                <div class="espaco-cap">Cap. 30 pessoas</div>
-              </div>
-              <span class="badge badge-green">Livre</span>
-            </div>
-            <div class="espaco-item" onclick="showToast('❌ Churrasqueira 2 já está reservada em 07/03')">
-              <div class="espaco-icon">🍖</div>
-              <div>
-                <div class="espaco-name">Churrasqueira 2</div>
-                <div class="espaco-cap">Cap. 30 pessoas</div>
-              </div>
-              <span class="badge badge-yellow">Reservada 07/03</span>
-            </div>
-            <div class="espaco-item" onclick="openModal('reserva')">
-              <div class="espaco-icon">🎉</div>
-              <div>
-                <div class="espaco-name">Salão de Festas</div>
-                <div class="espaco-cap">Cap. 80 pessoas</div>
-              </div>
-              <span class="badge badge-green">Livre</span>
-            </div>
-            <div class="espaco-item" onclick="openModal('reserva')">
-              <div class="espaco-icon">🏊</div>
-              <div>
-                <div class="espaco-name">Piscina</div>
-                <div class="espaco-cap">Uso livre · Seg–Dom</div>
-              </div>
-              <span class="badge badge-green">Livre</span>
-            </div>
-            <div class="espaco-item" onclick="openModal('reserva')">
-              <div class="espaco-icon">🏀</div>
-              <div>
-                <div class="espaco-name">Quadra Poliesportiva</div>
-                <div class="espaco-cap">Cap. 20 pessoas</div>
-              </div>
-              <span class="badge badge-green">Livre</span>
-            </div>
+      <div class="dash-grid-2">
+        <!-- ALERTAS -->
+        <div>
+          <div class="section-sep">
+            <div class="section-sep-label">Atenção</div>
           </div>
-        </div>
-        <div class="card" style="background:var(--surface-2);border-style:dashed;">
-          <div style="font-size:13px;color:var(--text-3);line-height:1.5;">
-            <strong style="color:var(--text-2);">ℹ️ Regras de uso</strong><br>
-            Reservas devem ser feitas com 24h de antecedência. Cancelamentos com até 12h antes sem penalidade. Máximo de 2 reservas ativas por unidade.
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ FINANCEIRO ═══ -->
-  <div class="content" id="page-financeiro">
-    <div class="page-header">
-      <div class="page-title">Financeiro</div>
-      <div class="page-sub">Acompanhe taxas, pagamentos e histórico da sua unidade</div>
-    </div>
-
-    <div class="fin-hero">
-      <div class="fin-hero-left">
-        <div class="fin-hero-label">Próxima cota</div>
-        <div class="fin-hero-amount">R$ 580,00</div>
-        <div class="fin-hero-due">Vencimento: 15 de abril de 2026</div>
-        <div style="margin-top:12px;"><span class="badge badge-green">Março/26 pago ✓</span></div>
-      </div>
-      <button class="fin-pay-btn" onclick="showToast('💳 Redirecionando para pagamento...')">Pagar cota →</button>
-    </div>
-
-    <div class="dash-grid-2">
-      <div class="card">
-        <div class="card-title">Histórico de Pagamentos</div>
-        <div class="pay-dots">
-          <div class="pay-dot-col"><div class="pay-dot ok" style="height:38px;"></div><div class="pay-dot-label">Jan</div></div>
-          <div class="pay-dot-col"><div class="pay-dot ok" style="height:38px;"></div><div class="pay-dot-label">Fev</div></div>
-          <div class="pay-dot-col"><div class="pay-dot ok" style="height:38px;"></div><div class="pay-dot-label">Mar</div></div>
-          <div class="pay-dot-col"><div class="pay-dot" style="height:38px;background:var(--border);opacity:0.5;"></div><div class="pay-dot-label">Abr</div></div>
-          <div class="pay-dot-col"><div class="pay-dot" style="height:38px;background:var(--border);opacity:0.5;"></div><div class="pay-dot-label">Mai</div></div>
-          <div class="pay-dot-col"><div class="pay-dot" style="height:38px;background:var(--border);opacity:0.5;"></div><div class="pay-dot-label">Jun</div></div>
-        </div>
-        <div style="font-size:12px;color:var(--text-4);">Todos os pagamentos em dia em 2026 ✓</div>
-        <hr class="sep">
-        <div class="hist-item">
-          <div class="hist-icon" style="background:var(--green-light);">✅</div>
-          <div class="hist-info">
-            <div class="hist-title">Cota de Março/2026</div>
-            <div class="hist-date">Pago em 03/03/2026 · PIX</div>
-          </div>
-          <div class="hist-amount paid">R$ 580,00</div>
-        </div>
-        <div class="hist-item">
-          <div class="hist-icon" style="background:var(--green-light);">✅</div>
-          <div class="hist-info">
-            <div class="hist-title">Cota de Fevereiro/2026</div>
-            <div class="hist-date">Pago em 12/02/2026 · Boleto</div>
-          </div>
-          <div class="hist-amount paid">R$ 580,00</div>
-        </div>
-        <div class="hist-item">
-          <div class="hist-icon" style="background:var(--green-light);">✅</div>
-          <div class="hist-info">
-            <div class="hist-title">Cota de Janeiro/2026</div>
-            <div class="hist-date">Pago em 08/01/2026 · Boleto</div>
-          </div>
-          <div class="hist-amount paid">R$ 580,00</div>
-        </div>
-        <div class="hist-item">
-          <div class="hist-icon" style="background:var(--green-light);">✅</div>
-          <div class="hist-info">
-            <div class="hist-title">Cota de Dezembro/2025</div>
-            <div class="hist-date">Pago em 10/12/2025 · PIX</div>
-          </div>
-          <div class="hist-amount paid">R$ 560,00</div>
-        </div>
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:16px;">
-        <div class="card">
-          <div class="card-title">Resumo</div>
           <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="display:flex;justify-content:space-between;padding:10px;background:var(--green-light);border-radius:var(--r-sm);">
-              <span style="font-size:13.5px;font-weight:500;">Pago em 2026</span>
-              <span style="font-weight:700;color:#027a48;">R$ 1.740,00</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;padding:10px;background:var(--surface-2);border-radius:var(--r-sm);">
-              <span style="font-size:13.5px;font-weight:500;">Pendente</span>
-              <span style="font-weight:700;color:var(--text-3);">R$ 0,00</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;padding:10px;background:var(--surface-2);border-radius:var(--r-sm);">
-              <span style="font-size:13.5px;font-weight:500;">Multas</span>
-              <span style="font-weight:700;color:var(--text-3);">R$ 0,00</span>
-            </div>
-          </div>
-        </div>
-        <div class="card" style="background:var(--primary-light);border-color:#bfdbfe;">
-          <div style="font-size:13px;font-weight:700;color:var(--primary);margin-bottom:4px;">🏆 Pagador exemplar!</div>
-          <div style="font-size:12.5px;color:var(--text-2);line-height:1.5;">Você está em dia com todas as taxas de 2026. Continue assim!</div>
-        </div>
-        <div class="card">
-          <div style="font-size:13.5px;font-weight:700;margin-bottom:12px;">Segunda via / Boleto</div>
-          <button class="btn btn-outline" style="width:100%;justify-content:center;" onclick="showToast('📄 Boleto de abril/2026 gerado!')">Gerar boleto de Abril/2026</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ ASSEMBLEIAS ═══ -->
-  <div class="content" id="page-assembleias">
-    <div class="page-header">
-      <div class="page-title">Assembleias e Votações</div>
-      <div class="page-sub">Participe das decisões do seu condomínio</div>
-    </div>
-
-    <!-- VOTAÇÃO ATIVA -->
-    <div class="section-sep"><div class="section-sep-label">Votação aberta</div></div>
-    <div class="vote-section">
-      <div class="vote-title">Reforma da fachada do Bloco B</div>
-      <div class="vote-sub">Votação encerra em 13/03/2026 · 47 de 120 unidades já votaram · Sua unidade ainda não votou</div>
-      <div class="vote-options" id="voteOptions">
-        <div class="vote-option" onclick="selectVote(this, 'sim')">
-          <div class="vote-option-icon">✅</div>
-          <div>
-            <div style="font-weight:600;">Sim — Aprovar reforma</div>
-            <div style="font-size:12.5px;color:var(--text-3);margin-top:2px;">Orçamento estimado: R$ 120.000 · Prazo: 60 dias</div>
-          </div>
-        </div>
-        <div class="vote-option" onclick="selectVote(this, 'nao')">
-          <div class="vote-option-icon">❌</div>
-          <div>
-            <div style="font-weight:600;">Não — Adiar para próxima assembleia</div>
-            <div style="font-size:12.5px;color:var(--text-3);margin-top:2px;">Revisar orçamentos e retomar em maio/2026</div>
-          </div>
-        </div>
-        <div class="vote-option" onclick="selectVote(this, 'abstencao')">
-          <div class="vote-option-icon">⚪</div>
-          <div>
-            <div style="font-weight:600;">Abstenção</div>
-          </div>
-        </div>
-      </div>
-      <button class="btn btn-primary" id="voteBtn" onclick="submitVote()" style="opacity:0.5;pointer-events:none;">Confirmar meu voto →</button>
-    </div>
-
-    <!-- RESULTADO PARCIAL -->
-    <div class="card" style="margin-bottom:16px;">
-      <div class="card-title">Resultado parcial — Reforma fachada Bloco B</div>
-      <div style="display:flex;flex-direction:column;gap:14px;">
-        <div class="vote-bar-row">
-          <div class="vote-bar-label"><span>✅ Sim (32 votos)</span><span style="font-weight:700;color:var(--green);">68%</span></div>
-          <div class="vote-bar-track"><div class="vote-bar-fill" style="width:68%;background:var(--green);"></div></div>
-        </div>
-        <div class="vote-bar-row">
-          <div class="vote-bar-label"><span>❌ Não (10 votos)</span><span style="font-weight:700;color:var(--red);">21%</span></div>
-          <div class="vote-bar-track"><div class="vote-bar-fill" style="width:21%;background:var(--red);"></div></div>
-        </div>
-        <div class="vote-bar-row">
-          <div class="vote-bar-label"><span>⚪ Abstenção (5 votos)</span><span style="font-weight:700;color:var(--text-3);">11%</span></div>
-          <div class="vote-bar-track"><div class="vote-bar-fill" style="width:11%;background:var(--text-4);"></div></div>
-        </div>
-      </div>
-      <div style="font-size:12px;color:var(--text-4);margin-top:14px;">73 unidades ainda não votaram · Resultado parcial, não definitivo</div>
-    </div>
-
-    <!-- PRÓXIMA ASSEMBLEIA -->
-    <div class="section-sep"><div class="section-sep-label">Próxima assembleia</div></div>
-    <div class="assembleia-card">
-      <div class="assembleia-header" style="background:linear-gradient(135deg,#eef0fd,#f0f9ff);">
-        <div class="assembleia-date-badge" style="background:linear-gradient(135deg,var(--primary),#7c5af1);">
-          <div class="dd">13</div>
-          <div class="mm">Mar</div>
-        </div>
-        <div class="assembleia-info">
-          <div class="assembleia-title">Assembleia Ordinária — Março/2026</div>
-          <div class="assembleia-meta">19h00 · Salão de Festas · Residencial Parque Verde</div>
-        </div>
-        <span class="badge badge-blue">Em 8 dias</span>
-      </div>
-      <div class="assembleia-pautas">
-        <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-4);padding-top:14px;margin-bottom:4px;">Pautas</div>
-        <div class="pauta-item"><div class="pauta-num">1</div><div class="pauta-text">Aprovação do orçamento condominial para 2026</div></div>
-        <div class="pauta-item"><div class="pauta-num">2</div><div class="pauta-text">Apresentação dos resultados da votação: Reforma fachada Bloco B</div></div>
-        <div class="pauta-item"><div class="pauta-num">3</div><div class="pauta-text">Eleição do subsíndico para o biênio 2026–2027</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ OCORRÊNCIAS ═══ -->
-  <div class="content" id="page-ocorrencias">
-    <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-      <div>
-        <div class="page-title">Ocorrências</div>
-        <div class="page-sub">Registre e acompanhe problemas no condomínio</div>
-      </div>
-      <button class="btn btn-primary" onclick="openModal('ocorrencia')">
-        <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round"/></svg>
-        Registrar Ocorrência
-      </button>
-    </div>
-
-    <div class="section-sep"><div class="section-sep-label">Minhas ocorrências</div></div>
-
-    <div class="ocor-card">
-      <div class="ocor-icon" style="background:var(--amber-light);">🔊</div>
-      <div class="ocor-info">
-        <div class="ocor-title">Barulho excessivo — Apto 508</div>
-        <div class="ocor-desc">Som alto após 22h repetidamente. Terceiro registro no mês. Moradores vizinhos estão sendo afetados.</div>
-        <div class="ocor-date">Registrada em 04/03/2026</div>
-      </div>
-      <span class="badge badge-yellow">Em análise</span>
-    </div>
-
-    <div class="section-sep"><div class="section-sep-label">Como registrar</div></div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
-      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:18px;text-align:center;cursor:pointer;transition:all 0.15s;" onclick="openModal('ocorrencia')" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
-        <div style="font-size:28px;margin-bottom:8px;">🔊</div>
-        <div style="font-size:13.5px;font-weight:600;">Barulho</div>
-        <div style="font-size:12px;color:var(--text-3);margin-top:3px;">Som alto, festas, animais</div>
-      </div>
-      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:18px;text-align:center;cursor:pointer;transition:all 0.15s;" onclick="openModal('ocorrencia')" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
-        <div style="font-size:28px;margin-bottom:8px;">🔧</div>
-        <div style="font-size:13.5px;font-weight:600;">Infraestrutura</div>
-        <div style="font-size:12px;color:var(--text-3);margin-top:3px;">Elevadores, iluminação, vazamentos</div>
-      </div>
-      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:18px;text-align:center;cursor:pointer;transition:all 0.15s;" onclick="openModal('ocorrencia')" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
-        <div style="font-size:28px;margin-bottom:8px;">📢</div>
-        <div style="font-size:13.5px;font-weight:600;">Outro</div>
-        <div style="font-size:12px;color:var(--text-3);margin-top:3px;">Segurança, limpeza, outros</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ NOTIFICAÇÕES ═══ -->
-  <div class="content" id="page-notificacoes">
-    <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-      <div>
-        <div class="page-title">Avisos e Notificações</div>
-        <div class="page-sub">4 mensagens não lidas</div>
-      </div>
-      <button class="btn btn-outline" onclick="showToast('✅ Marcadas como lidas')">Marcar todas como lidas</button>
-    </div>
-
-    <div class="notif-item unread">
-      <div class="notif-icon-wrap" style="background:var(--primary-light);">🗳️</div>
-      <div class="notif-body">
-        <div class="notif-title">Votação aberta — Reforma da fachada Bloco B</div>
-        <div class="notif-desc">Uma nova votação foi aberta. Sua participação é importante! A votação encerra em 13/03/2026. <span style="color:var(--primary);cursor:pointer;font-weight:600;" onclick="navigate('assembleias')">Votar agora →</span></div>
-        <div class="notif-time">Hoje às 09:14</div>
-      </div>
-    </div>
-
-    <div class="notif-item unread">
-      <div class="notif-icon-wrap" style="background:var(--green-light);">✅</div>
-      <div class="notif-body">
-        <div class="notif-title">Reserva confirmada — Churrasqueira 2</div>
-        <div class="notif-desc">Sua reserva para 07/03 das 12h às 18h foi confirmada. Lembre-se de deixar o espaço limpo após o uso.</div>
-        <div class="notif-time">Hoje às 10:42</div>
-      </div>
-    </div>
-
-    <div class="notif-item unread">
-      <div class="notif-icon-wrap" style="background:var(--amber-light);">🔧</div>
-      <div class="notif-body">
-        <div class="notif-title">Manutenção do elevador — Bloco A</div>
-        <div class="notif-desc">O elevador do Bloco A passará por manutenção em 09/03 das 8h às 12h. Apenas a escada estará disponível neste período.</div>
-        <div class="notif-time">Ontem às 15:30</div>
-      </div>
-    </div>
-
-    <div class="notif-item unread">
-      <div class="notif-icon-wrap" style="background:var(--red-light);">📢</div>
-      <div class="notif-body">
-        <div class="notif-title">Assembleia Ordinária — 13/03/2026</div>
-        <div class="notif-desc">Você está convocado para a Assembleia Ordinária de Março/2026. Data: 13/03, às 19h, no Salão de Festas. Sua presença é importante!</div>
-        <div class="notif-time">2 dias atrás</div>
-      </div>
-    </div>
-
-    <div class="notif-item" style="opacity:0.7;">
-      <div class="notif-icon-wrap" style="background:var(--surface-2);">💰</div>
-      <div class="notif-body">
-        <div class="notif-title">Pagamento confirmado — Cota Março/2026</div>
-        <div class="notif-desc">Recebemos seu pagamento de R$ 580,00 referente à cota de março/2026. Obrigado!</div>
-        <div class="notif-time">3 dias atrás</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ PERFIL ═══ -->
-  <div class="content" id="page-perfil">
-    <div class="page-header">
-      <div class="page-title">Meu Perfil</div>
-      <div class="page-sub">Informações da sua conta e unidade</div>
-    </div>
-
-    <div class="perfil-hero">
-      <div class="perfil-avatar">AL</div>
-      <div style="flex:1;">
-        <div class="perfil-name">Ana Lima</div>
-        <div class="perfil-unit">Apto 102 · Bloco A · Residencial Parque Verde</div>
-        <div style="display:flex;gap:8px;margin-top:8px;">
-          <span class="badge badge-blue">Titular</span>
-          <span class="badge badge-green">Em dia</span>
-        </div>
-      </div>
-      <button class="btn btn-outline" onclick="openModal('editPerfil')">✏️ Editar perfil</button>
-    </div>
-
-    <div class="dash-grid-2">
-      <div class="card">
-        <div class="card-title">Informações de contato</div>
-        <div class="info-grid">
-          <div class="info-field">
-            <div class="info-field-label">E-mail</div>
-            <div class="info-field-val">ana.lima@email.com</div>
-          </div>
-          <div class="info-field">
-            <div class="info-field-label">Telefone</div>
-            <div class="info-field-val">(11) 9 9876-5432</div>
-          </div>
-          <div class="info-field">
-            <div class="info-field-label">CPF</div>
-            <div class="info-field-val">***.456.789-**</div>
-          </div>
-          <div class="info-field">
-            <div class="info-field-label">Tipo</div>
-            <div class="info-field-val">Titular / Proprietária</div>
-          </div>
-        </div>
-        <hr class="sep">
-        <div class="card-title" style="margin-bottom:12px;">Unidade</div>
-        <div class="info-grid">
-          <div class="info-field">
-            <div class="info-field-label">Apartamento</div>
-            <div class="info-field-val">102</div>
-          </div>
-          <div class="info-field">
-            <div class="info-field-label">Bloco</div>
-            <div class="info-field-val">Bloco A · 1º andar</div>
-          </div>
-          <div class="info-field">
-            <div class="info-field-label">Vagas</div>
-            <div class="info-field-val">Vaga 14 (coberta)</div>
-          </div>
-          <div class="info-field">
-            <div class="info-field-label">Moradores</div>
-            <div class="info-field-val">2 pessoas</div>
-          </div>
-        </div>
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:16px;">
-        <div class="card">
-          <div class="card-title">Moradores vinculados</div>
-          <div class="moradores-list">
-            <div class="morador-item">
-              <div class="morador-av" style="background:linear-gradient(135deg,var(--primary),#7c5af1);">AL</div>
+            <div class="alert-card info">
+              <div class="alert-icon">🗳️</div>
               <div>
-                <div class="morador-name">Ana Lima</div>
-                <div style="font-size:11.5px;color:var(--text-3);">Titular · Proprietária</div>
+                <div class="alert-title">Votação disponível</div>
+                <div class="alert-sub">Reforma da fachada do Bloco B está em votação. Encerra em 13/03. <span
+                    style="color:var(--primary);cursor:pointer;font-weight:600;" onclick="navigate('assembleias')">Votar
+                    →</span></div>
               </div>
-              <span class="badge badge-blue">Você</span>
             </div>
-            <div class="morador-item">
-              <div class="morador-av" style="background:linear-gradient(135deg,var(--teal),#0cb8a0);">PL</div>
+            <div class="alert-card warn">
+              <div class="alert-icon">📢</div>
               <div>
-                <div class="morador-name">Pedro Lima</div>
-                <div style="font-size:11.5px;color:var(--text-3);">Dependente · Filho</div>
+                <div class="alert-title">Assembleia em 8 dias</div>
+                <div class="alert-sub">Assembleia Ordinária de Março/2026 — 13/03 às 19h no Salão de Festas.</div>
               </div>
             </div>
           </div>
         </div>
-        <div class="card" style="background:var(--surface-2);">
-          <div style="font-size:13.5px;font-weight:700;margin-bottom:8px;">Segurança</div>
-          <button class="btn btn-outline" style="width:100%;justify-content:center;margin-bottom:8px;" onclick="showToast('📧 E-mail de redefinição enviado!')">Alterar senha</button>
-          <button class="btn btn-outline" style="width:100%;justify-content:center;color:var(--red);border-color:var(--red);" onclick="showToast('👋 Até logo!')">Sair da conta</button>
+
+        <!-- PRÓXIMOS EVENTOS -->
+        <div>
+          <div class="section-sep">
+            <div class="section-sep-label">Agenda</div>
+          </div>
+          <div class="card" style="padding:16px;">
+            <div class="mini-events">
+              <div class="mini-event">
+                <div class="mini-event-date" style="background:var(--primary);">
+                  <div class="d">07</div>
+                  <div class="m">Mar</div>
+                </div>
+                <div class="mini-event-info">
+                  <div class="mini-event-title">Sua reserva — Churrasqueira 2</div>
+                  <div class="mini-event-sub">12h às 18h · Confirmada ✓</div>
+                </div>
+                <span class="badge badge-green">Conf.</span>
+              </div>
+              <div class="mini-event">
+                <div class="mini-event-date" style="background:#7c5af1;">
+                  <div class="d">13</div>
+                  <div class="m">Mar</div>
+                </div>
+                <div class="mini-event-info">
+                  <div class="mini-event-title">Assembleia Ordinária</div>
+                  <div class="mini-event-sub">19h · Salão de Festas</div>
+                </div>
+                <span class="badge badge-blue">Hoje</span>
+              </div>
+              <div class="mini-event">
+                <div class="mini-event-date" style="background:var(--teal);">
+                  <div class="d">15</div>
+                  <div class="m">Mar</div>
+                </div>
+                <div class="mini-event-info">
+                  <div class="mini-event-title">Vencimento cota abril</div>
+                  <div class="mini-event-sub">R$ 580,00 · Bloco A/102</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMUNICADO -->
+      <div class="section-sep">
+        <div class="section-sep-label">Último comunicado</div>
+      </div>
+      <div class="card" style="display:flex;align-items:flex-start;gap:16px;">
+        <div
+          style="width:44px;height:44px;background:var(--primary-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">
+          📋</div>
+        <div style="flex:1;">
+          <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Manutenção do elevador Bloco A</div>
+          <div style="font-size:13.5px;color:var(--text-3);line-height:1.55;">O elevador do Bloco A passará por
+            manutenção preventiva no dia <strong>09/03 (segunda-feira)</strong>, das 8h às 12h. Durante esse período,
+            apenas a escada estará disponível. Pedimos desculpas pelo transtorno.</div>
+          <div style="font-size:11.5px;color:var(--text-4);margin-top:8px;">Síndico Marco Ribeiro · 03/03/2026</div>
         </div>
       </div>
     </div>
-  </div>
-</div><!-- /app -->
 
-<!-- ─── MODAL RESERVA ─── -->
-<div class="modal-overlay" id="modal-reserva" onclick="closeModal('reserva',event)">
-  <div class="modal">
-    <div class="modal-head">
-      <div class="modal-title">Nova Reserva</div>
-      <div class="modal-close" onclick="closeModal('reserva')">✕</div>
+    <!-- ═══ RESERVAS ═══ -->
+    <div class="content" id="page-reservas">
+      <div class="page-header">
+        <div class="page-title">Reservas de Áreas Comuns</div>
+        <div class="page-sub">Agende e acompanhe o uso dos espaços do condomínio</div>
+      </div>
+      <div class="reservas-grid">
+        <div>
+          <div class="card" style="margin-bottom:16px;">
+            <div class="cal-nav-row">
+              <div class="cal-month-title">Março 2026</div>
+              <div class="cal-nav-btns">
+                <button class="btn btn-outline btn-sm">‹</button>
+                <button class="btn btn-outline btn-sm">›</button>
+              </div>
+            </div>
+            <div class="cal-grid">
+              <div class="cal-day-label">Dom</div>
+              <div class="cal-day-label">Seg</div>
+              <div class="cal-day-label">Ter</div>
+              <div class="cal-day-label">Qua</div>
+              <div class="cal-day-label">Qui</div>
+              <div class="cal-day-label">Sex</div>
+              <div class="cal-day-label">Sáb</div>
+              <div class="cal-day other">23</div>
+              <div class="cal-day other">24</div>
+              <div class="cal-day other">25</div>
+              <div class="cal-day other">26</div>
+              <div class="cal-day other">27</div>
+              <div class="cal-day other">28</div>
+              <div class="cal-day">1</div>
+              <div class="cal-day">2</div>
+              <div class="cal-day">3</div>
+              <div class="cal-day">4</div>
+              <div class="cal-day today">5</div>
+              <div class="cal-day">6</div>
+              <div class="cal-day has-reserva" title="Sua reserva">7</div>
+              <div class="cal-day disponivel">8</div>
+              <div class="cal-day">9</div>
+              <div class="cal-day">10</div>
+              <div class="cal-day">11</div>
+              <div class="cal-day">12</div>
+              <div class="cal-day disponivel">13</div>
+              <div class="cal-day">14</div>
+              <div class="cal-day disponivel">15</div>
+              <div class="cal-day">16</div>
+              <div class="cal-day">17</div>
+              <div class="cal-day">18</div>
+              <div class="cal-day">19</div>
+              <div class="cal-day">20</div>
+              <div class="cal-day disponivel">21</div>
+              <div class="cal-day">22</div>
+              <div class="cal-day">23</div>
+              <div class="cal-day">24</div>
+              <div class="cal-day">25</div>
+              <div class="cal-day">26</div>
+              <div class="cal-day">27</div>
+              <div class="cal-day">28</div>
+              <div class="cal-day">29</div>
+              <div class="cal-day">30</div>
+              <div class="cal-day">31</div>
+            </div>
+            <div
+              style="display:flex;gap:16px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--text-3);">
+              <span style="display:flex;align-items:center;gap:5px;"><span
+                  style="width:10px;height:10px;background:#dbeafe;border-radius:3px;display:inline-block;"></span>Sua
+                reserva</span>
+              <span style="display:flex;align-items:center;gap:5px;"><span
+                  style="width:10px;height:10px;background:var(--teal-light);border-radius:3px;display:inline-block;"></span>Disponível</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              Minhas Reservas
+              <button class="btn btn-primary btn-sm" onclick="openModal('reserva')">+ Nova Reserva</button>
+            </div>
+            <div class="res-card">
+              <div class="res-color-bar" style="background:var(--primary);"></div>
+              <div class="res-info">
+                <div class="res-title">🍖 Churrasqueira 2</div>
+                <div class="res-meta">07/03/2026 · Sábado · 12h00 às 18h00</div>
+              </div>
+              <div class="res-actions">
+                <span class="badge badge-green">Confirmada</span>
+                <button class="btn btn-outline btn-sm" onclick="showToast('🗑 Reserva cancelada')">Cancelar</button>
+              </div>
+            </div>
+            <div
+              style="background:var(--surface-2);border-radius:var(--r-sm);padding:16px;text-align:center;color:var(--text-3);font-size:13.5px;">
+              Nenhuma outra reserva agendada.<br>
+              <span style="color:var(--primary);cursor:pointer;font-weight:600;" onclick="openModal('reserva')">+ Fazer
+                nova reserva</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="card">
+            <div class="card-title">Espaços Disponíveis</div>
+            <div class="espacos-list">
+              <div class="espaco-item" onclick="openModal('reserva')">
+                <div class="espaco-icon">🍖</div>
+                <div>
+                  <div class="espaco-name">Churrasqueira 1</div>
+                  <div class="espaco-cap">Cap. 30 pessoas</div>
+                </div>
+                <span class="badge badge-green">Livre</span>
+              </div>
+              <div class="espaco-item" onclick="showToast('❌ Churrasqueira 2 já está reservada em 07/03')">
+                <div class="espaco-icon">🍖</div>
+                <div>
+                  <div class="espaco-name">Churrasqueira 2</div>
+                  <div class="espaco-cap">Cap. 30 pessoas</div>
+                </div>
+                <span class="badge badge-yellow">Reservada 07/03</span>
+              </div>
+              <div class="espaco-item" onclick="openModal('reserva')">
+                <div class="espaco-icon">🎉</div>
+                <div>
+                  <div class="espaco-name">Salão de Festas</div>
+                  <div class="espaco-cap">Cap. 80 pessoas</div>
+                </div>
+                <span class="badge badge-green">Livre</span>
+              </div>
+              <div class="espaco-item" onclick="openModal('reserva')">
+                <div class="espaco-icon">🏊</div>
+                <div>
+                  <div class="espaco-name">Piscina</div>
+                  <div class="espaco-cap">Uso livre · Seg–Dom</div>
+                </div>
+                <span class="badge badge-green">Livre</span>
+              </div>
+              <div class="espaco-item" onclick="openModal('reserva')">
+                <div class="espaco-icon">🏀</div>
+                <div>
+                  <div class="espaco-name">Quadra Poliesportiva</div>
+                  <div class="espaco-cap">Cap. 20 pessoas</div>
+                </div>
+                <span class="badge badge-green">Livre</span>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="background:var(--surface-2);border-style:dashed;">
+            <div style="font-size:13px;color:var(--text-3);line-height:1.5;">
+              <strong style="color:var(--text-2);">ℹ️ Regras de uso</strong><br>
+              Reservas devem ser feitas com 24h de antecedência. Cancelamentos com até 12h antes sem penalidade. Máximo
+              de 2 reservas ativas por unidade.
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label class="form-label">Área comum</label>
-      <select class="form-select">
-        <option>Churrasqueira 1</option>
-        <option>Salão de Festas</option>
-        <option>Quadra Poliesportiva</option>
-        <option>Piscina (área VIP)</option>
-      </select>
+
+    <!-- ═══ FINANCEIRO ═══ -->
+    <div class="content" id="page-financeiro">
+      <div class="page-header">
+        <div class="page-title">Financeiro</div>
+        <div class="page-sub">Acompanhe taxas, pagamentos e histórico da sua unidade</div>
+      </div>
+
+      <div class="fin-hero">
+        <div class="fin-hero-left">
+          <div class="fin-hero-label">Próxima cota</div>
+          <div class="fin-hero-amount">R$ 580,00</div>
+          <div class="fin-hero-due">Vencimento: 15 de abril de 2026</div>
+          <div style="margin-top:12px;"><span class="badge badge-green">Março/26 pago ✓</span></div>
+        </div>
+        <button class="fin-pay-btn" onclick="showToast('💳 Redirecionando para pagamento...')">Pagar cota →</button>
+      </div>
+
+      <div class="dash-grid-2">
+        <div class="card">
+          <div class="card-title">Histórico de Pagamentos</div>
+          <div class="pay-dots">
+            <div class="pay-dot-col">
+              <div class="pay-dot ok" style="height:38px;"></div>
+              <div class="pay-dot-label">Jan</div>
+            </div>
+            <div class="pay-dot-col">
+              <div class="pay-dot ok" style="height:38px;"></div>
+              <div class="pay-dot-label">Fev</div>
+            </div>
+            <div class="pay-dot-col">
+              <div class="pay-dot ok" style="height:38px;"></div>
+              <div class="pay-dot-label">Mar</div>
+            </div>
+            <div class="pay-dot-col">
+              <div class="pay-dot" style="height:38px;background:var(--border);opacity:0.5;"></div>
+              <div class="pay-dot-label">Abr</div>
+            </div>
+            <div class="pay-dot-col">
+              <div class="pay-dot" style="height:38px;background:var(--border);opacity:0.5;"></div>
+              <div class="pay-dot-label">Mai</div>
+            </div>
+            <div class="pay-dot-col">
+              <div class="pay-dot" style="height:38px;background:var(--border);opacity:0.5;"></div>
+              <div class="pay-dot-label">Jun</div>
+            </div>
+          </div>
+          <div style="font-size:12px;color:var(--text-4);">Todos os pagamentos em dia em 2026 ✓</div>
+          <hr class="sep">
+          <div class="hist-item">
+            <div class="hist-icon" style="background:var(--green-light);">✅</div>
+            <div class="hist-info">
+              <div class="hist-title">Cota de Março/2026</div>
+              <div class="hist-date">Pago em 03/03/2026 · PIX</div>
+            </div>
+            <div class="hist-amount paid">R$ 580,00</div>
+          </div>
+          <div class="hist-item">
+            <div class="hist-icon" style="background:var(--green-light);">✅</div>
+            <div class="hist-info">
+              <div class="hist-title">Cota de Fevereiro/2026</div>
+              <div class="hist-date">Pago em 12/02/2026 · Boleto</div>
+            </div>
+            <div class="hist-amount paid">R$ 580,00</div>
+          </div>
+          <div class="hist-item">
+            <div class="hist-icon" style="background:var(--green-light);">✅</div>
+            <div class="hist-info">
+              <div class="hist-title">Cota de Janeiro/2026</div>
+              <div class="hist-date">Pago em 08/01/2026 · Boleto</div>
+            </div>
+            <div class="hist-amount paid">R$ 580,00</div>
+          </div>
+          <div class="hist-item">
+            <div class="hist-icon" style="background:var(--green-light);">✅</div>
+            <div class="hist-info">
+              <div class="hist-title">Cota de Dezembro/2025</div>
+              <div class="hist-date">Pago em 10/12/2025 · PIX</div>
+            </div>
+            <div class="hist-amount paid">R$ 560,00</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="card">
+            <div class="card-title">Resumo</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div
+                style="display:flex;justify-content:space-between;padding:10px;background:var(--green-light);border-radius:var(--r-sm);">
+                <span style="font-size:13.5px;font-weight:500;">Pago em 2026</span>
+                <span style="font-weight:700;color:#027a48;">R$ 1.740,00</span>
+              </div>
+              <div
+                style="display:flex;justify-content:space-between;padding:10px;background:var(--surface-2);border-radius:var(--r-sm);">
+                <span style="font-size:13.5px;font-weight:500;">Pendente</span>
+                <span style="font-weight:700;color:var(--text-3);">R$ 0,00</span>
+              </div>
+              <div
+                style="display:flex;justify-content:space-between;padding:10px;background:var(--surface-2);border-radius:var(--r-sm);">
+                <span style="font-size:13.5px;font-weight:500;">Multas</span>
+                <span style="font-weight:700;color:var(--text-3);">R$ 0,00</span>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="background:var(--primary-light);border-color:#bfdbfe;">
+            <div style="font-size:13px;font-weight:700;color:var(--primary);margin-bottom:4px;">🏆 Pagador exemplar!
+            </div>
+            <div style="font-size:12.5px;color:var(--text-2);line-height:1.5;">Você está em dia com todas as taxas de
+              2026. Continue assim!</div>
+          </div>
+          <div class="card">
+            <div style="font-size:13.5px;font-weight:700;margin-bottom:12px;">Segunda via / Boleto</div>
+            <button class="btn btn-outline" style="width:100%;justify-content:center;"
+              onclick="showToast('📄 Boleto de abril/2026 gerado!')">Gerar boleto de Abril/2026</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <div class="form-group">
-        <label class="form-label">Data</label>
-        <input class="form-input" type="date" value="2026-03-14">
+
+    <!-- ═══ ASSEMBLEIAS ═══ -->
+    <div class="content" id="page-assembleias">
+      <div class="page-header">
+        <div class="page-title">Assembleias e Votações</div>
+        <div class="page-sub">Participe das decisões do seu condomínio</div>
+      </div>
+
+      <!-- VOTAÇÃO ATIVA -->
+      <div class="section-sep">
+        <div class="section-sep-label">Votação aberta</div>
+      </div>
+      <div class="vote-section">
+        <div class="vote-title">Reforma da fachada do Bloco B</div>
+        <div class="vote-sub">Votação encerra em 13/03/2026 · 47 de 120 unidades já votaram · Sua unidade ainda não
+          votou</div>
+        <div class="vote-options" id="voteOptions">
+          <div class="vote-option" onclick="selectVote(this, 'sim')">
+            <div class="vote-option-icon">✅</div>
+            <div>
+              <div style="font-weight:600;">Sim — Aprovar reforma</div>
+              <div style="font-size:12.5px;color:var(--text-3);margin-top:2px;">Orçamento estimado: R$ 120.000 · Prazo:
+                60 dias</div>
+            </div>
+          </div>
+          <div class="vote-option" onclick="selectVote(this, 'nao')">
+            <div class="vote-option-icon">❌</div>
+            <div>
+              <div style="font-weight:600;">Não — Adiar para próxima assembleia</div>
+              <div style="font-size:12.5px;color:var(--text-3);margin-top:2px;">Revisar orçamentos e retomar em
+                maio/2026</div>
+            </div>
+          </div>
+          <div class="vote-option" onclick="selectVote(this, 'abstencao')">
+            <div class="vote-option-icon">⚪</div>
+            <div>
+              <div style="font-weight:600;">Abstenção</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="voteBtn" onclick="submitVote()"
+          style="opacity:0.5;pointer-events:none;">Confirmar meu voto →</button>
+      </div>
+
+      <!-- RESULTADO PARCIAL -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-title">Resultado parcial — Reforma fachada Bloco B</div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div class="vote-bar-row">
+            <div class="vote-bar-label"><span>✅ Sim (32 votos)</span><span
+                style="font-weight:700;color:var(--green);">68%</span></div>
+            <div class="vote-bar-track">
+              <div class="vote-bar-fill" style="width:68%;background:var(--green);"></div>
+            </div>
+          </div>
+          <div class="vote-bar-row">
+            <div class="vote-bar-label"><span>❌ Não (10 votos)</span><span
+                style="font-weight:700;color:var(--red);">21%</span></div>
+            <div class="vote-bar-track">
+              <div class="vote-bar-fill" style="width:21%;background:var(--red);"></div>
+            </div>
+          </div>
+          <div class="vote-bar-row">
+            <div class="vote-bar-label"><span>⚪ Abstenção (5 votos)</span><span
+                style="font-weight:700;color:var(--text-3);">11%</span></div>
+            <div class="vote-bar-track">
+              <div class="vote-bar-fill" style="width:11%;background:var(--text-4);"></div>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--text-4);margin-top:14px;">73 unidades ainda não votaram · Resultado
+          parcial, não definitivo</div>
+      </div>
+
+      <!-- PRÓXIMA ASSEMBLEIA -->
+      <div class="section-sep">
+        <div class="section-sep-label">Próxima assembleia</div>
+      </div>
+      <div class="assembleia-card">
+        <div class="assembleia-header" style="background:linear-gradient(135deg,#eef0fd,#f0f9ff);">
+          <div class="assembleia-date-badge" style="background:linear-gradient(135deg,var(--primary),#7c5af1);">
+            <div class="dd">13</div>
+            <div class="mm">Mar</div>
+          </div>
+          <div class="assembleia-info">
+            <div class="assembleia-title">Assembleia Ordinária — Março/2026</div>
+            <div class="assembleia-meta">19h00 · Salão de Festas · Residencial Parque Verde</div>
+          </div>
+          <span class="badge badge-blue">Em 8 dias</span>
+        </div>
+        <div class="assembleia-pautas">
+          <div
+            style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-4);padding-top:14px;margin-bottom:4px;">
+            Pautas</div>
+          <div class="pauta-item">
+            <div class="pauta-num">1</div>
+            <div class="pauta-text">Aprovação do orçamento condominial para 2026</div>
+          </div>
+          <div class="pauta-item">
+            <div class="pauta-num">2</div>
+            <div class="pauta-text">Apresentação dos resultados da votação: Reforma fachada Bloco B</div>
+          </div>
+          <div class="pauta-item">
+            <div class="pauta-num">3</div>
+            <div class="pauta-text">Eleição do subsíndico para o biênio 2026–2027</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ OCORRÊNCIAS ═══ -->
+    <div class="content" id="page-ocorrencias">
+      <div class="page-header"
+        style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div class="page-title">Ocorrências</div>
+          <div class="page-sub">Registre e acompanhe problemas no condomínio</div>
+        </div>
+        <button class="btn btn-primary" onclick="openModal('ocorrencia')">
+          <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24">
+            <line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round" />
+            <line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round" />
+          </svg>
+          Registrar Ocorrência
+        </button>
+      </div>
+
+      <div class="section-sep">
+        <div class="section-sep-label">Minhas ocorrências</div>
+      </div>
+      <div class="section-sep">
+        <div class="section-sep-label">Multas e Recursos</div>
+      </div>
+
+      <div class="ocor-card" style="border-color: #fecaca; background: var(--red-light);">
+        <div class="ocor-icon" style="background:var(--red); color: white;">💲</div>
+        <div class="ocor-info">
+          <div class="ocor-title" style="color: #b42318;">Multa Aplicada — Descarte irregular de lixo</div>
+          <div class="ocor-desc" style="color: #b42318; opacity: 0.85;">Identificado lixo fora do horário na lixeira do
+            corredor (Ocorrência #0022).</div>
+          <div style="font-size:13.5px; font-weight:700; color:var(--red); margin-bottom:6px;">Valor: R$ 150,00</div>
+          <div class="ocor-date" style="font-weight:600; color: #b42318;">Prazo limite para recurso: até 12/03/2026
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-end;">
+          <span class="badge badge-red">Pendente</span>
+          <button class="btn btn-outline btn-sm" onclick="openModal('recurso')"
+            style="background:white; border-color:var(--red); color:var(--red);">Abrir Recurso ⚖️</button>
+        </div>
+      </div>
+
+      <div class="ocor-card">
+        <div class="ocor-icon" style="background:var(--surface-2);">⚖️</div>
+        <div class="ocor-info">
+          <div class="ocor-title">Recurso Julgado — Multa #0015 (Barulho)</div>
+          <div class="ocor-desc" style="margin-bottom: 8px;">
+            <strong style="color:var(--text-2);">Sua defesa:</strong> "A obra possuía autorização prévia documentada
+            enviada na portaria..."<br>
+          </div>
+          <div
+            style="padding:10px; background:var(--green-light); border-radius:var(--r-sm); border-left:3px solid var(--green); font-size:12.5px;">
+            <strong style="color:#027a48;">Decisão do Síndico:</strong> Deferido. Comprovada a autorização prévia para o
+            horário. A multa foi cancelada e não constará no próximo boleto.
+          </div>
+          <div class="ocor-date" style="margin-top:8px;">Julgado em 10/02/2026</div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-end;">
+          <span class="badge badge-green">Multa Cancelada</span>
+        </div>
+      </div>
+
+      <div class="ocor-card">
+        <div class="ocor-icon" style="background:var(--amber-light);">🔊</div>
+        <div class="ocor-info">
+          <div class="ocor-title">Barulho excessivo — Apto 508</div>
+          <div class="ocor-desc">Som alto após 22h repetidamente. Terceiro registro no mês. Moradores vizinhos estão
+            sendo afetados.</div>
+          <div class="ocor-date">Registrada em 04/03/2026</div>
+        </div>
+        <span class="badge badge-yellow">Em análise</span>
+      </div>
+
+      <div class="section-sep">
+        <div class="section-sep-label">Como registrar</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+        <div
+          style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:18px;text-align:center;cursor:pointer;transition:all 0.15s;"
+          onclick="openModal('ocorrencia')" onmouseover="this.style.borderColor='var(--primary)'"
+          onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:28px;margin-bottom:8px;">🔊</div>
+          <div style="font-size:13.5px;font-weight:600;">Barulho</div>
+          <div style="font-size:12px;color:var(--text-3);margin-top:3px;">Som alto, festas, animais</div>
+        </div>
+        <div
+          style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:18px;text-align:center;cursor:pointer;transition:all 0.15s;"
+          onclick="openModal('ocorrencia')" onmouseover="this.style.borderColor='var(--primary)'"
+          onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:28px;margin-bottom:8px;">🔧</div>
+          <div style="font-size:13.5px;font-weight:600;">Infraestrutura</div>
+          <div style="font-size:12px;color:var(--text-3);margin-top:3px;">Elevadores, iluminação, vazamentos</div>
+        </div>
+        <div
+          style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:18px;text-align:center;cursor:pointer;transition:all 0.15s;"
+          onclick="openModal('ocorrencia')" onmouseover="this.style.borderColor='var(--primary)'"
+          onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:28px;margin-bottom:8px;">📢</div>
+          <div style="font-size:13.5px;font-weight:600;">Outro</div>
+          <div style="font-size:12px;color:var(--text-3);margin-top:3px;">Segurança, limpeza, outros</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ NOTIFICAÇÕES ═══ -->
+    <div class="content" id="page-notificacoes">
+      <div class="page-header"
+        style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div class="page-title">Avisos e Notificações</div>
+          <div class="page-sub">4 mensagens não lidas</div>
+        </div>
+        <button class="btn btn-outline" onclick="showToast('✅ Marcadas como lidas')">Marcar todas como lidas</button>
+      </div>
+
+      <div class="notif-item unread">
+        <div class="notif-icon-wrap" style="background:var(--primary-light);">🗳️</div>
+        <div class="notif-body">
+          <div class="notif-title">Votação aberta — Reforma da fachada Bloco B</div>
+          <div class="notif-desc">Uma nova votação foi aberta. Sua participação é importante! A votação encerra em
+            13/03/2026. <span style="color:var(--primary);cursor:pointer;font-weight:600;"
+              onclick="navigate('assembleias')">Votar agora →</span></div>
+          <div class="notif-time">Hoje às 09:14</div>
+        </div>
+      </div>
+
+      <div class="notif-item unread">
+        <div class="notif-icon-wrap" style="background:var(--green-light);">✅</div>
+        <div class="notif-body">
+          <div class="notif-title">Reserva confirmada — Churrasqueira 2</div>
+          <div class="notif-desc">Sua reserva para 07/03 das 12h às 18h foi confirmada. Lembre-se de deixar o espaço
+            limpo após o uso.</div>
+          <div class="notif-time">Hoje às 10:42</div>
+        </div>
+      </div>
+
+      <div class="notif-item unread">
+        <div class="notif-icon-wrap" style="background:var(--amber-light);">🔧</div>
+        <div class="notif-body">
+          <div class="notif-title">Manutenção do elevador — Bloco A</div>
+          <div class="notif-desc">O elevador do Bloco A passará por manutenção em 09/03 das 8h às 12h. Apenas a escada
+            estará disponível neste período.</div>
+          <div class="notif-time">Ontem às 15:30</div>
+        </div>
+      </div>
+
+      <div class="notif-item unread">
+        <div class="notif-icon-wrap" style="background:var(--red-light);">📢</div>
+        <div class="notif-body">
+          <div class="notif-title">Assembleia Ordinária — 13/03/2026</div>
+          <div class="notif-desc">Você está convocado para a Assembleia Ordinária de Março/2026. Data: 13/03, às 19h, no
+            Salão de Festas. Sua presença é importante!</div>
+          <div class="notif-time">2 dias atrás</div>
+        </div>
+      </div>
+
+      <div class="notif-item" style="opacity:0.7;">
+        <div class="notif-icon-wrap" style="background:var(--surface-2);">💰</div>
+        <div class="notif-body">
+          <div class="notif-title">Pagamento confirmado — Cota Março/2026</div>
+          <div class="notif-desc">Recebemos seu pagamento de R$ 580,00 referente à cota de março/2026. Obrigado!</div>
+          <div class="notif-time">3 dias atrás</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PERFIL ═══ -->
+    <div class="content" id="page-perfil">
+      <div class="page-header">
+        <div class="page-title">Meu Perfil</div>
+        <div class="page-sub">Informações da sua conta e unidade</div>
+      </div>
+
+      <div class="perfil-hero">
+        <div class="perfil-avatar">AL</div>
+        <div style="flex:1;">
+          <div class="perfil-name">Ana Lima</div>
+          <div class="perfil-unit">Apto 102 · Bloco A · Residencial Parque Verde</div>
+          <div style="display:flex;gap:8px;margin-top:8px;">
+            <span class="badge badge-blue">Titular</span>
+            <span class="badge badge-green">Em dia</span>
+          </div>
+        </div>
+        <button class="btn btn-outline" onclick="openModal('editPerfil')">✏️ Editar perfil</button>
+      </div>
+
+      <div class="dash-grid-2">
+        <div class="card">
+          <div class="card-title">Informações de contato</div>
+          <div class="info-grid">
+            <div class="info-field">
+              <div class="info-field-label">E-mail</div>
+              <div class="info-field-val">ana.lima@email.com</div>
+            </div>
+            <div class="info-field">
+              <div class="info-field-label">Telefone</div>
+              <div class="info-field-val">(11) 9 9876-5432</div>
+            </div>
+            <div class="info-field">
+              <div class="info-field-label">CPF</div>
+              <div class="info-field-val">***.456.789-**</div>
+            </div>
+            <div class="info-field">
+              <div class="info-field-label">Tipo</div>
+              <div class="info-field-val">Titular / Proprietária</div>
+            </div>
+          </div>
+          <hr class="sep">
+          <div class="card-title" style="margin-bottom:12px;">Unidade</div>
+          <div class="info-grid">
+            <div class="info-field">
+              <div class="info-field-label">Apartamento</div>
+              <div class="info-field-val">102</div>
+            </div>
+            <div class="info-field">
+              <div class="info-field-label">Bloco</div>
+              <div class="info-field-val">Bloco A · 1º andar</div>
+            </div>
+            <div class="info-field">
+              <div class="info-field-label">Vagas</div>
+              <div class="info-field-val">Vaga 14 (coberta)</div>
+            </div>
+            <div class="info-field">
+              <div class="info-field-label">Moradores</div>
+              <div class="info-field-val">2 pessoas</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="card">
+            <div class="card-title">Moradores vinculados</div>
+            <div class="moradores-list">
+              <div class="morador-item">
+                <div class="morador-av" style="background:linear-gradient(135deg,var(--primary),#7c5af1);">AL</div>
+                <div>
+                  <div class="morador-name">Ana Lima</div>
+                  <div style="font-size:11.5px;color:var(--text-3);">Titular · Proprietária</div>
+                </div>
+                <span class="badge badge-blue">Você</span>
+              </div>
+              <div class="morador-item">
+                <div class="morador-av" style="background:linear-gradient(135deg,var(--teal),#0cb8a0);">PL</div>
+                <div>
+                  <div class="morador-name">Pedro Lima</div>
+                  <div style="font-size:11.5px;color:var(--text-3);">Dependente · Filho</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="background:var(--surface-2);">
+            <div style="font-size:13.5px;font-weight:700;margin-bottom:8px;">Segurança</div>
+            <button class="btn btn-outline" style="width:100%;justify-content:center;margin-bottom:8px;"
+              onclick="showToast('📧 E-mail de redefinição enviado!')">Alterar senha</button>
+            <button class="btn btn-outline"
+              style="width:100%;justify-content:center;color:var(--red);border-color:var(--red);"
+              onclick="showToast('👋 Até logo!')">Sair da conta</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /app -->
+
+  <!-- ─── MODAL RESERVA ─── -->
+  <div class="modal-overlay" id="modal-reserva" onclick="closeModal('reserva',event)">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-title">Nova Reserva</div>
+        <div class="modal-close" onclick="closeModal('reserva')">✕</div>
       </div>
       <div class="form-group">
-        <label class="form-label">Horário</label>
+        <label class="form-label">Área comum</label>
         <select class="form-select">
-          <option>08h às 12h</option>
-          <option>12h às 18h</option>
-          <option>18h às 23h</option>
+          <option>Churrasqueira 1</option>
+          <option>Salão de Festas</option>
+          <option>Quadra Poliesportiva</option>
+          <option>Piscina (área VIP)</option>
         </select>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Observações (opcional)</label>
-      <textarea class="form-textarea" placeholder="Ex: Aniversário de 15 anos, aprox. 25 pessoas..."></textarea>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('reserva')">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveReserva()">Confirmar reserva →</button>
-    </div>
-  </div>
-</div>
-
-<!-- ─── MODAL OCORRÊNCIA ─── -->
-<div class="modal-overlay" id="modal-ocorrencia" onclick="closeModal('ocorrencia',event)">
-  <div class="modal">
-    <div class="modal-head">
-      <div class="modal-title">Registrar Ocorrência</div>
-      <div class="modal-close" onclick="closeModal('ocorrencia')">✕</div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Tipo de ocorrência</label>
-      <select class="form-select">
-        <option>Barulho excessivo</option>
-        <option>Problema de infraestrutura</option>
-        <option>Descarte irregular de lixo</option>
-        <option>Segurança</option>
-        <option>Outro</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Unidade envolvida (se houver)</label>
-      <input class="form-input" placeholder="Ex: 508, área comum, corredor...">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Descrição</label>
-      <textarea class="form-textarea" placeholder="Descreva o ocorrido com detalhes..."></textarea>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('ocorrencia')">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveOcorrencia()">Enviar →</button>
-    </div>
-  </div>
-</div>
-
-<!-- ─── MODAL EDITAR PERFIL ─── -->
-<div class="modal-overlay" id="modal-editPerfil" onclick="closeModal('editPerfil',event)">
-  <div class="modal">
-    <div class="modal-head">
-      <div class="modal-title">Editar Perfil</div>
-      <div class="modal-close" onclick="closeModal('editPerfil')">✕</div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Nome completo</label>
-      <input class="form-input" value="Ana Lima">
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <div class="form-group">
-        <label class="form-label">E-mail</label>
-        <input class="form-input" type="email" value="ana.lima@email.com">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="form-group">
+          <label class="form-label">Data</label>
+          <input class="form-input" type="date" value="2026-03-14">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Horário</label>
+          <select class="form-select">
+            <option>08h às 12h</option>
+            <option>12h às 18h</option>
+            <option>18h às 23h</option>
+          </select>
+        </div>
       </div>
       <div class="form-group">
-        <label class="form-label">Telefone</label>
-        <input class="form-input" value="(11) 9 9876-5432">
+        <label class="form-label">Observações (opcional)</label>
+        <textarea class="form-textarea" placeholder="Ex: Aniversário de 15 anos, aprox. 25 pessoas..."></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('reserva')">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveReserva()">Confirmar reserva →</button>
       </div>
     </div>
-    <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('editPerfil')">Cancelar</button>
-      <button class="btn btn-primary" onclick="savePerfil()">Salvar →</button>
+  </div>
+
+  <!-- ─── MODAL OCORRÊNCIA ─── -->
+  <div class="modal-overlay" id="modal-ocorrencia" onclick="closeModal('ocorrencia',event)">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-title">Registrar Ocorrência</div>
+        <div class="modal-close" onclick="closeModal('ocorrencia')">✕</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tipo de ocorrência</label>
+        <select class="form-select">
+          <option>Barulho excessivo</option>
+          <option>Problema de infraestrutura</option>
+          <option>Descarte irregular de lixo</option>
+          <option>Segurança</option>
+          <option>Outro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Unidade envolvida (se houver)</label>
+        <input class="form-input" placeholder="Ex: 508, área comum, corredor...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Descrição</label>
+        <textarea class="form-textarea" placeholder="Descreva o ocorrido com detalhes..."></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('ocorrencia')">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveOcorrencia()">Enviar →</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- TOASTS -->
-<div class="toast-container" id="toastContainer"></div>
+  <!-- ─── MODAL EDITAR PERFIL ─── -->
+  <div class="modal-overlay" id="modal-editPerfil" onclick="closeModal('editPerfil',event)">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-title">Editar Perfil</div>
+        <div class="modal-close" onclick="closeModal('editPerfil')">✕</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nome completo</label>
+        <input class="form-input" value="Ana Lima">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input class="form-input" type="email" value="ana.lima@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Telefone</label>
+          <input class="form-input" value="(11) 9 9876-5432">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('editPerfil')">Cancelar</button>
+        <button class="btn btn-primary" onclick="savePerfil()">Salvar →</button>
+      </div>
+    </div>
+  </div>
 
-<script>
-  function doLogin() {
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    showToast('👋 Bem-vinda, Ana! Tudo em dia por aqui.');
-  }
+  <div class="modal-overlay" id="modal-recurso" onclick="closeModal('recurso',event)">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-title">Abrir Recurso Contra Multa</div>
+        <div class="modal-close" onclick="closeModal('recurso')">✕</div>
+      </div>
 
-  const pages = ['dashboard','reservas','financeiro','assembleias','ocorrencias','notificacoes','perfil'];
-  const breadcrumbs = {
-    dashboard:'Início', reservas:'Reservas', financeiro:'Financeiro',
-    assembleias:'Assembleias', ocorrencias:'Ocorrências',
-    notificacoes:'Avisos', perfil:'Perfil'
-  };
+      <div
+        style="padding:10px; background:var(--primary-light); border-left:3px solid var(--primary); border-radius:var(--r-sm); margin-bottom:16px;">
+        <span style="font-size:12.5px; color:var(--primary-dark); line-height:1.4; display:block;">
+          <strong>Aviso (US07):</strong> Você está dentro do <strong>prazo regulamentar (12/03/2026)</strong>. O síndico
+          analisará sua justificativa e emitirá uma decisão (manutenção, alteração ou cancelamento da multa).
+        </span>
+      </div>
 
-  function navigate(page) {
-    pages.forEach(p => {
-      const el = document.getElementById('page-' + p);
-      if (el) el.classList.remove('active');
-    });
-    const target = document.getElementById('page-' + page);
-    if (target) target.classList.add('active');
-    document.querySelectorAll('.nav-tab').forEach(el => {
-      el.classList.remove('active');
-      const oc = el.getAttribute('onclick') || '';
-      if (oc.includes("'" + page + "'")) el.classList.add('active');
-    });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+      <div class="form-group">
+        <label class="form-label">Multa Contestada</label>
+        <input class="form-input" value="Multa #0022 - Descarte irregular (R$ 150,00)" disabled
+          style="background:var(--surface-2); color:var(--text-3); cursor:not-allowed;">
+      </div>
 
-  function openModal(type) {
-    const el = document.getElementById('modal-' + type);
-    if (el) el.classList.add('open');
-  }
+      <div class="form-group">
+        <label class="form-label">Sua Justificativa / Defesa</label>
+        <textarea class="form-textarea"
+          placeholder="Explique detalhadamente por que a multa deve ser revista ou cancelada..." rows="4"></textarea>
+      </div>
 
-  function closeModal(type, e) {
-    if (e && e.target !== document.getElementById('modal-' + type)) return;
-    const el = document.getElementById('modal-' + type);
-    if (el) el.classList.remove('open');
-  }
+      <div class="form-group">
+        <label class="form-label">Anexar Evidências (Opcional)</label>
+        <div
+          style="padding:16px; border:1.5px dashed var(--border-mid); border-radius:var(--r-sm); text-align:center; color:var(--text-3); font-size:13.5px; cursor:pointer; background:var(--surface-2); transition: all 0.15s;"
+          onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border-mid)'">
+          📄 Clique para anexar fotos ou documentos comprobatórios
+        </div>
+      </div>
 
-  function saveReserva() {
-    closeModal('reserva');
-    showToast('✅ Reserva criada com sucesso!');
-  }
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('recurso')">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveRecurso()">Enviar Recurso →</button>
+      </div>
+    </div>
+  </div>
 
-  function saveOcorrencia() {
-    closeModal('ocorrencia');
-    showToast('📋 Ocorrência registrada! O síndico será notificado.');
-  }
+  <!-- TOASTS -->
+  <div class="toast-container" id="toastContainer"></div>
 
-  function savePerfil() {
-    closeModal('editPerfil');
-    showToast('✅ Perfil atualizado!');
-  }
+  <script>
 
-  let selectedVote = null;
+    function saveRecurso() {
+      closeModal('recurso');
+      showToast('⚖️ Recurso enviado com sucesso! Acompanhe a decisão na aba de Ocorrências.');
 
-  function selectVote(el, val) {
-    selectedVote = val;
-    document.querySelectorAll('.vote-option').forEach(o => o.classList.remove('selected'));
-    el.classList.add('selected');
-    const btn = document.getElementById('voteBtn');
-    btn.style.opacity = '1';
-    btn.style.pointerEvents = 'all';
-  }
+    }
 
-  function submitVote() {
-    if (!selectedVote) return;
-    document.querySelector('.vote-section').innerHTML = `
+    function doLogin() {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      showToast('👋 Bem-vinda, Ana! Tudo em dia por aqui.');
+    }
+
+    const pages = ['dashboard', 'reservas', 'financeiro', 'assembleias', 'ocorrencias', 'notificacoes', 'perfil'];
+    const breadcrumbs = {
+      dashboard: 'Início', reservas: 'Reservas', financeiro: 'Financeiro',
+      assembleias: 'Assembleias', ocorrencias: 'Ocorrências',
+      notificacoes: 'Avisos', perfil: 'Perfil'
+    };
+
+    function navigate(page) {
+      pages.forEach(p => {
+        const el = document.getElementById('page-' + p);
+        if (el) el.classList.remove('active');
+      });
+      const target = document.getElementById('page-' + page);
+      if (target) target.classList.add('active');
+      document.querySelectorAll('.nav-tab').forEach(el => {
+        el.classList.remove('active');
+        const oc = el.getAttribute('onclick') || '';
+        if (oc.includes("'" + page + "'")) el.classList.add('active');
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openModal(type) {
+      const el = document.getElementById('modal-' + type);
+      if (el) el.classList.add('open');
+    }
+
+    function closeModal(type, e) {
+      if (e && e.target !== document.getElementById('modal-' + type)) return;
+      const el = document.getElementById('modal-' + type);
+      if (el) el.classList.remove('open');
+    }
+
+    function saveReserva() {
+      closeModal('reserva');
+      showToast('✅ Reserva criada com sucesso!');
+    }
+
+    function saveOcorrencia() {
+      closeModal('ocorrencia');
+      showToast('📋 Ocorrência registrada! O síndico será notificado.');
+    }
+
+    function savePerfil() {
+      closeModal('editPerfil');
+      showToast('✅ Perfil atualizado!');
+    }
+
+    let selectedVote = null;
+
+    function selectVote(el, val) {
+      selectedVote = val;
+      document.querySelectorAll('.vote-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      const btn = document.getElementById('voteBtn');
+      btn.style.opacity = '1';
+      btn.style.pointerEvents = 'all';
+    }
+
+    function submitVote() {
+      if (!selectedVote) return;
+      document.querySelector('.vote-section').innerHTML = `
       <div style="text-align:center;padding:20px 0;">
         <div style="font-size:40px;margin-bottom:12px;">🗳️</div>
         <div style="font-family:'Fraunces',serif;font-size:18px;font-weight:700;margin-bottom:6px;">Voto registrado!</div>
         <div style="font-size:13.5px;color:var(--text-3);">Seu voto foi computado com sucesso. Obrigada pela participação!</div>
         <div style="margin-top:16px;"><span class="badge badge-green">Votação concluída</span></div>
       </div>`;
-    showToast('🗳️ Voto registrado com sucesso!');
-  }
+      showToast('🗳️ Voto registrado com sucesso!');
+    }
 
-  function showToast(msg) {
-    const container = document.getElementById('toastContainer');
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.textContent = msg;
-    container.appendChild(toast);
-    setTimeout(() => {
-      toast.style.transition = 'all 0.3s';
-      toast.style.opacity = '0';
-      toast.style.transform = 'translateX(60px)';
-      setTimeout(() => toast.remove(), 300);
-    }, 3000);
-  }
-</script>
+    function showToast(msg) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = msg;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.transition = 'all 0.3s';
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(60px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+  </script>
 </body>
+
 </html>
