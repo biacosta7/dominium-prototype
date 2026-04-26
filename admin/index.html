@@ -2238,11 +2238,12 @@
                     22h por 3ª vez</td>
                   <td>05/03/2026</td>
                   <td><span class="badge br">R$ 200</span></td>
-                  <td><span class="badge by">Em análise</span></td>
+                  <td><span class="badge by" style="background:#fef08a;color:#854d0e;">Em Recurso</span></td>
                   <td>
                     <div class="abtns">
-                      <div class="abtn" onclick="showToast('📋 Ocorrência #0023')">👁</div>
-                      <div class="abtn" onclick="showToast('✅ Resolvida!')">✅</div>
+                      <div class="abtn" title="Analisar Recurso" onclick="openModal('modal-recurso-multa')">⚖️</div>
+                      <div class="abtn" title="Registrar Pagamento Manual"
+                        onclick="showToast('💰 Pagamento registrado!')">💳</div>
                     </div>
                   </td>
                 </tr>
@@ -2253,12 +2254,12 @@
                   <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Lixo fora do
                     horário</td>
                   <td>02/03/2026</td>
-                  <td><span class="badge by">R$ 100</span></td>
+                  <td><span class="badge bgr">Pendente</span></td>
                   <td><span class="badge by">Aberta</span></td>
                   <td>
                     <div class="abtns">
-                      <div class="abtn">👁</div>
-                      <div class="abtn" onclick="showToast('✅ Resolvida!')">✅</div>
+                      <div class="abtn" title="Aplicar Multa" onclick="openModal('modal-aplicar-multa')">💲</div>
+                      <div class="abtn" title="Resolver Ocorrência" onclick="showToast('✅ Resolvida!')">✅</div>
                     </div>
                   </td>
                 </tr>
@@ -2269,26 +2270,11 @@
                   <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Dano ao
                     elevador Bloco A</td>
                   <td>28/02/2026</td>
-                  <td><span class="badge br">R$ 500</span></td>
+                  <td><span class="badge bg">Paga (R$ 500)</span></td>
                   <td><span class="badge bg">Resolvida</span></td>
                   <td>
                     <div class="abtns">
-                      <div class="abtn">👁</div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tdb" style="color:var(--tx4)">#0020</td>
-                  <td>204</td>
-                  <td>Barulho</td>
-                  <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Festa sem
-                    autorização</td>
-                  <td>22/02/2026</td>
-                  <td><span class="badge br">R$ 200</span></td>
-                  <td><span class="badge bg">Resolvida</span></td>
-                  <td>
-                    <div class="abtns">
-                      <div class="abtn">👁</div>
+                      <div class="abtn" title="Ver Detalhes">👁</div>
                     </div>
                   </td>
                 </tr>
@@ -3018,6 +3004,108 @@
         <button class="btn btn-p" style="background:var(--red);box-shadow:none;"
           onclick="showToast('Cancelamento concluído. Lista de espera acionada.'); closeModal('modal-cancelar-reserva');">Cancelar
           Reserva</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mo" id="modal-aplicar-multa" onclick="closeModalOut(event)">
+    <div class="mbox">
+      <div class="mh">
+        <div class="mt">Aplicar Multa</div>
+        <div class="mc" onclick="closeModal('modal-aplicar-multa')">✕</div>
+      </div>
+
+      <div
+        style="padding:10px; background:var(--yellow-bg); border-left:3px solid var(--yellow); border-radius:var(--r-sm); margin-bottom:16px;">
+        <span style="font-size:12px; color:#92400e; line-height:1.4; display:block;">
+          <strong>Aviso (US06):</strong> Multas por reincidência são progressivas. O valor gerado será integrado
+          automaticamente à próxima taxa mensal da unidade.
+        </span>
+      </div>
+
+      <div class="fgrid">
+        <div class="fgg"><label class="fgl">Unidade Infratora</label><input class="fgi" placeholder="Ex: 508"
+            value="508"></div>
+        <div class="fgg"><label class="fgl">Infração Vinculada</label><select class="fgi">
+            <option>#0023 - Barulho excessivo</option>
+            <option>#0022 - Descarte irregular</option>
+            <option>Multa Direta (Sem Ocorrência)</option>
+          </select></div>
+      </div>
+
+      <div class="fgrid">
+        <div class="fgg">
+          <label class="fgl">Tipo de Cobrança</label>
+          <select class="fgi">
+            <option>Valor Fixo (R$)</option>
+            <option>Percentual (%) sobre cota</option>
+          </select>
+        </div>
+        <div class="fgg"><label class="fgl">Valor / Percentual</label><input class="fgi"
+            placeholder="Ex: 200,00 ou 10%"></div>
+      </div>
+
+      <div class="fgg" style="margin-top:5px; margin-bottom:15px;">
+        <label style="font-size:12.5px;color:var(--tx2);display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <input type="checkbox" style="width:16px;height:16px;accent-color:var(--accent);" checked>
+          Infração reincidente (Aplica multiplicador progressivo de multa)
+        </label>
+      </div>
+
+      <div class="mf">
+        <button class="btn btn-s" onclick="closeModal('modal-aplicar-multa')">Cancelar</button>
+        <button class="btn btn-p"
+          onclick="showToast('✅ Multa gerada e integrada à cota mensal!'); closeModal('modal-aplicar-multa');">Gerar
+          Multa</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mo" id="modal-recurso-multa" onclick="closeModalOut(event)">
+    <div class="mbox">
+      <div class="mh">
+        <div class="mt">Analisar Recurso de Multa</div>
+        <div class="mc" onclick="closeModal('modal-recurso-multa')">✕</div>
+      </div>
+
+      <div
+        style="padding:10px; background:var(--blue-bg); border-left:3px solid var(--accent); border-radius:var(--r-sm); margin-bottom:16px;">
+        <span style="font-size:12px; color:#1e40af; line-height:1.4; display:block;">
+          <strong>Prazo Válido (US07):</strong> O morador (Apto 508) abriu contestação dentro do prazo de 15 dias. É
+          obrigatório registrar uma justificativa para sua decisão.
+        </span>
+      </div>
+
+      <div class="fgg">
+        <label class="fgl">Argumentação do Morador (Histórico)</label>
+        <textarea class="fgi" disabled style="background:var(--surf2);cursor:not-allowed;color:var(--tx2);resize:none;"
+          rows="2">"O barulho após as 22h não ocorreu na minha unidade, eu estava viajando na data informada. Segue passagem aérea em anexo."</textarea>
+      </div>
+
+      <div class="fgrid">
+        <div class="fgg">
+          <label class="fgl">Decisão do Síndico</label>
+          <select class="fgi">
+            <option>Manter Multa (Indeferido)</option>
+            <option>Cancelar Multa (Deferido)</option>
+            <option>Alterar Valor da Multa</option>
+          </select>
+        </div>
+        <div class="fgg"><label class="fgl">Novo Valor (Se alterado)</label><input class="fgi" placeholder="R$ 0,00">
+        </div>
+      </div>
+
+      <div class="fgg">
+        <label class="fgl">Justificativa da Decisão (Obrigatório)</label>
+        <textarea class="fgi" placeholder="Descreva o motivo da decisão para compor o histórico imutável..."
+          rows="2"></textarea>
+      </div>
+
+      <div class="mf">
+        <button class="btn btn-s" onclick="closeModal('modal-recurso-multa')">Cancelar</button>
+        <button class="btn btn-p"
+          onclick="showToast('⚖️ Decisão registrada no histórico!'); closeModal('modal-recurso-multa');">Registrar
+          Decisão</button>
       </div>
     </div>
   </div>
