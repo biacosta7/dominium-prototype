@@ -2314,13 +2314,14 @@
             <div class="pt">Assembleias e Votações</div>
             <div class="ps">Gestão de pautas, votos e resultados</div>
           </div>
-          <button class="btn btn-p" onclick="openModal('modal-assembleia')">
-            <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24">
-              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round" />
-              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round" />
-            </svg>
-            Criar Assembleia
-          </button>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-s" onclick="openModal('modal-pauta')">Adicionar Pauta</button>
+            <button class="btn btn-p" onclick="openModal('modal-assembleia')"><svg width="14" height="14" fill="none"
+                stroke="white" viewBox="0 0 24 24">
+                <line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round" />
+                <line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round" />
+              </svg> Criar Assembleia</button>
+          </div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;">
           <div class="card" style="border:2px solid var(--accent);position:relative;overflow:hidden;">
@@ -2352,38 +2353,38 @@
           </div>
           <div class="card">
             <div class="card-h">
-              <div class="card-t">Votação Ativa</div><span class="badge bg">Aberta</span>
+              <div class="card-t">Gestão de Votação Ativa</div>
+              <span class="badge bg">Votação em Curso</span>
             </div>
-            <div style="font-size:14px;font-weight:500;margin-bottom:3px;">Reforma da fachada do Bloco B</div>
-            <div style="font-size:12.5px;color:var(--tx4);margin-bottom:14px;">Encerra 13/03/2026 · 47 votos</div>
+            <div style="font-size:14px; font-weight:500; margin-bottom:3px;">Reforma da fachada do Bloco B</div>
+            <div style="font-size:12.5px; color:var(--tx4); margin-bottom:14px;">
+              Iniciada em: 01/03/2026 · <strong>Quórum: 39%</strong> (Mín. exigido: 50%)
+            </div>
+
             <div class="vbw">
-              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:3px;">
-                <span>✅ Sim</span><span style="color:var(--green)">68%</span>
+              <div
+                style="display:flex; justify-content:space-between; font-size:13px; font-weight:500; margin-bottom:3px;">
+                <span>Aprovação (Sim)</span>
+                <span style="color:var(--green)">68%</span>
               </div>
               <div class="vbt">
-                <div class="vbf" style="width:68%;background:var(--green)"></div>
+                <div class="vbf" style="width:68%; background:var(--green)"></div>
               </div>
-              <div class="vbm"><span>32 votos</span><span>47 total</span></div>
             </div>
-            <div class="vbw" style="margin-top:10px;">
-              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:3px;">
-                <span>❌ Não</span><span style="color:var(--red)">22%</span>
-              </div>
-              <div class="vbt">
-                <div class="vbf" style="width:22%;background:var(--red)"></div>
-              </div>
-              <div class="vbm"><span>10 votos</span></div>
+
+            <div
+              style="margin-top:16px; padding:12px; background:var(--surf2); border-radius:var(--r-sm); font-size:12px; color:var(--tx3);">
+              <strong>Regra US09:</strong> Apenas 120 unidades adimplentes estão aptas a votar. Votos duplicados são
+              bloqueados automaticamente.
             </div>
-            <div class="vbw" style="margin-top:10px;">
-              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:3px;">
-                <span>⚪ Abstenção</span><span style="color:var(--tx4)">10%</span>
-              </div>
-              <div class="vbt">
-                <div class="vbf" style="width:10%;background:var(--tx4)"></div>
-              </div>
-              <div class="vbm"><span>5 votos</span></div>
+
+            <div style="display:flex; gap:8px; margin-top:16px;">
+              <button class="btn btn-p btn-sm" style="flex:1;"
+                onclick="showToast('🗳️ Voto manual registrado para unidade adimplente.')">Registrar Voto
+                Manual</button>
+              <button class="btn btn-s btn-sm" style="color:var(--red); border-color:var(--red);"
+                onclick="showToast('🔒 Votação encerrada e ata gerada.')">Encerrar Votação</button>
             </div>
-            <div style="margin-top:12px;font-size:12px;color:var(--tx4)">73 unidades ainda não votaram</div>
           </div>
         </div>
         <div class="card">
@@ -2594,61 +2595,99 @@
       </div>
 
       <div class="content" id="page-notificacoes">
-        <div class="ph">
+        <div class="ph"
+          style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;">
           <div>
-            <div class="pt">Notificações</div>
-            <div class="ps">5 não lidas</div>
+            <div class="pt">Gestão de Notificações</div>
+            <div class="ps">Painel de comunicados do síndico e eventos do sistema</div>
           </div>
-          <button class="btn btn-s" onclick="showToast('✅ Todas marcadas como lidas')">Marcar como lidas</button>
+          <button class="btn btn-p" onclick="openModal('modal-notificacao')">
+            <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24">
+              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2.5" stroke-linecap="round" />
+              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2.5" stroke-linecap="round" />
+            </svg>
+            Novo Comunicado
+          </button>
         </div>
-        <div class="nl">
-          <div class="ni2 unread">
-            <div class="niw" style="background:#fee2e2;">🔔</div>
-            <div class="nb2">
-              <div class="nt">Nova ocorrência — Barulho Apto 508</div>
-              <div class="nd">Ocorrência #0023 aguarda análise. Multa sugerida: R$ 200,00.</div>
-            </div>
-            <div class="ntime">há 3h</div>
+
+        <div class="card" style="padding:0;">
+          <div
+            style="padding:14px 18px;border-bottom:1px solid var(--bdr);display:flex;justify-content:space-between;align-items:center;">
+            <div class="card-t">Registro de Disparos (Histórico Imutável)</div>
+            <select class="fsel">
+              <option>Todos os Disparos</option>
+              <option>Automáticos (Sistema)</option>
+              <option>Manuais (Comunicados)</option>
+            </select>
           </div>
-          <div class="ni2 unread">
-            <div class="niw" style="background:#dbeafe;">📅</div>
-            <div class="nb2">
-              <div class="nt">Reserva confirmada — Churrasqueira 2</div>
-              <div class="nd">Ana Lima (Apto 102) confirmou para 07/03 das 12h às 18h.</div>
-            </div>
-            <div class="ntime">há 1h</div>
-          </div>
-          <div class="ni2 unread">
-            <div class="niw" style="background:#d1fae5;">💰</div>
-            <div class="nb2">
-              <div class="nt">Pagamento recebido — Apto 304</div>
-              <div class="nd">Fernanda Costa pagou R$ 580,00 — cota de março/2026.</div>
-            </div>
-            <div class="ntime">há 12min</div>
-          </div>
-          <div class="ni2 unread">
-            <div class="niw" style="background:#ede9fe;">🗳️</div>
-            <div class="nb2">
-              <div class="nt">Votação ativa — Reforma fachada Bloco B</div>
-              <div class="nd">47 de 120 unidades votaram. Encerra em 13/03/2026.</div>
-            </div>
-            <div class="ntime">ontem</div>
-          </div>
-          <div class="ni2 unread">
-            <div class="niw" style="background:#fef3c7;">⚠️</div>
-            <div class="nb2">
-              <div class="nt">Inadimplência — 3 novas unidades</div>
-              <div class="nd">Apto 108, 312 e 421 estão inadimplentes. Considere notificações.</div>
-            </div>
-            <div class="ntime">2 dias</div>
-          </div>
-          <div class="ni2" style="opacity:.6;">
-            <div class="niw" style="background:var(--surf2);">📋</div>
-            <div class="nb2">
-              <div class="nt">Assembleia agendada para 13/03</div>
-              <div class="nd">Enviar convocação com 10 dias de antecedência.</div>
-            </div>
-            <div class="ntime">3 dias</div>
+          <div class="tw">
+            <table>
+              <thead>
+                <tr>
+                  <th>Título / Categoria</th>
+                  <th>Destinatário(s)</th>
+                  <th>Data do Disparo</th>
+                  <th>Status / Leitura</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Convocação: Assembleia Ordinária</strong><br><span
+                      style="font-size:11px;color:var(--tx4);">Sistema — Nova Assembleia</span></td>
+                  <td>Todos (120 unid.)</td>
+                  <td>05/03/2026 - 09:00</td>
+                  <td>
+                    <div style="display:flex;align-items:center;gap:8px;" title="102 de 120 moradores visualizaram">
+                      <div style="width:60px;height:6px;background:var(--surface-2);border-radius:3px;overflow:hidden;">
+                        <div style="width:85%;height:100%;background:var(--green);"></div>
+                      </div>
+                      <span style="font-size:12px;font-weight:600;color:var(--green);">85% lidas</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="abtn" title="Ver relatório detalhado">👁</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Aviso de Penalidade — Multa #0023</strong><br><span
+                      style="font-size:11px;color:var(--tx4);">Sistema — Aplicação de Multa</span></td>
+                  <td>Apto 508</td>
+                  <td>05/03/2026 - 08:30</td>
+                  <td><span class="badge by">Entregue (Não lida)</span></td>
+                  <td>
+                    <div class="abtn">👁</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Sua vez chegou! Reserva disponível</strong><br><span
+                      style="font-size:11px;color:var(--tx4);">Sistema — Lista de Espera</span></td>
+                  <td>Apto 217</td>
+                  <td>04/03/2026 - 15:40</td>
+                  <td><span class="badge bg">Lida (Confirmada)</span></td>
+                  <td>
+                    <div class="abtn">👁</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Aviso: Manutenção do Elevador</strong><br><span
+                      style="font-size:11px;color:var(--tx4);">Comunicado Manual</span></td>
+                  <td>Bloco A (30 unid.)</td>
+                  <td>28/02/2026 - 14:00</td>
+                  <td>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                      <div style="width:60px;height:6px;background:var(--surface-2);border-radius:3px;overflow:hidden;">
+                        <div style="width:95%;height:100%;background:var(--green);"></div>
+                      </div>
+                      <span style="font-size:12px;font-weight:600;color:var(--green);">95% lidas</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="abtn">👁</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -2929,6 +2968,54 @@
       <div class="mf">
         <button class="btn btn-s" onclick="closeModal('modal-orcamento')">Cancelar</button>
         <button class="btn btn-p" onclick="saveModal('modal-orcamento')">Salvar Orçamento</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mo" id="modal-pauta" onclick="closeModalOut(event)">
+    <div class="mbox">
+      <div class="mh">
+        <div class="mt">Criar Nova Pauta de Votação</div>
+        <div class="mc" onclick="closeModal('modal-pauta')">✕</div>
+      </div>
+
+      <div class="fgg">
+        <label class="fgl">Título da Pauta</label>
+        <input class="fgi" placeholder="Ex: Substituição do mobiliário da piscina">
+      </div>
+
+      <div class="fgrid">
+        <div class="fgg">
+          <label class="fgl">Tipo de Maioria</label>
+          <select class="fgi">
+            <option>Maioria Simples (50% + 1 dos presentes)</option>
+            <option>Maioria Qualificada (2/3 do total)</option>
+            <option>Unanimidade</option>
+          </select>
+        </div>
+        <div class="fgg">
+          <label class="fgl">Quórum Mínimo (%)</label>
+          <input class="fgi" type="number" value="50">
+        </div>
+      </div>
+
+      <div class="fgg">
+        <label class="fgl">Descrição e Contexto</label>
+        <textarea class="fgi" rows="3" placeholder="Explique os detalhes para os moradores..."></textarea>
+      </div>
+
+      <div class="fgg" style="margin-top:10px;">
+        <label style="font-size:12.5px;color:var(--tx2);display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <input type="checkbox" style="width:16px;height:16px;accent-color:var(--accent);" checked>
+          Bloquear votos de unidades inadimplentes (Regra US09)
+        </label>
+      </div>
+
+      <div class="mf">
+        <button class="btn btn-s" onclick="closeModal('modal-pauta')">Cancelar</button>
+        <button class="btn btn-p"
+          onclick="showToast('📢 Pauta criada e disponível para votação!'); closeModal('modal-pauta');">Abrir
+          Votação</button>
       </div>
     </div>
   </div>
@@ -3297,6 +3384,54 @@
     </div>
   </div>
 
+  <div class="mo" id="modal-pauta" onclick="closeModalOut(event)">
+    <div class="mbox">
+      <div class="mh">
+        <div class="mt">Criar Nova Pauta de Votação</div>
+        <div class="mc" onclick="closeModal('modal-pauta')">✕</div>
+      </div>
+
+      <div class="fgg">
+        <label class="fgl">Título da Pauta</label>
+        <input class="fgi" placeholder="Ex: Substituição do mobiliário da piscina">
+      </div>
+
+      <div class="fgrid">
+        <div class="fgg">
+          <label class="fgl">Tipo de Maioria</label>
+          <select class="fgi">
+            <option>Maioria Simples (50% + 1 dos presentes)</option>
+            <option>Maioria Qualificada (2/3 do total)</option>
+            <option>Unanimidade</option>
+          </select>
+        </div>
+        <div class="fgg">
+          <label class="fgl">Quórum Mínimo (%)</label>
+          <input class="fgi" type="number" value="50">
+        </div>
+      </div>
+
+      <div class="fgg">
+        <label class="fgl">Descrição e Contexto</label>
+        <textarea class="fgi" rows="3" placeholder="Explique os detalhes para os moradores..."></textarea>
+      </div>
+
+      <div class="fgg" style="margin-top:10px;">
+        <label style="font-size:12.5px;color:var(--tx2);display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <input type="checkbox" style="width:16px;height:16px;accent-color:var(--accent);" checked>
+          Bloquear votos de unidades inadimplentes (Regra US09)
+        </label>
+      </div>
+
+      <div class="mf">
+        <button class="btn btn-s" onclick="closeModal('modal-pauta')">Cancelar</button>
+        <button class="btn btn-p"
+          onclick="showToast('📢 Pauta criada e disponível para votação!'); closeModal('modal-pauta');">Abrir
+          Votação</button>
+      </div>
+    </div>
+  </div>
+
   <div class="mo" id="modal-ocorrencia" onclick="closeModalOut(event)">
     <div class="mbox">
       <div class="mh">
@@ -3575,6 +3710,61 @@
         <button class="btn btn-p"
           onclick="showToast('⚖️ Decisão registrada e enviada ao morador!'); closeModal('modal-julgar-recurso');">Finalizar
           Julgamento</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mo" id="modal-notificacao" onclick="closeModalOut(event)">
+    <div class="mbox">
+      <div class="mh">
+        <div class="mt">Enviar Novo Comunicado</div>
+        <div class="mc" onclick="closeModal('modal-notificacao')">✕</div>
+      </div>
+
+      <div
+        style="padding:10px; background:var(--blue-bg); border-left:3px solid var(--accent); border-radius:var(--r-sm); margin-bottom:16px;">
+        <span style="font-size:12px; color:#1e40af; line-height:1.4; display:block;">
+          <strong>Regra (US11):</strong> Toda notificação é registrada no sistema, não pode ser excluída pelo morador e
+          gera relatórios de "leitura". Eventos como Multas, Taxas e Assembleias disparam avisos automaticamente.
+        </span>
+      </div>
+
+      <div class="fgrid">
+        <div class="fgg">
+          <label class="fgl">Tipo de Mensagem</label>
+          <select class="fgi">
+            <option>Aviso Geral / Informativo</option>
+            <option>Alerta de Manutenção</option>
+            <option>Lembrete Importante</option>
+          </select>
+        </div>
+        <div class="fgg">
+          <label class="fgl">Público / Destinatário</label>
+          <select class="fgi">
+            <option>Todos os Moradores (Broadcast)</option>
+            <option>Somente Bloco A</option>
+            <option>Somente Bloco B</option>
+            <option>Unidade Específica</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="fgg">
+        <label class="fgl">Título da Notificação</label>
+        <input class="fgi" placeholder="Ex: Limpeza das caixas d'água neste sábado">
+      </div>
+
+      <div class="fgg">
+        <label class="fgl">Conteúdo da Mensagem</label>
+        <textarea class="fgi" placeholder="Digite a mensagem que aparecerá na tela inicial do morador..."
+          rows="3"></textarea>
+      </div>
+
+      <div class="mf">
+        <button class="btn btn-s" onclick="closeModal('modal-notificacao')">Cancelar</button>
+        <button class="btn btn-p"
+          onclick="showToast('📢 Comunicado disparado! Acompanhe as leituras.'); closeModal('modal-notificacao');">Disparar
+          Notificação</button>
       </div>
     </div>
   </div>
