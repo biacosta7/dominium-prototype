@@ -1057,6 +1057,26 @@
       align-items: flex-start;
     }
 
+    .cal-day.disponivel {
+    background: transparent !important; /* Remove o verde */
+    }
+
+    .espaco-item.res-indisponivel {
+        opacity: 0.8;
+        cursor: not-allowed;
+        background: var(--surface-2);
+    }
+
+    .espaco-cap {
+        font-size: 11.5px;
+        color: var(--text-3);
+    }
+
+    .badge-yellow {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
     /* ═══ FINANCEIRO ═══ */
     .fin-hero {
       background: linear-gradient(135deg, #0d1117 0%, #1a2540 100%);
@@ -2046,6 +2066,7 @@
         <div class="page-title">Reservas de Áreas Comuns</div>
         <div class="page-sub">Agende e acompanhe o uso dos espaços do condomínio</div>
       </div>
+
       <div class="reservas-grid">
         <div>
           <div class="card" style="margin-bottom:16px;">
@@ -2064,59 +2085,36 @@
               <div class="cal-day-label">Qui</div>
               <div class="cal-day-label">Sex</div>
               <div class="cal-day-label">Sáb</div>
-              <div class="cal-day other">23</div>
-              <div class="cal-day other">24</div>
-              <div class="cal-day other">25</div>
-              <div class="cal-day other">26</div>
-              <div class="cal-day other">27</div>
-              <div class="cal-day other">28</div>
-              <div class="cal-day">1</div>
-              <div class="cal-day">2</div>
-              <div class="cal-day">3</div>
-              <div class="cal-day">4</div>
-              <div class="cal-day today">5</div>
-              <div class="cal-day">6</div>
-              <div class="cal-day has-reserva" title="Sua reserva">7</div>
-              <div class="cal-day disponivel">8</div>
-              <div class="cal-day">9</div>
-              <div class="cal-day">10</div>
-              <div class="cal-day">11</div>
-              <div class="cal-day">12</div>
-              <div class="cal-day disponivel">13</div>
-              <div class="cal-day">14</div>
-              <div class="cal-day disponivel">15</div>
-              <div class="cal-day">16</div>
-              <div class="cal-day">17</div>
-              <div class="cal-day">18</div>
-              <div class="cal-day">19</div>
-              <div class="cal-day">20</div>
-              <div class="cal-day disponivel">21</div>
-              <div class="cal-day">22</div>
-              <div class="cal-day">23</div>
-              <div class="cal-day">24</div>
-              <div class="cal-day">25</div>
-              <div class="cal-day">26</div>
-              <div class="cal-day">27</div>
-              <div class="cal-day">28</div>
-              <div class="cal-day">29</div>
-              <div class="cal-day">30</div>
-              <div class="cal-day">31</div>
+              
+              <div class="cal-day other">23</div><div class="cal-day other">24</div><div class="cal-day other">25</div>
+              <div class="cal-day other">26</div><div class="cal-day other">27</div><div class="cal-day other">28</div>
+              
+              <div class="cal-day">1</div><div class="cal-day">2</div><div class="cal-day">3</div><div class="cal-day">4</div>
+              <div class="cal-day today">5</div> <div class="cal-day">6</div>
+              <div class="cal-day has-reserva" title="Sua reserva">7</div> <div class="cal-day">8</div><div class="cal-day">9</div><div class="cal-day">10</div><div class="cal-day">11</div>
+              <div class="cal-day">12</div><div class="cal-day">13</div><div class="cal-day">14</div><div class="cal-day">15</div>
+              <div class="cal-day">16</div><div class="cal-day">17</div><div class="cal-day">18</div><div class="cal-day">19</div>
+              <div class="cal-day">20</div><div class="cal-day">21</div><div class="cal-day">22</div><div class="cal-day">23</div>
+              <div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div>
+              <div class="cal-day">28</div><div class="cal-day">29</div><div class="cal-day">30</div><div class="cal-day">31</div>
             </div>
-            <div
-              style="display:flex;gap:16px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--text-3);">
-              <span style="display:flex;align-items:center;gap:5px;"><span
-                  style="width:10px;height:10px;background:#dbeafe;border-radius:3px;display:inline-block;"></span>Sua
-                reserva</span>
-              <span style="display:flex;align-items:center;gap:5px;"><span
-                  style="width:10px;height:10px;background:var(--teal-light);border-radius:3px;display:inline-block;"></span>Disponível</span>
+            
+            <div style="display:flex;gap:16px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--text-3);">
+              <span style="display:flex;align-items:center;gap:5px;">
+                <span style="width:10px;height:10px;background:#dbeafe;border-radius:3px;display:inline-block;border:1px solid var(--primary);"></span>Sua reserva
+              </span>
+              <span style="display:flex;align-items:center;gap:5px;">
+                <span style="width:10px;height:10px;background:var(--primary);border-radius:3px;display:inline-block;"></span>Hoje
+              </span>
             </div>
           </div>
 
           <div class="card">
-            <div class="card-title">
+            <div class="card-title" style="display:flex; justify-content: space-between; align-items: center;">
               Minhas Reservas
               <button class="btn btn-primary btn-sm" onclick="openModal('reserva')">+ Nova Reserva</button>
             </div>
+            
             <div class="res-card">
               <div class="res-color-bar" style="background:var(--primary);"></div>
               <div class="res-info">
@@ -2128,66 +2126,55 @@
                 <button class="btn btn-outline btn-sm" onclick="showToast('🗑 Reserva cancelada')">Cancelar</button>
               </div>
             </div>
-            <div
-              style="background:var(--surface-2);border-radius:var(--r-sm);padding:16px;text-align:center;color:var(--text-3);font-size:13.5px;">
-              Nenhuma outra reserva agendada.<br>
-              <span style="color:var(--primary);cursor:pointer;font-weight:600;" onclick="openModal('reserva')">+ Fazer
-                nova reserva</span>
-            </div>
           </div>
         </div>
 
         <div style="display:flex;flex-direction:column;gap:16px;">
           <div class="card">
-            <div class="card-title">Espaços Disponíveis</div>
+            <div class="card-title">Disponibilidade de Hoje</div>
             <div class="espacos-list">
               <div class="espaco-item" onclick="openModal('reserva')">
                 <div class="espaco-icon">🍖</div>
                 <div>
                   <div class="espaco-name">Churrasqueira 1</div>
-                  <div class="espaco-cap">Cap. 30 pessoas</div>
+                  <div class="espaco-cap">Livre: 09:00 - 22:00</div>
                 </div>
-                <span class="badge badge-green">Livre</span>
+                <span class="badge badge-green">Disponível</span>
               </div>
-              <div class="espaco-item" onclick="showToast('❌ Churrasqueira 2 já está reservada em 07/03')">
+              
+              <div class="espaco-item res-indisponivel">
                 <div class="espaco-icon">🍖</div>
                 <div>
                   <div class="espaco-name">Churrasqueira 2</div>
-                  <div class="espaco-cap">Cap. 30 pessoas</div>
+                  <div class="espaco-cap" style="color:var(--text-danger);">Reservada: 12:00 às 18:00</div>
                 </div>
-                <span class="badge badge-yellow">Reservada 07/03</span>
+                <span class="badge badge-yellow">Ocupada</span>
               </div>
+
               <div class="espaco-item" onclick="openModal('reserva')">
                 <div class="espaco-icon">🎉</div>
                 <div>
                   <div class="espaco-name">Salão de Festas</div>
-                  <div class="espaco-cap">Cap. 80 pessoas</div>
+                  <div class="espaco-cap">Livre: 10:00 - 00:00</div>
                 </div>
-                <span class="badge badge-green">Livre</span>
+                <span class="badge badge-green">Disponível</span>
               </div>
+
               <div class="espaco-item" onclick="openModal('reserva')">
                 <div class="espaco-icon">🏊</div>
                 <div>
                   <div class="espaco-name">Piscina</div>
-                  <div class="espaco-cap">Uso livre · Seg–Dom</div>
-                </div>
-                <span class="badge badge-green">Livre</span>
-              </div>
-              <div class="espaco-item" onclick="openModal('reserva')">
-                <div class="espaco-icon">🏀</div>
-                <div>
-                  <div class="espaco-name">Quadra Poliesportiva</div>
-                  <div class="espaco-cap">Cap. 20 pessoas</div>
+                  <div class="espaco-cap">Uso livre: 08:00 - 20:00</div>
                 </div>
                 <span class="badge badge-green">Livre</span>
               </div>
             </div>
           </div>
+
           <div class="card" style="background:var(--surface-2);border-style:dashed;">
             <div style="font-size:13px;color:var(--text-3);line-height:1.5;">
               <strong style="color:var(--text-2);">ℹ️ Regras de uso</strong><br>
-              Reservas devem ser feitas com 24h de antecedência. Cancelamentos com até 12h antes sem penalidade. Máximo
-              de 2 reservas ativas por unidade.
+              Reservas devem ser feitas com 24h de antecedência. Máximo de 2 reservas ativas por unidade.
             </div>
           </div>
         </div>
