@@ -2652,20 +2652,39 @@
         <div style="display:flex;flex-direction:column;gap:16px;">
           <div class="card">
             <div class="card-title">Moradores vinculados</div>
-            <div class="moradores-list">
-              <div class="morador-item">
-                <div class="morador-av" style="background:linear-gradient(135deg,var(--primary),#7c5af1);">AL</div>
-                <div>
-                  <div class="morador-name">Ana Lima</div>
-                  <div style="font-size:11.5px;color:var(--text-3);">Titular · Proprietária</div>
-                </div>
-                <span class="badge badge-blue">Você</span>
+            <div class="card">
+              <div class="card-title">
+                Gestão da Unidade (Moradores)
+                <button class="btn btn-primary btn-sm" onclick="openModal('addMorador')">+ Adicionar Morador</button>
               </div>
-              <div class="morador-item">
-                <div class="morador-av" style="background:linear-gradient(135deg,var(--teal),#0cb8a0);">PL</div>
-                <div>
-                  <div class="morador-name">Pedro Lima</div>
-                  <div style="font-size:11.5px;color:var(--text-3);">Dependente · Filho</div>
+
+              <div
+                style="padding:10px; background:var(--primary-light); border-left:3px solid var(--primary); border-radius:var(--r-sm); margin-bottom:16px;">
+                <span style="font-size:12px; color:var(--primary-dark); line-height:1.4; display:block;">
+                  <strong>Regra (US02):</strong> Como titular, você pode gerenciar os moradores da Unidade 102. O limite
+                  de moradores é configurável pelo condomínio.
+                </span>
+              </div>
+
+              <div class="moradores-list">
+                <div class="morador-item">
+                  <div class="morador-av" style="background:linear-gradient(135deg,var(--primary),#7c5af1);">AL</div>
+                  <div style="flex:1;">
+                    <div class="morador-name">Ana Lima</div>
+                    <div style="font-size:11.5px; color:var(--text-3);">Titular · Proprietária</div>
+                  </div>
+                  <span class="badge badge-blue">Você</span>
+                </div>
+
+                <div class="morador-item">
+                  <div class="morador-av" style="background:linear-gradient(135deg,var(--teal),#0cb8a0);">PL</div>
+                  <div style="flex:1;">
+                    <div class="morador-name">Pedro Lima</div>
+                    <div style="font-size:11.5px; color:var(--text-3);">Dependente · Filho</div>
+                  </div>
+                  <button class="btn btn-outline btn-sm"
+                    style="color:var(--red); border-color:var(--red); padding:4px 8px;"
+                    onclick="showToast('🗑️ Solicitação de remoção enviada para o sistema.')">Remover</button>
                 </div>
               </div>
             </div>
@@ -2827,10 +2846,58 @@
     </div>
   </div>
 
+  <div class="modal-overlay" id="modal-addMorador" onclick="closeModal('addMorador',event)">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-title">Adicionar Novo Morador</div>
+        <div class="modal-close" onclick="closeModal('addMorador')">✕</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Nome Completo</label>
+        <input class="form-input" placeholder="Ex: João da Silva">
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label class="form-label">Parentesco / Tipo</label>
+          <select class="form-select">
+            <option>Dependente</option>
+            <option>Inquilino</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">CPF</label>
+          <input class="form-input" placeholder="000.000.000-00">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">E-mail (Para acesso ao portal)</label>
+        <input class="form-input" type="email" placeholder="morador@email.com">
+      </div>
+
+      <div style="font-size:12px; color:var(--text-3); margin-bottom:16px;">
+        Ao adicionar, o novo morador terá acesso às áreas comuns conforme as regras da unidade.
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('addMorador')">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveNewMorador()">Concluir Cadastro →</button>
+      </div>
+    </div>
+  </div>
+
   <!-- TOASTS -->
   <div class="toast-container" id="toastContainer"></div>
 
   <script>
+
+    function saveNewMorador() {
+      closeModal('addMorador');
+      showToast('✅ Novo morador cadastrado e vinculado à Unidade 102!');
+    }
 
     function saveRecurso() {
       closeModal('recurso');
